@@ -1,0 +1,3179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shuang. — Designer & Illustrator</title>
+  <style>
+/* Shuang. — Portfolio shared styles
+ * Built on Apple Design System tokens.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@400;500&display=swap");
+
+:root {
+  /* Apple DS tokens */
+  --color-primary: #0066cc;
+  --color-canvas: #ffffff;
+  --color-canvas-parchment: #f5f5f7;
+  --color-surface-pearl: #fafafc;
+  --color-surface-black: #000000;
+  --color-ink: #1d1d1f;
+  --color-ink-muted-80: #333333;
+  --color-ink-muted-48: #7a7a7a;
+  --color-divider-soft: #f0f0f0;
+  --color-hairline: #e0e0e0;
+
+  /* Figma palette tokens */
+  --color-stone-warm: #eae8e4;
+  --color-stone-cool: #efeeeb;
+  --color-stone-grey: #eeeeee;
+  --color-butter: #fff0a9;
+  --color-true-black: #000000;
+
+  /* Type */
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Inter", sans-serif;
+  --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Inter", sans-serif;
+  --font-mark: "Caveat", "Brush Script MT", cursive;
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --press: scale(0.95);
+
+  --max: 1860px;
+  --gutter: 34px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===========================================================
+   Custom cursor
+   =========================================================== */
+@media (hover: hover) and (pointer: fine) {
+  body.has-cursor {
+    cursor: none;
+  }
+  body.has-cursor a,
+  body.has-cursor button,
+  body.has-cursor [role="button"] {
+    cursor: none;
+  }
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate3d(-50%, -50%, 0);
+    will-change: transform, width, height;
+    mix-blend-mode: difference;
+  }
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    transition: width 240ms var(--ease-out), height 240ms var(--ease-out),
+      opacity 200ms var(--ease-out);
+  }
+  .cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 50%;
+    background: transparent;
+    transition: width 280ms var(--ease-out), height 280ms var(--ease-out),
+      border-color 220ms var(--ease-out), opacity 200ms var(--ease-out),
+      background 220ms var(--ease-out), color 220ms var(--ease-out);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-text);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: transparent;
+    text-transform: lowercase;
+  }
+  /* Button / nav hover: lighter outline-only feedback */
+  body.cursor-hover .cursor-dot {
+    opacity: 0;
+  }
+  body.cursor-hover .cursor-ring {
+    width: 44px;
+    height: 44px;
+    border-color: #fff;
+    border-width: 1.5px;
+    background: transparent;
+  }
+  /* Project / image hover with label: filled "view" pill — strongest state */
+  body.cursor-view .cursor-ring {
+    width: 86px;
+    height: 86px;
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+    mix-blend-mode: difference;
+  }
+  body.cursor-view .cursor-ring::after {
+    content: attr(data-label);
+    color: inherit;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}
+
+/* ===========================================================
+   Header / nav
+   =========================================================== */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--gutter);
+  transition: background 320ms var(--ease-out), color 220ms var(--ease-out);
+  color: var(--color-ink);
+}
+.nav.is-scrolled {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+.nav.theme-light {
+  color: #fff;
+}
+.nav.theme-light.is-scrolled {
+  background: rgba(0, 0, 0, 0.42);
+}
+.nav-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  gap: 24px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 33px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  justify-self: start;
+}
+.nav-links {
+  display: contents;
+}
+.nav-link {
+  justify-self: center;
+}
+@media (max-width: 720px) {
+  .nav-row { grid-template-columns: auto 1fr; gap: 16px; }
+  .nav-logo { justify-self: start; }
+  .nav-link { justify-self: auto; font-size: 14px; }
+}
+.nav-link {
+  position: relative;
+  font-family: var(--font-text);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 6px 2px;
+  transition: opacity 220ms var(--ease-out);
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--ease-out);
+}
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+/* ===========================================================
+   Footer
+   =========================================================== */
+.footer {
+  background: #fff;
+  color: var(--color-ink);
+  padding: 120px var(--gutter) 48px;
+  position: relative;
+  border-top: 1px solid var(--color-hairline);
+}
+.footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.footer h2 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  margin: 0 0 28px;
+  line-height: 0.92;
+  color: var(--color-ink);
+}
+.footer-block-title {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted-48);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.footer .contact-info {
+  font-family: var(--font-text);
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--color-ink-muted-80);
+}
+.footer .contact-info a {
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-hairline);
+  transition: border-color 200ms var(--ease-out);
+}
+.footer .contact-info a:hover {
+  border-color: var(--color-ink);
+}
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-end;
+  text-align: right;
+}
+.footer-nav-link {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  position: relative;
+  transition: color 200ms var(--ease-out), transform 320ms var(--ease-out);
+}
+.footer-nav-link:hover {
+  transform: translateX(-4px);
+  color: var(--color-ink-muted-48);
+}
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  text-align: right;
+}
+.footer-social-link {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 200ms var(--ease-out);
+}
+.footer-social-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 320ms var(--ease-out);
+}
+.footer-social-link:hover::after {
+  transform: scaleX(1);
+}
+.footer-fineprint {
+  grid-column: 1 / -1;
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-hairline);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--color-ink-muted-48);
+  letter-spacing: 0.04em;
+}
+@media (max-width: 720px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 48px; }
+  .footer-nav, .footer-social { align-items: flex-start; text-align: left; }
+  .footer-social-link::after { transform-origin: left; }
+}
+
+/* Back to top */
+.back-to-top {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-ink);
+  border: 1px solid var(--color-hairline);
+  display: grid;
+  place-items: center;
+  z-index: 80;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out),
+    background 200ms var(--ease-out);
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.back-to-top:hover {
+  background: var(--color-ink);
+  color: #fff;
+}
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ===========================================================
+   Page transitions — view-transition-ish overlay
+   =========================================================== */
+.page-veil {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 320ms var(--ease-out);
+}
+.page-veil.is-out {
+  opacity: 1;
+}
+body.is-entering {
+  animation: page-fade-in 540ms var(--ease-out) both;
+}
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================================================
+   Reveal on scroll
+   =========================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================================================
+   Project card / image hover
+   =========================================================== */
+.proj {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+.proj-thumb {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-canvas-parchment);
+  border-radius: 0;
+}
+.proj-thumb-inner {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 700ms var(--ease-out);
+  will-change: transform;
+}
+.proj:hover .proj-thumb-inner {
+  transform: scale(1.04);
+}
+.proj-meta {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  align-items: start;
+}
+.proj-title {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  line-height: 1.3;
+  transition: color 200ms var(--ease-out);
+}
+.proj:hover .proj-title {
+  color: var(--color-primary);
+}
+.proj-desc {
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--color-ink-muted-80);
+}
+.proj-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.proj-tag {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-weight: 600;
+  color: var(--color-ink-muted-48);
+  background: var(--color-canvas-parchment);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+/* Common section */
+.section {
+  padding: 120px var(--gutter);
+}
+.section-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+/* Filter pills */
+.filter-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+.filter-pill {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-ink-muted-80);
+  cursor: pointer;
+  transition: background 200ms var(--ease-out), color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out), transform 120ms var(--ease-out);
+}
+.filter-pill:hover {
+  border-color: var(--color-hairline);
+}
+.filter-pill.is-active {
+  background: var(--color-ink);
+  color: #fff;
+  border-color: var(--color-ink);
+}
+.filter-pill:active {
+  transform: var(--press);
+}
+
+/* Page-title big-ink display */
+.title-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  margin-bottom: 80px;
+  flex-wrap: wrap;
+}
+.title-row h1 {
+  font-family: var(--font-display);
+  font-size: 104px;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  margin: 0;
+}
+.title-row .title-active {
+  color: var(--color-ink);
+}
+.title-row .title-other {
+  color: rgba(29, 29, 31, 0.12);
+  cursor: pointer;
+  transition: color 240ms var(--ease-out);
+}
+.title-row .title-other:hover {
+  color: rgba(29, 29, 31, 0.45);
+}
+
+/* Hero featured project on listing page */
+.hero-feat {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin-bottom: 80px;
+  background: #111;
+}
+.hero-feat-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 1200ms var(--ease-out);
+}
+.hero-feat:hover .hero-feat-img {
+  transform: scale(1.03);
+}
+.hero-feat-meta {
+  position: absolute;
+  left: 34px;
+  bottom: 34px;
+  right: 34px;
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+.hero-feat-title {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 0;
+}
+.hero-feat-desc {
+  font-size: 16px;
+  max-width: 380px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Utility */
+.flex {
+  display: flex;
+}
+.center {
+  display: grid;
+  place-items: center;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* === index.html styles === */
+
+    .home-hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      padding: 0 var(--gutter);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .home-hero-slideshow {
+      position: absolute; inset: 0;
+      z-index: 0;
+      display: flex;
+      width: max-content;
+      animation: hero-marquee 50s linear infinite;
+      will-change: transform;
+    }
+    .home-hero-slideshow .slide {
+      width: 100vw; height: 100vh; min-height: 720px;
+      flex-shrink: 0;
+      background-size: cover; background-position: center center;
+      background-repeat: no-repeat;
+      background-color: #000;
+      cursor: pointer;
+    }
+    @keyframes hero-marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .home-hero::before {
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.72) 100%);
+    }
+    .home-hero-inner {
+      max-width: 1400px; margin: 0 auto; padding: 80px 0;
+      position: relative; z-index: 2;
+      pointer-events: none;
+    }
+    .home-hero-inner > * { pointer-events: auto; }
+    .home-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 9vw, 140px);
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 0.92;
+      margin: 0 0 56px;
+      text-align: center;
+      color: #fff;
+    }
+    .home-hero h1 em {
+      font-style: italic;
+      font-family: "Times New Roman", serif;
+      font-weight: 400;
+    }
+    .home-hero .subhead {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 22px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+    .home-mark {
+      font-family: var(--font-mark);
+      font-size: 36px;
+      color: rgba(255,255,255,0.9);
+      transform: rotate(-3deg);
+      display: inline-block;
+      margin-top: 28px;
+    }
+    .scroll-indicator {
+      position: absolute; left: 50%; bottom: 32px;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      z-index: 3;
+    }
+    .scroll-indicator .line {
+      width: 1px; height: 56px; background: #fff;
+      animation: scroll-pulse 1.8s var(--ease-standard) infinite;
+    }
+    @keyframes scroll-pulse {
+      0% { transform: scaleY(0); transform-origin: top; }
+      40% { transform: scaleY(1); transform-origin: top; }
+      60% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    .grid-projects {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 48px 18px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+    .grid-projects .span-8 { grid-column: span 8; }
+    .grid-projects .span-4 { grid-column: span 4; }
+    .grid-projects .span-6 { grid-column: span 6; }
+    .grid-projects .proj-thumb { aspect-ratio: 16 / 9; }
+
+    .home-services {
+      background: var(--color-canvas-parchment);
+      padding: 140px 0;
+    }
+    .home-services-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+    .home-services h2 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.5vw, 60px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.04;
+      margin: 0 0 64px;
+      max-width: 1100px;
+    }
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+    .pillar {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      position: relative;
+      transition: transform 360ms var(--ease-out);
+      display: flex;
+      flex-direction: column;
+    }
+    .pillar:hover { transform: translateY(-4px); }
+    /* Staggered tall / short rhythm */
+    .pillar:nth-child(odd)  { padding-top: 0;   }
+    .pillar:nth-child(even) { padding-top: 96px; }
+    .pillar-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--color-stone-grey);
+      border-radius: 0;
+      margin: 0 0 20px;
+    }
+    .pillar:nth-child(odd) .pillar-img  { aspect-ratio: 1 / 1; }
+    .pillar:nth-child(even) .pillar-img { aspect-ratio: 1 / 1; }
+    .pillar-num {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--color-ink-muted-48);
+      position: static;
+      margin-bottom: 6px;
+    }
+    .pillar-cat {
+      display: none;
+    }
+    .pillar-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .pillar-title svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform 280ms var(--ease-out); }
+    .pillar:hover .pillar-title svg { transform: translateX(4px); }
+  
+/* === design.html styles === */
+
+    .listing-head { padding: 200px var(--gutter) 0; max-width: 1860px; margin: 0 auto; }
+    .listing-head .title-row { margin-bottom: 0; }
+    .listing-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 80px 18px;
+      max-width: 1860px;
+      margin: 0 auto;
+      padding: 48px var(--gutter) 140px;
+    }
+    .listing-grid .row-feature { grid-column: 1 / -1; }
+    .listing-grid .span-7 { grid-column: span 7; margin-bottom: 32px; }
+    .listing-grid .span-5 { grid-column: span 5; margin-bottom: 32px; }
+    .listing-grid .span-6 { grid-column: span 6; }
+    .listing-grid .span-4 { grid-column: span 4; }
+    .listing-grid .span-8 { grid-column: span 8; }
+    /* all thumbs 16:9 by default */
+    .listing-grid .proj-thumb { aspect-ratio: 16/9; }
+    /* PokerStars VR — native 16:9, no crop */
+    .listing-grid .proj-thumb.pokerstars { aspect-ratio: 16/9; background: #0a1628; }
+    .listing-grid .proj-thumb.pokerstars .proj-thumb-inner { background-size: contain !important; background-color: #0a1628; }
+    .listing-grid .row-feature .proj-thumb { aspect-ratio: unset; height: 800px; }
+    /* project 2: right-aligned */
+    .listing-grid .proj-right { grid-column: 5 / 13 !important; margin-bottom: 32px; }
+    .listing-grid .proj-right .proj-thumb { aspect-ratio: 16/9; }
+    /* project 5: left-aligned, slightly taller */
+    .listing-grid .proj-left { grid-column: 1 / 9 !important; margin-bottom: 32px; }
+    .listing-grid .proj-left .proj-thumb { aspect-ratio: 3/2; }
+
+  
+/* === illustration.html styles === */
+
+    body { background: var(--color-stone-grey); }
+    .listing-head { padding: 200px var(--gutter) 0; max-width: 1860px; margin: 0 auto; }
+    .listing-head .title-row { margin-bottom: 0; }
+    .ill-feature {
+      max-width: 1860px;
+      margin: 48px auto 0;
+      padding: 0 var(--gutter);
+    }
+    .ill-feature-meta {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 32px;
+      margin-bottom: 24px;
+      align-items: start;
+    }
+    .ill-feature-meta .label { font-weight: 600; font-size: 16px; }
+    .ill-feature-meta .desc { font-size: 16px; color: var(--color-ink-muted-80); max-width: 380px; }
+    .ill-feature-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background-size: cover;
+      background-position: center;
+      transition: transform 1000ms var(--ease-out);
+    }
+    .ill-feature:hover .ill-feature-img { transform: scale(1.02); }
+    .ill-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 80px 18px;
+      max-width: 1860px;
+      margin: 0 auto;
+      padding: 48px var(--gutter) 140px;
+    }
+    .ill-grid .row-feature { grid-column: 1 / -1; }
+    .ill-grid .span-7 { grid-column: span 7; }
+    .ill-grid .span-5 { grid-column: span 5; }
+    .ill-grid .span-6 { grid-column: span 6; }
+    .ill-grid .span-4 { grid-column: span 4; }
+    .ill-grid .span-8 { grid-column: span 8; }
+    .ill-grid .proj-thumb { aspect-ratio: 16 / 9; }
+    .ill-grid .proj[data-slug="66-day-gifs"] .proj-thumb { aspect-ratio: 3 / 2; }
+    .ill-grid .proj[data-slug="ot"] .proj-thumb { aspect-ratio: 3 / 4; }
+    .ill-grid .proj[data-slug="happy-new-year"] .proj-thumb { aspect-ratio: 3 / 4; }
+    .ill-grid .proj[data-slug="overview-of-types"] .proj-thumb { aspect-ratio: 3 / 2; }
+    .ill-grid .row-feature .proj-thumb { aspect-ratio: unset; height: 800px; }
+    .ill-grid .span-4 .proj-thumb { aspect-ratio: 4 / 5; }
+    .ill-grid .span-8 .proj-thumb { aspect-ratio: 16 / 9; }
+    @media (max-width: 980px) {
+      .ill-grid { grid-template-columns: 1fr 1fr; }
+      .ill-feature-meta { grid-template-columns: 1fr; }
+    }
+  
+/* === about.html styles === */
+    .about-wrap { background: #FFF0A9; min-height: 100vh; }
+    .about-s1 { background: #FFF0A9; padding: 160px var(--gutter) 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: var(--max); margin: 0 auto; }
+    .about-s1-left { position: relative; display: flex; align-items: center; justify-content: center; min-height: 380px; }
+    .about-oval-svg { width: 100%; max-width: 420px; }
+    .about-tagline { position: absolute; bottom: -10px; left: 0; font-family: var(--font-mark); font-size: 19px; color: #555; line-height: 1.4; max-width: 220px; transform: rotate(-2deg); }
+    .about-s1-right h1 { font-family: var(--font-display); font-size: clamp(26px, 3.2vw, 44px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.18; color: #1d1d1f; margin: 0 0 40px; }
+    .about-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .about-btn-primary { font-family: var(--font-display); font-size: 14px; font-weight: 600; padding: 12px 22px; background: #1d1d1f; color: #FFF0A9; border-radius: 9999px; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: opacity 200ms; }
+    .about-btn-primary:hover { opacity: 0.75; }
+    .about-btn-secondary { font-family: var(--font-display); font-size: 14px; font-weight: 500; padding: 12px 22px; background: transparent; color: #1d1d1f; border: 1.5px solid rgba(0,0,0,0.25); border-radius: 9999px; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: background 200ms, color 200ms, border-color 200ms; }
+    .about-btn-secondary:hover { background: #1d1d1f; color: #FFF0A9; border-color: #1d1d1f; }
+    .about-services { background: #111; color: #fff; padding: 80px var(--gutter); }
+    .about-services-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .about-section-label { font-family: var(--font-display); font-size: 32px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.08; color: rgba(255,255,255,0.95); }
+    .about-services-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .about-services-cat h3 { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin: 0 0 12px; }
+    .about-services-cat ul { list-style: none; padding: 0; margin: 0; }
+    .about-services-cat ul li { font-family: var(--font-display); font-size: 18px; font-weight: 400; color: #fff; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); letter-spacing: -0.005em; }
+    .about-services-cat ul li:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+    .about-clients { background: #111; color: #fff; padding: 80px var(--gutter); border-top: 1px solid rgba(255,255,255,0.08); }
+    .about-clients-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .about-clients-text p { font-family: var(--font-display); font-size: 18px; font-weight: 400; line-height: 1.6; letter-spacing: -0.015em; color: #fff; margin: 0 0 24px; }
+    .about-clients-text p:last-child { margin: 0; }
+    @media (max-width: 960px) { .about-s1 { grid-template-columns: 1fr; gap: 40px; padding: 140px var(--gutter) 60px; } .about-s1-left { min-height: 280px; } }
+    @media (max-width: 700px) { .about-services-inner, .about-clients-inner { grid-template-columns: 1fr; gap: 32px; } }
+    @media (max-width: 600px) { .about-services-cols { grid-template-columns: 1fr 1fr; gap: 16px; } .about-btns { flex-direction: column; } .about-btn-primary, .about-btn-secondary { text-align: center; justify-content: center; } }
+    
+    /* === contact.html styles === */
+
+    body { background: var(--color-stone-warm); }
+    .contact-wrap { padding: 200px var(--gutter) 120px; max-width: var(--max); margin: 0 auto; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-col-left { grid-column: 1; }
+    .contact-col-right { grid-column: 2; display: flex; flex-direction: column; gap: 40px; }
+    .contact-grid h1 { font-family: var(--font-display); font-size: clamp(40px, 4.5vw, 72px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.05; margin: 0 0 24px; }
+    .contact-grid h1 em { font-family: "Times New Roman", serif; font-style: italic; font-weight: 400; }
+    .contact-lead { font-size: 22px; line-height: 1.45; color: var(--color-ink-muted-80); max-width: 560px; }
+    .contact-mark { font-family: var(--font-mark); font-size: 24px; transform: rotate(-2deg); display: inline-block; margin-top: 16px; }
+
+    .contact-card {
+      background: #fff; border-radius: 24px; padding: 40px;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 320ms var(--ease-out);
+    }
+    .contact-card:hover { transform: translateY(-2px); }
+    .contact-card .label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-ink-muted-48); margin-bottom: 8px; }
+    .contact-line { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--color-divider-soft); }
+    .contact-line:last-child { border-bottom: 0; }
+    .contact-line .key { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted-48); }
+    .contact-line .val { font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: -0.015em; color: var(--color-ink); }
+    .contact-line .val a { border-bottom: 1px solid transparent; transition: border-color 200ms var(--ease-out); }
+    .contact-line:hover .val a { border-color: var(--color-ink); }
+
+    .contact-cta {
+      margin-top: 32px;
+      background: var(--color-ink); color: #fff;
+      padding: 28px 32px; border-radius: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: transform 320ms var(--ease-out);
+    }
+    .contact-cta:hover { transform: translateY(-2px); }
+    .contact-cta .ctitle { font-family: var(--font-display); font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+    .contact-cta .arrow { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.12); display: grid; place-items: center; transition: background 200ms var(--ease-out); }
+    .contact-cta:hover .arrow { background: #fff; color: var(--color-ink); }
+
+    .availability {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 32px;
+      padding: 32px 40px 0;
+      border-top: 1px solid rgba(0,0,0,0.12);
+    }
+    .availability .col .label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-ink-muted-48); margin-bottom: 6px; }
+    .availability .col .val { font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: -0.01em; }
+    .availability .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2db464; margin-right: 8px; vertical-align: middle; box-shadow: 0 0 0 0 rgba(45,180,100,0.6); animation: pulse 2.4s var(--ease-standard) infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(45,180,100,0.5); } 70% { box-shadow: 0 0 0 14px rgba(45,180,100,0); } 100% { box-shadow: 0 0 0 0 rgba(45,180,100,0); } }
+
+    @media (max-width: 980px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .availability { grid-template-columns: 1fr 1fr; }
+    }
+  
+/* === design-detail.html styles === */
+
+    .detail-hero {
+      width: 100%;
+      height: 100vh;
+      min-height: 720px;
+      position: relative;
+      background: #111;
+      overflow: hidden;
+    }
+    .detail-hero-img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transform: scale(1.05);
+      animation: hero-zoom 1600ms var(--ease-out) both;
+    }
+    @keyframes hero-zoom { from { transform: scale(1.12); opacity: 0.4; } to { transform: scale(1.05); opacity: 1; } }
+    .detail-hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.55) 100%);
+    }
+    .detail-hero-meta {
+      position: absolute; left: var(--gutter); right: var(--gutter); bottom: 56px;
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: end;
+      z-index: 1;
+    }
+    .detail-hero-meta h1 {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 8vw, 128px);
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 0.92;
+      margin: 0;
+    }
+    .detail-hero-meta .partners {
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+      margin-bottom: 16px;
+    }
+    .detail-meta-row {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 100px var(--gutter) 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+    .detail-meta-row h2 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.4vw, 56px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin: 0;
+    }
+    .meta-list {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      row-gap: 14px;
+      column-gap: 24px;
+      font-size: 15px;
+      align-content: start;
+    }
+    .meta-list dt {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted-48);
+      padding-top: 4px;
+    }
+    .meta-list dd { margin: 0; color: var(--color-ink); }
+
+    .detail-section { padding: 0 var(--gutter); margin-bottom: 80px; }
+    .detail-section.full { padding: 0; }
+    .detail-section img, .detail-section .img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background-size: cover;
+      background-position: center;
+    }
+    .detail-section .caption {
+      max-width: var(--max);
+      margin: 16px auto 0;
+      font-size: 13px;
+      color: var(--color-ink-muted-48);
+      letter-spacing: 0.02em;
+    }
+    .split-section {
+      max-width: var(--max);
+      margin: 0 auto 100px;
+      padding: 0 var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gutter);
+    }
+    .split-section .img { aspect-ratio: 4 / 5; }
+
+    .quote-section {
+      max-width: 1100px;
+      margin: 100px auto;
+      padding: 0 var(--gutter);
+      text-align: center;
+    }
+    .quote-section blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin: 0 0 24px;
+    }
+    .quote-section cite {
+      font-style: normal;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted-48);
+    }
+
+    .next-strip {
+      background: var(--color-stone-warm);
+      padding: 80px var(--gutter);
+      margin-top: 60px;
+    }
+    .next-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .next-eyebrow { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-ink-muted-48); margin-bottom: 8px; }
+    .next-inner h3 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      margin: 0;
+      line-height: 1;
+    }
+    .next-arrow {
+      width: 88px; height: 88px; border-radius: 50%; background: var(--color-ink); color: #fff;
+      display: grid; place-items: center;
+      transition: transform 320ms var(--ease-out);
+    }
+    .next-strip a:hover .next-arrow { transform: translateX(8px); }
+
+    @media (max-width: 980px) {
+      .detail-hero-meta, .detail-meta-row, .split-section { grid-template-columns: 1fr; }
+    }
+  
+/* === illustration-detail.html styles === */
+
+    .detail-hero {
+      width: 100%;
+      height: 100vh;
+      min-height: 720px;
+      position: relative;
+      background: #111;
+      overflow: hidden;
+    }
+    .detail-hero-img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transform: scale(1.05);
+      animation: hero-zoom 1600ms var(--ease-out) both;
+    }
+    @keyframes hero-zoom { from { transform: scale(1.12); opacity: 0.4; } to { transform: scale(1.05); opacity: 1; } }
+    .detail-hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.55) 100%);
+    }
+    .detail-hero-meta {
+      position: absolute; left: var(--gutter); right: var(--gutter); bottom: 56px;
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: end;
+      z-index: 1;
+    }
+    .detail-hero-meta h1 {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 8vw, 128px);
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 0.92;
+      margin: 0;
+    }
+    .detail-hero-meta .partners {
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+      margin-bottom: 16px;
+    }
+    .detail-meta-row {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 100px var(--gutter) 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+    .detail-meta-row h2 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.4vw, 56px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin: 0;
+    }
+    .meta-list {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      row-gap: 14px;
+      column-gap: 24px;
+      font-size: 15px;
+      align-content: start;
+    }
+    .meta-list dt {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted-48);
+      padding-top: 4px;
+    }
+    .meta-list dd { margin: 0; color: var(--color-ink); }
+
+    .detail-section { padding: 0 var(--gutter); margin-bottom: 80px; }
+    .detail-section.full { padding: 0; }
+    .detail-section img, .detail-section .img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background-size: cover;
+      background-position: center;
+    }
+    .detail-section .caption {
+      max-width: var(--max);
+      margin: 16px auto 0;
+      font-size: 13px;
+      color: var(--color-ink-muted-48);
+      letter-spacing: 0.02em;
+    }
+    .split-section {
+      max-width: var(--max);
+      margin: 0 auto 100px;
+      padding: 0 var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gutter);
+    }
+    .split-section .img { aspect-ratio: 4 / 5; }
+
+    .quote-section {
+      max-width: 1100px;
+      margin: 100px auto;
+      padding: 0 var(--gutter);
+      text-align: center;
+    }
+    .quote-section blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin: 0 0 24px;
+    }
+    .quote-section cite {
+      font-style: normal;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted-48);
+    }
+
+    .next-strip {
+      background: var(--color-stone-warm);
+      padding: 80px var(--gutter);
+      margin-top: 60px;
+    }
+    .next-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .next-eyebrow { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-ink-muted-48); margin-bottom: 8px; }
+    .next-inner h3 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      margin: 0;
+      line-height: 1;
+    }
+    .next-arrow {
+      width: 88px; height: 88px; border-radius: 50%; background: var(--color-ink); color: #fff;
+      display: grid; place-items: center;
+      transition: transform 320ms var(--ease-out);
+    }
+    .next-strip a:hover .next-arrow { transform: translateX(8px); }
+
+    @media (max-width: 980px) {
+      .detail-hero-meta, .detail-meta-row, .split-section { grid-template-columns: 1fr; }
+    }
+  
+/* === SPA router === */
+.page { display: none; }
+.page.is-active { display: block; }
+body { background: #fff; }
+  
+/* ============================================================
+   RESPONSIVE — Mobile-first breakpoints
+   sm: 0–600px | md: 601–960px | lg: 961–1280px | xl: 1281px+
+   ============================================================ */
+
+/* ── Base / Mobile (default) ─────────────────────────────── */
+:root { --gutter: 20px; }
+
+/* Nav */
+.nav { height: 64px; padding: 0 var(--gutter); }
+.nav-row { grid-template-columns: auto 1fr; gap: 12px; }
+.nav-logo { font-size: 24px; }
+.nav-links { display: flex; gap: 12px; justify-self: end; }
+.nav-link { font-size: 13px; }
+
+/* Hero */
+.home-hero { min-height: 100svh; }
+.home-hero h1 { font-size: clamp(52px, 14vw, 140px) !important; height: auto !important; margin-bottom: 56px; }
+.home-hero .subhead { font-size: 15px; padding: 0 8px; margin-bottom: 16px; }
+.home-mark { font-size: 26px; }
+.scroll-indicator { display: none; }
+
+/* Home featured grid — single column on mobile */
+.grid-projects {
+  grid-template-columns: 1fr !important;
+  gap: 32px 0 !important;
+  padding: 0 var(--gutter) !important;
+}
+.grid-projects .span-8,
+.grid-projects .span-4,
+.grid-projects .span-6 { grid-column: 1 / -1 !important; }
+
+/* Filter row */
+.filter-row { gap: 8px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
+.filter-pill { font-size: 12px; padding: 6px 14px; }
+
+/* Featured section */
+#featured { padding: 60px 0 40px !important; }
+
+/* Services / pillars — single column */
+.home-services { padding: 80px 0; }
+.home-services h2 { font-size: clamp(24px, 6vw, 48px); margin-bottom: 40px; }
+.pillar-grid { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+.pillar:nth-child(even) { padding-top: 0 !important; }
+
+/* Design/Illustration listing */
+.listing-head { padding: 160px var(--gutter) 0 !important; }
+.about-hero { padding: 160px var(--gutter) 60px !important; }
+.contact-wrap { padding: 160px var(--gutter) 80px !important; }
+@media (max-width: 600px) {
+.listing-grid,
+.ill-grid {
+  grid-template-columns: 1fr !important;
+  gap: 60px 0 !important;
+  padding: 32px var(--gutter) 80px !important;
+}
+.listing-grid .row-feature,
+.listing-grid .proj-right,
+.listing-grid .proj-left,
+.listing-grid .span-7,
+.listing-grid .span-5,
+.listing-grid .span-6,
+.listing-grid .span-4,
+.listing-grid .span-8,
+.ill-grid .row-feature,
+.ill-grid .span-7,
+.ill-grid .span-5,
+.ill-grid .span-6,
+.ill-grid .span-4,
+.ill-grid .span-8 { grid-column: 1 / -1 !important; margin-bottom: 0 !important; width: 100% !important; }
+.listing-grid .row-feature .proj-thumb { height: auto !important; aspect-ratio: 16/9 !important; }
+.listing-grid .proj-left .proj-thumb { aspect-ratio: 16/9 !important; }
+.listing-grid .proj-right .proj-thumb { aspect-ratio: 16/9 !important; }
+.ill-grid .row-feature .proj-thumb { height: auto !important; aspect-ratio: 16/9 !important; }
+}
+
+/* Proj meta */
+.proj-meta { grid-template-columns: 1fr !important; gap: 8px !important; }
+
+/* Detail pages */
+.detail-hero { height: 60vw; min-height: 320px; }
+.detail-hero-meta { grid-template-columns: 1fr !important; bottom: 24px; }
+.detail-hero-meta h1 { font-size: clamp(32px, 8vw, 80px); }
+.detail-meta-row { grid-template-columns: 1fr !important; gap: 32px; padding: 60px var(--gutter) 40px; }
+.split-section { grid-template-columns: 1fr !important; }
+.next-inner h3 { font-size: clamp(24px, 6vw, 48px); }
+.next-arrow { width: 56px; height: 56px; }
+
+/* About */
+.about-hero-inner { grid-template-columns: 1fr !important; gap: 32px; }
+.about-bio-inner { grid-template-columns: 1fr !important; gap: 24px; }
+.about-row { grid-template-columns: 1fr !important; gap: 4px; }
+.recognition-inner { grid-template-columns: 1fr !important; gap: 32px; }
+.rec-list { grid-template-columns: 1fr !important; }
+.about-table { padding: 60px var(--gutter); }
+
+@media (max-width: 600px) {
+.contact-grid { grid-template-columns: 1fr !important; gap: 40px; }
+.contact-grid h1 { font-size: clamp(28px, 8vw, 48px) !important; }
+.contact-col-left, .contact-col-right { grid-column: 1 !important; }
+}
+.availability { grid-template-columns: 1fr 1fr !important; gap: 20px; }
+
+/* Footer */
+.footer { padding: 80px var(--gutter) 40px; }
+.footer-inner { grid-template-columns: 1fr !important; gap: 40px; }
+.footer h2 { font-size: clamp(40px, 10vw, 80px); }
+.footer-nav,
+.footer-social { align-items: flex-start; text-align: left; }
+.footer-fineprint { flex-direction: column; gap: 8px; }
+
+/* Title row */
+.title-row { gap: 16px; }
+.title-row h1 { font-size: clamp(40px, 10vw, 104px); }
+
+/* ── Tablet (601px – 960px) ──────────────────────────────── */
+@media (min-width: 601px) {
+  :root { --gutter: 28px; }
+
+  .nav-row { grid-template-columns: repeat(5, 1fr); }
+  .nav-logo { font-size: 28px; }
+  .nav-link { font-size: 15px; justify-self: center; }
+  .nav-links { display: contents; }
+
+  .home-hero h1 { font-size: clamp(72px, 12vw, 140px) !important; }
+  .home-hero .subhead { font-size: 18px; }
+  .scroll-indicator { display: flex; }
+
+  .grid-projects {
+    grid-template-columns: repeat(12, 1fr) !important;
+    gap: 48px 18px !important;
+  }
+  .grid-projects .span-8 { grid-column: span 8 !important; }
+  .grid-projects .span-4 { grid-column: span 4 !important; }
+  .grid-projects .span-6 { grid-column: span 6 !important; }
+
+  .pillar-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  .listing-grid,
+  .ill-grid {
+    grid-template-columns: repeat(12, 1fr) !important;
+    gap: 80px 18px !important;
+    padding: 48px var(--gutter) 100px !important;
+  }
+  .listing-grid .row-feature,
+  .ill-grid .row-feature { grid-column: 1 / -1 !important; }
+  .listing-grid .span-7, .ill-grid .span-7 { grid-column: span 7 !important; }
+  .listing-grid .span-5, .ill-grid .span-5 { grid-column: span 5 !important; }
+  .listing-grid .span-6, .ill-grid .span-6 { grid-column: span 6 !important; }
+  .listing-grid .span-4, .ill-grid .span-4 { grid-column: span 6 !important; }
+  .listing-grid .span-8, .ill-grid .span-8 { grid-column: span 8 !important; }
+  .listing-grid .row-feature .proj-thumb { height: 500px !important; aspect-ratio: unset !important; }
+  .ill-grid .row-feature .proj-thumb { height: 500px !important; aspect-ratio: unset !important; }
+
+  .proj-meta { grid-template-columns: 1fr 2fr !important; }
+
+  .detail-hero { height: 70vw; }
+  .detail-meta-row { grid-template-columns: 1fr 1fr !important; }
+
+  .footer-inner { grid-template-columns: 2fr 1fr 1fr !important; }
+  .footer-nav, .footer-social { align-items: flex-end; text-align: right; }
+}
+
+/* ── Desktop (961px+) ────────────────────────────────────── */
+@media (min-width: 961px) {
+  :root { --gutter: 34px; }
+
+  .nav { height: 84px; }
+  .nav-logo { font-size: 33px; }
+  .nav-link { font-size: 18px; }
+
+  .home-hero h1 { font-size: 210px !important; }
+  .home-hero .subhead { font-size: 22px; }
+
+  .pillar-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .pillar:nth-child(even) { padding-top: 96px !important; }
+
+  .listing-grid .span-4, .ill-grid .span-4 { grid-column: span 4 !important; }
+  .listing-grid .row-feature .proj-thumb { height: 800px !important; }
+  .ill-grid .row-feature .proj-thumb { height: 800px !important; }
+
+  .detail-hero { height: 100vh; }
+  .detail-hero-meta { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ============================================================
+   RESPONSIVE NAV — Hamburger on mobile
+   ============================================================ */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+  margin-right: -8px;
+  justify-self: end;
+  z-index: 200;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 300ms var(--ease-out), opacity 200ms var(--ease-out), width 300ms var(--ease-out), background 200ms;
+  transition: transform 300ms var(--ease-out), opacity 200ms var(--ease-out), width 300ms var(--ease-out);
+  transform-origin: center;
+}
+.nav-hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; width: 0; }
+.nav-hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Full-screen overlay menu */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: var(--color-ink);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 32px 48px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-12px);
+  transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out);
+}
+.nav-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+.nav-overlay-primary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: auto;
+}
+.nav-overlay-primary a {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 10vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #fff;
+  line-height: 1.1;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 200ms;
+}
+.nav-overlay-primary a:hover { opacity: 1; }
+.nav-overlay-primary a.is-active { opacity: 1; }
+.nav-overlay-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.nav-overlay-secondary a {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: color 200ms;
+}
+.nav-overlay-secondary a:hover { color: #fff; }
+.nav-overlay-social {
+  display: flex;
+  gap: 24px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 24px;
+}
+.nav-overlay-social a {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  transition: color 200ms;
+}
+.nav-overlay-social a:hover { color: #fff; }
+
+@media (max-width: 600px) {
+  .nav-hamburger { display: flex; color: var(--color-ink); }
+  /* Hamburger — explicit state cascade */
+  .nav-hamburger { color: #1d1d1f; }
+  .nav.theme-light .nav-hamburger { color: #ffffff; }
+  .nav.theme-light.is-scrolled .nav-hamburger { color: #ffffff; }
+  .nav.is-scrolled .nav-hamburger { color: #1d1d1f; }
+  .nav-hamburger.is-open { color: #ffffff !important; }
+  .nav-links { display: none !important; }
+  .nav-row { grid-template-columns: auto 1fr !important; }
+}
+@media (min-width: 601px) {
+  .nav-overlay { display: none; }
+  .nav-hamburger { display: none !important; }
+}
+
+.nav-overlay-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  transition: color 200ms var(--ease-out), transform 200ms var(--ease-out);
+  padding: 0;
+}
+.nav-overlay-close:hover {
+  color: #fff;
+  transform: rotate(90deg);
+}
+.nav-overlay-close svg {
+  width: 36px;
+  height: 36px;
+}
+.nav-overlay { position: fixed; }
+
+    /* ── Detail: Banner Carousel ── */
+    .detail-carousel { position: relative; width: 100%; overflow: hidden; aspect-ratio: 16/9; }
+    .detail-carousel-track { display: flex; height: 100%; transition: transform 700ms cubic-bezier(0.4,0,0.2,1); }
+    .detail-carousel-slide { flex: 0 0 100%; width: 100%; height: 100%; background-size: cover; background-position: center; }
+    .detail-carousel-dots { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+    .detail-carousel-progress { width: 100%; height: 4px; background: rgba(0,0,0,0.12); cursor: pointer; display: block; }
+    .detail-carousel-progress-bar { height: 100%; background: #1d1d1f; width: 0%; display: block; transition: width 100ms linear; }
+    .detail-carousel-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.45); cursor: pointer; border: none; padding: 0; transition: background 250ms, transform 250ms; }
+    .detail-carousel-dot.is-active { background: #fff; transform: scale(1.3); }
+    /* ── Detail: Intro ── */
+    .detail-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: var(--max); margin: 0 auto; padding: 48px clamp(60px, 10vw, 180px) 80px; align-items: start; }
+    .detail-intro-right { padding-top: 32px; }
+    .di-client { font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted-48); margin: 0 0 12px; }
+    .di-title { font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.05; color: var(--color-ink); margin: 0; }
+    .di-desc { font-size: 17px; line-height: 1.4; color: var(--color-ink-muted-80); margin: 0 0 12px; }
+    .di-tags { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; margin-bottom: 40px; }
+    .di-tag { font-size: 13px; letter-spacing: 0.02em; font-weight: 500; color: var(--color-ink-muted-48); background: var(--color-canvas-parchment); padding: 5px 12px; border-radius: 9999px; }
+    /* ── Detail: Content sections ── */
+    .detail-sections { max-width: var(--max); margin: 0 auto; padding: 0 clamp(60px, 10vw, 180px) 80px; display: flex; flex-direction: column; gap: 20px; }
+    .detail-img-full { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
+    .detail-img-full.ratio-4-3 { aspect-ratio: 4/3; }
+    .detail-img-full.ratio-3-2 { aspect-ratio: 3/2; }
+    .detail-img-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .detail-img-split-asymmetric { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: start; }
+    .detail-img-split-asymmetric .detail-img-half-small { aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
+    .detail-img-split-asymmetric .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .detail-img-split-asymmetric .detail-img-half-large { aspect-ratio: 4/3; background-size: cover; background-position: center; border-radius: 4px; }
+    .detail-img-split-asymmetric-rev { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: start; }
+    .detail-img-split-asymmetric-rev .detail-img-half-large { aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 4px; }
+    .detail-img-split-asymmetric-rev .detail-img-half-small { aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
+    .detail-img-split-asymmetric-rev .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .detail-img-split-equal { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; }
+    .detail-img-split-equal .detail-img-half { border-radius: 4px; overflow: hidden; }
+    .detail-img-split-equal .detail-img-half img { width: 100%; height: auto; display: block; border-radius: 4px; }
+    .detail-img-half { aspect-ratio: 4/3; background-size: cover; background-position: center; border-radius: 4px; }
+    .detail-caption { font-size: 13px; color: var(--color-ink-muted-48); padding: 10px 0 0; font-style: italic; }
+    /* ── Detail: Next project ── */
+    .detail-next { padding: 80px clamp(60px, 10vw, 180px) 0; max-width: var(--max); margin: 0 auto; }
+    .detail-next-inner { border-top: 1px solid var(--color-hairline); padding-top: 60px; }
+    .detail-next-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-ink-muted-48); margin: 0 0 32px; }
+    .detail-next-link { display: block; text-decoration: none; color: var(--color-ink); transition: opacity 200ms; padding-bottom: 80px; }
+    .detail-next-link:hover { opacity: 0.6; }
+    .detail-next-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 80px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin: 0 0 20px; }
+    .detail-next-desc { font-size: 15px; color: var(--color-ink-muted-80); max-width: 520px; margin: 0 0 16px; line-height: 1.55; }
+    .detail-next-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .detail-next-tag { font-size: 11px; font-weight: 500; padding: 4px 12px; border: 1px solid rgba(0,0,0,0.15); border-radius: 9999px; color: var(--color-ink-muted-48); }
+    .detail-next-divider { height: 80px; background: var(--color-stone-grey); margin: 0 clamp(60px, 10vw, 180px); border-radius: 4px; }
+    @media (max-width: 960px) { .detail-next-divider { margin: 0 clamp(40px, 6vw, 100px); } }
+    @media (max-width: 600px) { .detail-next-divider { margin: 0 24px; } }
+    @media (max-width: 960px) { .detail-intro { grid-template-columns: 1fr; gap: 32px; padding: 32px clamp(40px, 6vw, 100px) 60px; } .detail-sections { padding: 0 clamp(40px, 6vw, 100px) 60px; } .detail-next { padding: 60px clamp(40px, 6vw, 100px) 0; } .detail-img-split { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .detail-carousel-slide { aspect-ratio: 4/3; } .detail-next-title { font-size: clamp(28px, 8vw, 48px); } .detail-intro { padding: 24px 24px 48px; } .detail-sections { padding: 0 24px 48px; } .detail-next { padding: 48px 24px 0; } }
+
+
+    /* ── Detail: Dark video section ── */
+    .detail-video-section {
+      width: 100vw;
+      background: #0a0a0a;
+      padding: 120px clamp(60px, 10vw, 180px);
+      margin: 60px calc(-1 * clamp(60px, 10vw, 180px));
+    }
+    .detail-video-inner {
+      max-width: 80%;
+      margin: 0 auto;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-video-inner video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .detail-video-inner iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    /* placeholder before video uploads */
+    .detail-video-placeholder {
+      width: 100%;
+      height: 100%;
+      background: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.25);
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="page" id="page_index" data-page="index.html">
+<main>
+  <section class="home-hero">
+    <div class="home-hero-slideshow" id="heroSlides"></div>
+    <div class="home-hero-inner">
+      <h1 class="reveal" style="font-weight: 700; font-size: 210px; height: 230px">Shuang.</h1>
+      <p class="subhead reveal" style="--reveal-delay: 100ms">
+        Shuang is a Toronto-based multidisciplinary designer creating thoughtful visual experiences across branding, motion, print, and digital spaces.
+      </p>
+      <div><span class="home-mark reveal" style="--reveal-delay: 220ms">— Considered visuals made with intention</span></div>
+    </div>
+    <a class="scroll-indicator" href="#featured" data-cursor-hover>
+      <span>Scroll</span>
+      <span class="line"></span>
+    </a>
+  </section>
+
+  <section id="featured" style="padding: 120px 0 80px; margin-bottom: 80px;">
+    <div class="filter-row reveal">
+      <button class="filter-pill is-active" data-filter="all">Selected</button>
+      <button class="filter-pill" data-filter="design">Design</button>
+      <button class="filter-pill" data-filter="illustration">Illustration</button>
+    </div>
+
+    <div class="grid-projects" id="featured-grid"></div>
+  </section>
+
+  <section class="home-services">
+    <div class="home-services-inner">
+      <h2 class="reveal">Multidisciplinary design across brand, digital, and visual experiences.</h2>
+      <div class="pillar-grid">
+        <a class="pillar reveal" style="--reveal-delay: 0ms" href="design.html" data-cursor-hover>
+          <div class="pillar-img" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=70')"></div>
+          <div class="pillar-num">01 / Practice</div>
+          <div class="pillar-title">Brand Identity
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </a>
+        <a class="pillar reveal" style="--reveal-delay: 80ms" href="design.html" data-cursor-hover>
+          <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1542728928-0011f81446e5?w=900&q=70')"></div>
+          <div class="pillar-num">02 / Practice</div>
+          <div class="pillar-title">Production &amp; Packaging
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </a>
+        <a class="pillar reveal" style="--reveal-delay: 160ms" href="illustration.html" data-cursor-hover>
+          <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1493612276216-ee3925520721?w=900&q=70')"></div>
+          <div class="pillar-num">03 / Practice</div>
+          <div class="pillar-title">Website &amp; UXUI
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </a>
+        <a class="pillar reveal" style="--reveal-delay: 240ms" href="design.html" data-cursor-hover>
+          <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=900&q=70')"></div>
+          <div class="pillar-num">04 / Practice</div>
+          <div class="pillar-title">Campaign &amp; Social Content
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+</div>
+
+<div class="page" id="page_design" data-page="design.html">
+<main>
+  <section class="listing-head">
+    <div class="title-row reveal">
+      <h1 class="title-active">Design.</h1>
+      <a href="illustration.html" class="title-other-link" data-cursor-hover><h1 class="title-other">Illustration.</h1></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="listing-grid" id="design-grid"></div>
+  </section>
+</main>
+</div>
+
+<div class="page" id="page_illustration" data-page="illustration.html">
+<main>
+  <section class="listing-head">
+    <div class="title-row reveal">
+      <h1 class="title-active">Illustration.</h1>
+      <a href="design.html" class="title-other-link" data-cursor-hover><h1 class="title-other">Design.</h1></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="ill-grid" id="ill-grid"></div>
+  </section>
+</main>
+</div>
+
+<div class="page" id="page_about" data-page="about.html">
+<main class="about-wrap">
+  <section class="about-s1">
+    <div class="about-s1-left reveal">
+      <svg class="about-oval-svg" viewBox="0 0 420 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 210 62 C 262 54, 342 76, 363 122 C 385 168, 377 222, 354 257 C 330 292, 276 310, 223 311 C 170 312, 106 297, 77 259 C 47 221, 50 164, 73 124 C 96 84, 156 70, 210 62 Z" stroke="#1d1d1f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <text x="105" y="162" fill="#888" font-family="-apple-system,system-ui,sans-serif" font-size="12" letter-spacing="0.08em">VISUAL &amp; GRAPHIC DESIGNER</text>
+        <text x="105" y="196" fill="#1d1d1f" font-family="-apple-system,system-ui,sans-serif" font-size="22" font-weight="700" letter-spacing="-0.03em">Shuang Zhan</text>
+        <path d="M 130 312 C 115 335, 95 355, 70 372" stroke="#1d1d1f" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="about-tagline">Designing across branding,<br>campaigns, and digital experiences.</div>
+    </div>
+    <div class="about-s1-right reveal" style="--reveal-delay:120ms">
+      <h1>Shuang is a Toronto-based visual designer working across branding, digital design, and illustration, with a focus on creating clear, system-driven visual work across web and marketing touchpoints.</h1>
+      <div class="about-btns">
+        <a class="about-btn-primary" href="contact.html" data-cursor-hover>Contact Me <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="about-btn-secondary" href="design.html" data-cursor-hover>View Case Studies <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+  <section class="about-services">
+    <div class="about-services-inner">
+      <div class="about-section-label reveal">What I can help you do—</div>
+      <div class="about-services-cols reveal" style="--reveal-delay:80ms">
+        <div class="about-services-cat"><h3>Design</h3><ul><li>Brand Identity &amp; Visual Systems</li><li>Campaign &amp; Marketing Design</li><li>Social Media &amp; Promotional Design</li><li>Website &amp; Digital Visual Design</li><li>Presentation &amp; Editorial Design</li><li>Typography &amp; Layout Systems</li><li>Brand Guidelines &amp; Collateral</li></ul></div>
+        <div class="about-services-cat"><h3>Illustration</h3><ul><li>Custom Illustration</li><li>Editorial &amp; Campaign Illustration</li><li>Motion GIF Visuals</li><li>Visual Storytelling</li><li>Environmental Artwork</li><li>Illustration Systems &amp; Assets</li></ul></div>
+      </div>
+    </div>
+  </section>
+  <section class="about-clients">
+    <div class="about-clients-inner">
+      <div class="about-section-label reveal">What makes me different—</div>
+      <div class="about-clients-text reveal" style="--reveal-delay:80ms">
+        <p>I create clear and structured visual design that helps brands communicate more effectively and present themselves with clarity and consistency.</p>
+        <p>My work focuses on turning complex or inconsistent visual communication into cohesive systems across branding, campaigns, and illustration. This helps brands express their identity more clearly, improve recognition, and create a more unified experience across digital and physical touchpoints.</p>
+      </div>
+    </div>
+  </section>
+</main>
+</div>
+
+<div class="page" id="page_contact" data-page="contact.html">
+<main>
+  <section class="contact-wrap">
+    <div class="contact-grid">
+      <div class="contact-col-left">
+        <h1 class="reveal">Got a project that good design will make better? Let's talk</h1>
+        <p class="contact-lead reveal" style="--reveal-delay: 100ms">Open to collaborations, freelance projects, and creative partnerships.</p>
+      </div>
+      <div class="contact-col-right">
+        <div class="reveal" style="--reveal-delay: 80ms">
+          <div class="contact-card">
+            <div class="contact-line"><span class="key">Email</span><span class="val"><a href="mailto:shuangzhan708@gmail.com" data-cursor-hover>shuangzhan708@gmail.com</a></span></div>
+            <div class="contact-line"><span class="key">Studio</span><span class="val">Toronto, ON</span></div>
+            <div class="contact-line"><span class="key">Instagram</span><span class="val"><a href="https://www.instagram.com/shuangs_design" data-cursor-hover>@shuangs_design</a></span></div>
+            <div class="contact-line"><span class="key">LinkedIn</span><span class="val"><a href="https://www.linkedin.com/in/shuang-zhan-s708" data-cursor-hover>shuang-zhan-s708</a></span></div>
+          </div>
+        </div>
+        <div class="availability reveal" style="--reveal-delay: 200ms">
+          <div class="col"><div class="label">Availability</div><div class="val"><span class="dot"></span>Available for new project</div></div>
+          <div class="col"><div class="label">Time Zone</div><div class="val">Toronto (EST/EDT)</div></div>
+          <div class="col"><div class="label">Response Time</div><div class="val">Within 24–48 hours</div></div>
+          <div class="col"><div class="label">Language</div><div class="val">English / 中文 / 日本語</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</div>
+
+<div class="page" id="page_design_detail" data-page="design-detail.html">
+<main>
+  <div class="detail-carousel">
+    <div class="detail-carousel-track" id="carousel-track"></div>
+    <div class="detail-carousel-dots" id="carousel-dots"></div>
+  </div>
+  <section class="detail-intro reveal">
+    <div class="detail-intro-left">
+      <div class="di-client" id="di-client"></div>
+      <h1 class="di-title" id="di-title"></h1>
+    </div>
+    <div class="detail-intro-right">
+      <div class="di-desc" id="di-desc"></div>
+      <div class="di-tags" id="di-tags"></div>
+    </div>
+  </section>
+  <div class="detail-sections" id="sections"></div>
+  <div class="detail-next reveal">
+    <div class="detail-next-inner">
+      <div class="detail-next-eyebrow">Next Project</div>
+      <a class="detail-next-link" id="nextlink" data-cursor-hover>
+        <div class="detail-next-title" id="nexttitle"></div>
+        <div class="detail-next-desc" id="nextdesc"></div>
+        <div class="detail-next-tags" id="nexttags"></div>
+      </a>
+    </div>
+  </div>
+  <div class="detail-next-divider"></div>
+</main>
+</div>
+
+<div class="page" id="page_illustration_detail" data-page="illustration-detail.html">
+<main>
+  <div class="detail-carousel">
+    <div class="detail-carousel-track" id="ill-carousel-track"></div>
+    <div class="detail-carousel-dots" id="ill-carousel-dots"></div>
+  </div>
+  <section class="detail-intro reveal">
+    <div class="detail-intro-left">
+      <div class="di-client" id="ill-di-client"></div>
+      <h1 class="di-title" id="ill-di-title"></h1>
+    </div>
+    <div class="detail-intro-right">
+      <div class="di-desc" id="ill-di-desc"></div>
+      <div class="di-tags" id="ill-di-tags"></div>
+    </div>
+  </section>
+  <div class="detail-sections" id="ill-sections"></div>
+  <div class="detail-next reveal">
+    <div class="detail-next-inner">
+      <div class="detail-next-eyebrow">Next Project</div>
+      <a class="detail-next-link" id="ill-nextlink" data-cursor-hover>
+        <div class="detail-next-title" id="ill-nexttitle"></div>
+        <div class="detail-next-desc" id="ill-nextdesc"></div>
+        <div class="detail-next-tags" id="ill-nexttags"></div>
+      </a>
+    </div>
+  </div>
+  <div class="detail-next-divider"></div>
+</main>
+</div>
+
+<script>
+// Project data — 10 Visual & Graphic Design + 10 Illustration projects
+window.PROJECTS = {
+  design: [
+    {
+      slug: "broad-reach",
+      title: "Broad Reach",
+      desc: "A system-driven branding project exploring how visual identity can scale across campaigns, digital platforms, and communication touchpoints with clarity and consistency.",
+      tags: ["Brand System", "Campaign Design", "Web & UX/UI"],
+      detailTags: ["Brand Identity", "Brand System", "Art Direction", "Marketing & Social Media Design", "Website & UX/UI Design", "Presentation Design", "Typography", "Layout & Visual Hierarchy", "Information Design", "Brand Guidelines"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Reach Canadian Art Collection",
+      year: "2025",
+      role: "Art Direction, Brand Identity, Editorial",
+      partners: "In partnership with Broad Reach",
+      summary:
+        "Broad Reach is a system-driven brand project focused on building a cohesive visual identity across digital and physical touchpoints.||The project explores how a structured visual language can scale across campaigns, web, and communication materials while maintaining clarity, consistency, and flexibility.||It focuses on developing a clear system logic that supports both brand expression and practical application across multiple formats.",
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "kinton-ramen",
+      title: "Kinton Ramen",
+      desc: "Kinton Ramen is a campaign and visual communication project for an established restaurant brand within a multi-brand group.",
+      tags: ["Campaign Design", "Print & Digital", "Social Media"],
+      detailTags: ["Art Direction", "Campaign Design", "Marketing Design", "Social Media Design", "Print Design", "Typography", "Layout Design", "Visual Communication"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Kinton Ramen",
+      year: "2024",
+      role: "Brand System, Wordmark, Wayfinding",
+      partners: "In partnership with the UAE Ministry of Culture",
+      summary:
+        "Kinton Ramen is a campaign and visual communication project for an established restaurant brand within a multi-brand group.||The work focused on producing consistent promotional materials across digital and print channels, supporting seasonal campaigns and ongoing marketing communication.||It emphasizes clarity, adaptability, and consistency across fast-moving promotional content.",
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "split-asymmetric", left: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==", right: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ,
+        { kind: "split-asymmetric-rev", left: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==", right: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ,
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "reach-eshop",
+      title: "Reach E-Shop",
+      desc: "A brand refresh project focused on upgrading an existing e-commerce identity into a more dynamic and visually engaging system for digital and social platforms.",
+      tags: ["Brand Refresh", "Visual Direction", "Campaign Design"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Reach",
+      year: "2025",
+      role: "Web Design, Art Direction, Campaign",
+      partners: "In partnership with Reach",
+      summary: "Reach E-Shop is a brand refresh project focused on elevating an existing e-commerce platform into a more dynamic and visually distinctive system.||The work explores how to enhance an established identity through a more expressive visual direction, while maintaining clarity across digital and social touchpoints.||The goal was to create a more engaging and contemporary visual language that supports a younger and more fashion-driven audience.",
+      detailTags: ["Art Direction", "Brand Refresh", "Marketing & Social Media Design", "Website & UX/UI Support", "Visual Identity Upgrade", "Typography", "Layout Design", "Editorial / Collage Style System"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "shingyu",
+      title: "SHINGYU",
+      desc: "A full-scope restaurant branding project focused on developing and applying a cohesive visual system across digital and physical touchpoints, from concept to final execution.",
+      tags: ["Brand Identity", "Visual System", "Digital & Print"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "SHINGYU Motor Company",
+      year: "2025",
+      role: "Brand Strategy, OOH, Type System",
+      partners: "In partnership with SHINGYU",
+      summary:
+        "ShinGyu is a full-scope brand development project for a restaurant, delivered within a design agency environment.||Working from initial client discussions through to final execution, the project focused on building a cohesive visual system that could be consistently applied across both digital and physical touchpoints.||Based on an existing logo, the work centered on defining a clear visual direction and extending it into a complete brand experience, covering everything from typography and color to menu design, website, and marketing materials.",
+      detailTags: ["Brand Identity", "Visual System", "Art Direction", "Typography", "Menu Design", "Website Design", "Social Media Design", "Print Design", "Brand Collateral", "Pattern Design"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "two-cats",
+      title: "Two Cats Cannabis Co.",
+      desc: "A logo design project for a cannabis retail brand focused on creating a distinctive identity through research-driven visual exploration and concept development.",
+      tags: ["Logo Design", "Brand Identity", "Visual Direction"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Two Cats Cannabis Co.",
+      year: "2024",
+      role: "Identity, Packaging, Photography Direction",
+      partners: "In partnership with Nature Fresh",
+      summary:
+        "Faithfully guarded by ladybugs. A friendly identity built around the farm's actual integrated pest management — characters drawn with the same care given to the produce.",
+      summary: "Two Cats Cannabis is a logo design project for a new retail direction within a cannabis brand extension.||The project focused on creating a distinctive and recognizable visual identity that could differentiate the brand within a highly competitive category, while aligning with an existing interior design direction provided by the client.||The work involved translating spatial and material references into a refined visual concept, supported by competitive research and iterative design exploration.",
+      detailTags: ["Logo Design", "Brand Identity", "Art Direction", "Visual Exploration", "Competitive Research", "Concept Development", "Typography", "Symbol Design"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", ratio: "3/2", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "vegas-infinite",
+      title: "Vegas Infinite",
+      desc: "A visual system rollout project following a full rebrand, focused on translating an externally developed system into scalable in-house applications across marketing and product touchpoints.",
+      tags: ["Visual System", "Campaign Design", "Digital Content Design"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Vegas Infinite",
+      year: "2025",
+      role: "Brand Identity, Digital Design",
+      partners: "In partnership with Vegas Infinite",
+      summary: "Vegas Infinite is a visual system rollout project following the rebrand of PokerStars VR into a new live-service digital product.||The visual system was developed by an external agency, while the in-house role focused on translating and implementing the system across ongoing product and marketing touchpoints.||Working within structured but limited guidelines, the focus was on adapting the system into scalable and practical design applications.",
+      detailTags: ["Brand System Adaptation", "Visual System Implementation", "Art Direction", "Campaign Design", "In-game Visual Assets", "Social Media Design", "Design System Rollout", "Promotional Design"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "lucky-penny",
+      title: "Lucky Penny Real Estate",
+      desc: "A brand application project focused on implementing a visual identity across real estate marketing materials, signage, and communication templates.",
+      tags: ["Brand Application", "Print & Signage", "Real Estate"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Biophi Labs",
+      year: "2025",
+      role: "Identity, Apparel, Web",
+      partners: "In partnership with Biophi",
+      summary: "Lucky Penny Real Estate is a visual identity application project for a real estate brand, working under an established art direction and brand system.||The focus was on translating an existing visual identity into a wide range of real-world applications across print, signage, and digital templates, ensuring consistency across all customer-facing touchpoints.||The project spans both physical and digital brand materials used in real estate marketing and sales environments.",
+      detailTags: ["Brand Identity Application", "Visual System Execution", "Print Design", "Signage Design", "Marketing Collateral", "Social Media Templates", "Stationery Design", "Layout Design", "Template System", "Production Design"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "thallo",
+      title: "Thallo",
+      desc: "A full brand and packaging design project for a skincare brand inspired by the Greek goddess of spring, focusing on natural elegance and structured packaging storytelling.",
+      tags: ["Brand Identity", "Packaging Design", "Art Direction"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Kolm Studios",
+      year: "2025",
+      role: "Identity, Environmental Graphics",
+      partners: "In partnership with Kolm",
+      summary: "Thallo Cosmetics is a high-end skincare brand designed for a female professional audience, built around the idea of nature-driven beauty and botanical purity.||The brand takes inspiration from Thallo, the Greek goddess of spring, symbolizing renewal, natural growth, and elegance. This narrative becomes the foundation for both the visual identity and packaging system, translating mythology and nature into a contemporary luxury skincare brand.||The project spans from brand concept and logo design to packaging structure, material exploration, and physical prototyping.",
+      detailTags: ["Brand Identity", "Logo Design", "Packaging Design", "Structural Packaging", "Art Direction", "Concept Development", "Typography", "Visual System", "Product Photography"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "marguerite-de-jardin",
+      title: "Marguerite De Jardin",
+      desc: "A brand identity and packaging design project for a French-inspired artisan food brand.",
+      tags: ["Brand Identity", "Packaging Design", "Art Direction"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Marguerite De Jardin",
+      year: "2024",
+      role: "Brand Identity, Packaging Design",
+      partners: "",
+      summary: "Marguerite De Jardin is a brand identity and packaging design project for a French-inspired artisan food brand.||The work focused on developing a visual language that captures the brand's connection to natural ingredients and artisan craft, applied across packaging and brand communication materials.",
+      detailTags: ["Brand Identity", "Packaging Design", "Art Direction", "Typography", "Visual Communication"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "captains-boil",
+      title: "The Captain's Boil",
+      desc: "A promotional design project for a restaurant brand focused on creating seasonal campaign visuals and social media content within an existing brand system.",
+      tags: ["Campaign Design", "Social Media", "Promotional Design"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      client: "Jaberi Dance Theatre",
+      year: "2025",
+      role: "Identity, Editorial, Campaign",
+      partners: "In partnership with JDT",
+      summary:
+        "The Captain's Boil is a promotional design project for an established restaurant brand in Toronto, focused on seasonal and menu-based campaign communication.||Working within an existing brand system, the project involved creating promotional visuals across both print and digital platforms, ensuring consistency while adapting to different campaign themes and food offerings.||The work focuses on translating brand guidelines into engaging marketing visuals that support ongoing promotional needs.",
+      detailTags: ["Campaign Design", "Social Media Design", "Print Design", "Promotional Graphics", "Brand Application", "Visual Adaptation", "Layout Design", "Typography", "Marketing Design"],
+      sections: [
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "video" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
+        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+      ]
+    },
+    {
+      slug: "website-design-collection",
+      title: "Website Design Collection",
+      desc: "A curated showcase of multiple website design projects, demonstrating a range of digital experiences across different industries and visual styles.",
+      tags: ["Web Design", "UX/UI", "Digital"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
+      client: "Reach / Early Days",
+      year: "2025",
+      role: "Identity, Print, Wayfinding",
+      partners: "In partnership with Reach",
+      summary: "A type-led campaign that puts Indigenous voices first — large-scale serif headlines, paired with curatorial sub-systems built from the artists' own marks.",
+      sections: []
+    },
+    {
+      slug: "packaging-design-collection",
+      title: "Packaging Design Collection",
+      desc: "A curated showcase of packaging design projects.",
+      tags: ["Packaging Design", "Art Direction", "Brand Identity"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
+      client: "Harry Rosen",
+      year: "2024",
+      role: "Editorial, Photography Direction, Print",
+      partners: "In partnership with Harry Rosen",
+      summary: "A long-form lookbook and seasonal magazine — printed on uncoated stock, set in a single weight, photographed in a single light.",
+      sections: []
+    },
+    {
+      slug: "printing-production-collection",
+      title: "Printing & Production Collection",
+      desc: "A curated showcase of printing and production work, highlighting craftsmanship across physical materials, finishes, and production techniques.",
+      tags: ["Print", "Production", "Art Direction"],
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
+      client: "",
+      year: "2026",
+      role: "",
+      partners: "",
+      summary: "New project coming soon.",
+      sections: []
+    }
+  ],
+  illustration: [
+    { slug: "mercatus-technologies", title: "Mercatus Technologies", desc: "A custom website illustration project focused on building a cohesive visual language for digital communication across a B2B technology platform.", year: "2024", role: "Illustration", tags: ["Illustration", "Campaign Design", "Visual Communication"],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A vibrant illustration system built around the everyday act of grocery shopping — characters, data visualisations, and digital interfaces woven into a single cohesive world.",
+      sections: [{ kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }] },
+    { slug: "pokerstars-vr", title: "PokerStars VR", desc: "A game-focused illustration project creating themed visual assets, event identities, and environmental artwork for a live-service VR platform.", year: "2023", role: "Illustration", tags: ["Illustration", "Game Visuals", "Creative Direction"],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A bold animated illustration for PokerStars VR's Summer Sizzle campaign — vivid characters and kinetic energy built for virtual reality.",
+      sections: [{ kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }] },
+    { slug: "nanxiang-express", title: "Nanxiang Express", desc: "Coming soon.", year: "2011", role: "Illustration", tags: [],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A typographic illustration set built around the word LOVE — hand-cut, hand-coloured, and shot on macro film.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600&q=80" }] },
+    { slug: "real-fruit", title: "Real Fruit Bubble Tea", desc: "Coming soon.", year: "2014", role: "Illustration", tags: [],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A cabinet-of-curiosities poster — drawn objects stacked into a face, then re-stacked into a sentence.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1600&q=80" }] },
+    { slug: "overview-of-types", title: "Overview Of The Types Of Printing", desc: "Coming soon.", year: "2023", role: "Illustration", tags: [],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "Coming soon.",
+      sections: [{ kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }] },
+    { slug: "ot", title: "O.T.", desc: "An illustration of the quiet exhaustion of office life — a dog in business casual, just trying to get through the day.", year: "2016", role: "Illustration", tags: ["Illustration", "Character Design", "Editorial"],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A serif F sprouting instruments — drawn until each one read at logo scale.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=1600&q=80" }] },
+    { slug: "baitme", title: "Baitme", desc: "An illustration-led awareness campaign using narrative storytelling and digital animation to communicate online privacy risks, recognized with an RGD Student Awards Honourable Mention (Print Design).", year: "2010", role: "Editorial Illustration", tags: ["Illustration", "Awareness Campaign", "Digital Storytelling"],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A curtain motif drawn as bands of riso ink — the cover series for NOVUM's Drama issue.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?w=1600&q=80" }] },
+    { slug: "66-day-gifs", title: "66 Day Gifs", desc: "Coming soon.", year: "2018", role: "Illustration", tags: ["Animation", "Motion Graphic", "Illustration"],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A dot-matrix identity for a children's research foundation — a different colour for every kid we asked.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=1600&q=80" }] },
+    { slug: "toronto-airport", title: "Toronto International Airport", desc: "Michael Gericke, 2008", year: "2008", role: "Illustration", tags: ["Environmental", "Wayfinding"],
+      thumb: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=900&q=70",
+      hero: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80",
+      summary: "Concourse-scale illustration — clouds, cities, and the diagrammatic arrows that hold them together.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80" }] },
+    { slug: "happy-new-year", title: "Happy New Year!", desc: "A personal illustration celebrating the new year with a city at midnight.", year: "2019", role: "Editorial Illustration", tags: ["Illustration", "Personal", "Editorial"],
+      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      summary: "A single portrait that anchors a feature on talk therapy — pink, drawn in three sittings.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1584824486509-112e4181ff6b?w=1600&q=80" }] },
+    { slug: "the-gay-essay", title: "The Gay Essay", desc: "Bob Aufuldish / Anthony Friedkin, 2014", year: "2014", role: "Photo Editorial", tags: ["Book", "Editorial"],
+      thumb: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=70",
+      hero: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1600&q=80",
+      summary: "A black-and-white book design for a long-running photo essay — set in a single Didone, generously leaded.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1600&q=80" }] },
+    { slug: "city-cafe", title: "City Cafe TT — XX bb ZZ", desc: "Aaron Nieh, 2016", year: "2016", role: "Illustration", tags: ["Packaging", "System"],
+      thumb: "https://images.unsplash.com/photo-1517959105821-eaf2591984ca?w=900&q=70",
+      hero: "https://images.unsplash.com/photo-1517959105821-eaf2591984ca?w=1600&q=80",
+      summary: "A cup is a frame is a cup — a packaging illustration system designed entirely on the curve of the takeaway lid.",
+      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1517959105821-eaf2591984ca?w=1600&q=80" }] }
+  ]
+};
+
+// Shared header / footer / cursor / transitions for Shuang. portfolio
+(function () {
+  const PAGES = [
+    { href: "design.html", label: "Visual & Graphic Design" },
+    { href: "illustration.html", label: "Illustration" },
+    { href: "about.html", label: "About" },
+    { href: "contact.html", label: "Contact" },
+  ];
+
+  function curPage() {
+    const p = location.pathname.split("/").pop() || "index.html";
+    return p;
+  }
+
+  function injectNav(theme) {
+    const here = curPage();
+
+    // Desktop nav links
+    const desktopLinks = PAGES.map(p =>
+      `<a class="nav-link${
+        here === p.href || (p.href === "design.html" && here === "design-detail.html")
+          || (p.href === "illustration.html" && here === "illustration-detail.html")
+          ? " is-active" : ""
+      }" href="${p.href}" data-cursor-hover>${p.label}</a>`
+    ).join("");
+
+    const nav = document.createElement("header");
+    nav.className = "nav" + (theme === "light" ? " theme-light" : "");
+    nav.innerHTML =
+      '<div class="nav-row">' +
+        '<a class="nav-logo" href="index.html" data-cursor-hover>Shuang.</a>' +
+        '<nav class="nav-links">' + desktopLinks + '</nav>' +
+        '<button class="nav-hamburger" aria-label="Menu" aria-expanded="false">' +
+          '<span></span><span></span><span></span>' +
+        '</button>' +
+      '</div>';
+
+    // Full-screen overlay
+    const overlay = document.createElement("div");
+    overlay.className = "nav-overlay";
+    overlay.innerHTML =
+      '<button class="nav-overlay-close" aria-label="Close menu">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">' +
+          '<path d="M18 6L6 18M6 6l12 12"/>' +
+        '</svg>' +
+      '</button>' +
+      '<div class="nav-overlay-primary">' +
+        '<a href="design.html">Design</a>' +
+        '<a href="illustration.html">Illustration</a>' +
+      '</div>' +
+      '<div class="nav-overlay-secondary">' +
+        '<a href="about.html">Info</a>' +
+        '<a href="contact.html">Contact</a>' +
+      '</div>' +
+      '<div class="nav-overlay-social">' +
+        '<a href="#">Instagram</a>' +
+        '<a href="#">LinkedIn</a>' +
+        '<a href="#">Behance</a>' +
+      '</div>';
+
+    document.body.insertBefore(nav, document.body.firstChild);
+    document.body.insertBefore(overlay, document.body.firstChild);
+
+    // Hamburger toggle
+    const burger = nav.querySelector(".nav-hamburger");
+    burger.addEventListener("click", () => {
+      const isOpen = overlay.classList.toggle("is-open");
+      burger.classList.toggle("is-open", isOpen);
+      burger.setAttribute("aria-expanded", isOpen);
+      document.body.style.overflow = isOpen ? "hidden" : "";
+    });
+
+    // Close button
+    overlay.querySelector('.nav-overlay-close').addEventListener('click', () => {
+      overlay.classList.remove('is-open');
+      burger.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      // Restore correct burger color after closing
+      burger.style.removeProperty('color');
+    });
+
+    // Close on overlay link click — use capture to fire before SPA router
+    overlay.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", () => {
+        overlay.classList.remove("is-open");
+        burger.classList.remove("is-open");
+        burger.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      }, true);
+    });
+
+    const onScroll = () => {
+      const scrolled = window.scrollY > 12;
+      nav.classList.toggle("is-scrolled", scrolled);
+      // Reset any inline color override so CSS cascade takes effect
+      if (!burger.classList.contains('is-open')) {
+        burger.style.color = '';
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  function injectFooter() {
+    const f = document.createElement("footer");
+    f.className = "footer";
+    f.innerHTML =
+      '<div class="footer-inner">' +
+      "<div>" +
+      '<div class="footer-block-title">Contact</div>' +
+      '<h2 style="font-size:clamp(52px,7vw,110px);margin-bottom:32px;">Shuang.</h2>' +
+      '<div class="contact-info">' +
+      '<a href="mailto:shuangzhan708@gmail.com" data-cursor-hover>shuangzhan708@gmail.com</a><br>' +
+      "" +
+      "</div>" +
+      "</div>" +
+      '<nav class="footer-nav">' +
+      '<div class="footer-block-title">Sitmap</div>' +
+      '<a class="footer-nav-link" href="design.html" data-cursor-hover>Design</a>' +
+      '<a class="footer-nav-link" href="illustration.html" data-cursor-hover>Illustration</a>' +
+      '<a class="footer-nav-link" href="about.html" data-cursor-hover>About</a>' +
+      "</nav>" +
+      '<div class="footer-social">' +
+      '<div class="footer-block-title">Elsewhere</div>' +
+      '<a class="footer-social-link" href="#" data-cursor-hover>LinkedIn</a>' +
+      '<a class="footer-social-link" href="#" data-cursor-hover>Instagram</a>' +
+      '<a class="footer-social-link" href="#" data-cursor-hover>Behance</a>' +
+      "</div>" +
+      '<div class="footer-fineprint">' +
+      "<span>© 2026 Shuang. All rights reserved.</span>" +
+      "<span>Designed in Toronto.</span>" +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(f);
+  }
+
+  function injectBackToTop() {
+    const b = document.createElement("button");
+    b.className = "back-to-top";
+    b.setAttribute("aria-label", "Back to top");
+    b.setAttribute("data-cursor-hover", "");
+    b.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+    document.body.appendChild(b);
+    b.addEventListener("click", () =>
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    );
+    const onScroll = () => {
+      if (window.scrollY > 600) b.classList.add("is-visible");
+      else b.classList.remove("is-visible");
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  // ===== Custom cursor =====
+  function initCursor() {
+    if (window.matchMedia("(hover: none)").matches) return;
+    document.body.classList.add("has-cursor");
+    const dot = document.createElement("div");
+    dot.className = "cursor-dot";
+    const ring = document.createElement("div");
+    ring.className = "cursor-ring";
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    let mx = window.innerWidth / 2,
+      my = window.innerHeight / 2;
+    let rx = mx,
+      ry = my;
+    let dx = mx,
+      dy = my;
+    document.addEventListener("mousemove", (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+    function tick() {
+      // Dot follows quickly, ring lags slightly
+      dx += (mx - dx) * 0.55;
+      dy += (my - dy) * 0.55;
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      dot.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%)`;
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    document.addEventListener("mouseover", (e) => {
+      const t = e.target.closest("[data-cursor-hover], a, button");
+      if (t) {
+        document.body.classList.add("cursor-hover");
+        const lab = t.getAttribute("data-cursor-label");
+        if (lab) {
+          ring.setAttribute("data-label", lab);
+          document.body.classList.add("cursor-view");
+        }
+      }
+    });
+    document.addEventListener("mouseout", (e) => {
+      const t = e.target.closest("[data-cursor-hover], a, button");
+      if (t) {
+        document.body.classList.remove("cursor-hover");
+        document.body.classList.remove("cursor-view");
+        ring.removeAttribute("data-label");
+      }
+    });
+    document.addEventListener("mouseleave", () => {
+      dot.style.opacity = 0;
+      ring.style.opacity = 0;
+    });
+    document.addEventListener("mouseenter", () => {
+      dot.style.opacity = 1;
+      ring.style.opacity = 1;
+    });
+  }
+
+  // ===== Reveal on scroll =====
+  function initReveal() {
+    const els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((e) => e.classList.add("is-in"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add("is-in");
+            io.unobserve(en.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    els.forEach((e) => io.observe(e));
+  }
+
+  // ===== Page transitions: fade-out veil on internal nav =====
+  function initTransitions() {
+    const veil = document.createElement("div");
+    veil.className = "page-veil";
+    document.body.appendChild(veil);
+
+    document.body.classList.add("is-entering");
+    setTimeout(() => document.body.classList.remove("is-entering"), 600);
+
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest("a[href]");
+      if (!a) return;
+      const href = a.getAttribute("href");
+      if (
+        !href ||
+        href.startsWith("http") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        href.startsWith("#") ||
+        a.target === "_blank"
+      )
+        return;
+      e.preventDefault();
+      veil.classList.add("is-out");
+      setTimeout(() => {
+        location.href = href;
+      }, 280);
+    });
+  }
+
+  // public init
+  window.SHUANG = {
+    init: function (opts) {
+      opts = opts || {};
+      injectNav(opts.theme);
+      injectFooter();
+      injectBackToTop();
+      initCursor();
+      initTransitions();
+      // Reveal initialized after DOMContentLoaded for any lazy content
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+        initReveal();
+      } else {
+        document.addEventListener("DOMContentLoaded", initReveal);
+      }
+    },
+  };
+})();
+
+</script>
+<script>
+
+window._init_index = function() {
+
+  
+
+  // Hero slideshow — duplicated for seamless marquee loop
+  (function buildHero() {
+    const wrap = document.getElementById('heroSlides');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    // Vivid placeholder images so the slideshow is unmistakable
+    const placeholders = [
+      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==',
+      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==',
+      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==',
+      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==',
+      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==',
+      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==',
+      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg=='
+    ];
+    const slugMap = ['broad-reach','reach-eshop','kinton-ramen','kinton-ramen','shingyu','two-cats','two-cats','vegas-infinite'];
+    const imgs = placeholders.map((src, i) => ({ src, slug: slugMap[i] || PROJECTS.design[0].slug }));
+    const seq = imgs.concat(imgs);
+    seq.forEach(it => {
+      const a = document.createElement('a');
+      a.href = `design-detail.html?p=${it.slug}`;
+      a.setAttribute('data-cursor-hover', '');
+      a.setAttribute('data-cursor-label', 'view');
+      if (it.src.startsWith('data:image/gif')) {
+        a.className = 'slide slide-gif';
+        const img = document.createElement('img');
+        img.src = it.src;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center;display:block;';
+        a.appendChild(img);
+      } else {
+        a.className = 'slide';
+        a.style.backgroundImage = `url('${it.src}')`;
+      }
+      wrap.appendChild(a);
+    });
+  })();
+
+  // Direct-edit overrides applied after footer injection
+  // (Footer is now styled white via shared.css — no overrides needed.)
+
+  // Section background override
+  (function applySectionOverrides() {
+    const hs = document.querySelector(".home-services");
+    if (hs) hs.style.backgroundColor = "rgb(234, 232, 228)";
+  })();
+
+  // Featured grid: mix of design + illustration projects, with span layout
+  const grid = document.getElementById("featured-grid");
+  // Hand-picked layout for "Selected" — spans only used here
+  const selected = [
+    { p: PROJECTS.design[0], cat: "design", span: 8 },
+    { p: PROJECTS.design[2], cat: "design", span: 4 },
+    { p: PROJECTS.design[4], cat: "design", span: 4 },
+    { p: PROJECTS.illustration[1], cat: "illustration", span: 4 },
+    { p: PROJECTS.design[3], cat: "design", span: 4 },
+    { p: PROJECTS.illustration[2], cat: "illustration", span: 4 },
+    { p: PROJECTS.illustration[3], cat: "illustration", span: 4 },
+    { p: PROJECTS.design[6], cat: "design", span: 4 }
+  ];
+  // Design tab: 8 projects, all 4-col
+  const designOnly = PROJECTS.design.slice(0, 9).map(p => ({ p, cat: "design", span: 4 }));
+  // Illustration tab: 6 projects, all 4-col (2 rows of 3)
+  const illustrationOnly = PROJECTS.illustration.slice(0, 6).map(p => ({ p, cat: "illustration", span: 4 }));
+
+  function render(filter) {
+    grid.innerHTML = "";
+    let list;
+    if (filter === "design") list = designOnly;
+    else if (filter === "illustration") list = illustrationOnly;
+    else list = selected;
+
+    list.forEach((item, i) => {
+      const detail = item.cat === "design" ? "design-detail.html" : "illustration-detail.html";
+      const el = document.createElement("a");
+      el.className = `proj reveal span-${item.span}`;
+      el.style.setProperty("--reveal-delay", (i * 60) + "ms");
+      el.href = `${detail}?p=${item.p.slug}`;
+      el.setAttribute("data-cursor-label", "view");
+      el.setAttribute("data-cursor-hover", "");
+      const tags = (item.p.tags && item.p.tags.length)
+        ? item.p.tags
+        : [item.cat === "design" ? "Design" : "Illustration"];
+      const isGif = item.p.thumb.startsWith('data:image/gif');
+      el.innerHTML = `
+        <div class="proj-thumb">${isGif
+          ? `<img src="${item.p.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+          : `<div class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
+        }</div>
+        <div class="proj-meta">
+          <div>
+            <div class="proj-title">${item.p.title}</div>
+            <div class="proj-tags">${tags.map(t=>`<span class="proj-tag">${t}</span>`).join("")}</div>
+          </div>
+          <div class="proj-desc">${item.p.desc}</div>
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+    // Force-reveal newly-rendered cards (IntersectionObserver was set up
+    // before these elements existed, so it won't fire for them).
+    requestAnimationFrame(() => {
+      grid.querySelectorAll(".reveal").forEach(e => e.classList.add("is-in"));
+    });
+  }
+  render("all");
+
+  document.querySelectorAll(".filter-pill").forEach(b => { b.replaceWith(b.cloneNode(true)); });
+  document.querySelectorAll(".filter-pill").forEach(b => {
+    b.addEventListener("click", () => {
+      document.querySelectorAll(".filter-pill").forEach(x => x.classList.remove("is-active"));
+      b.classList.add("is-active");
+      render(b.dataset.filter);
+    });
+  });
+
+};
+
+window._init_design = function() {
+  const grid = document.getElementById("design-grid");
+  grid.innerHTML = "";
+  const repeatPattern = ["proj-right", "span-5", "span-7", "proj-left", "span-7", "span-5"];
+  const layout = ["row-feature", ...Array.from({length: 30}, (_, i) => repeatPattern[i % repeatPattern.length])];
+  PROJECTS.design.forEach((p, i) => {
+    const el = document.createElement("a");
+    el.className = `proj reveal ${layout[i] || "span-6"}`;
+    el.style.setProperty("--reveal-delay", ((i % 3) * 80) + "ms");
+    el.href = `design-detail.html?p=${p.slug}`;
+    el.setAttribute("data-cursor-label", "view");
+    el.setAttribute("data-cursor-hover", "");
+    const isGif = p.thumb && p.thumb.startsWith('data:image/gif');
+    el.innerHTML = `
+      <div class="proj-thumb">${isGif
+        ? `<img src="${p.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+        : `<div class="proj-thumb-inner" style="background-image:url('${p.thumb}')"></div>`
+      }</div>
+      <div class="proj-meta">
+        <div>
+          <div class="proj-title">${p.title}</div>
+          ${p.tags ? `<div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join("")}</div>` : ""}
+        </div>
+        <div class="proj-desc">${p.desc}</div>
+      </div>`;
+    grid.appendChild(el);
+  });
+};
+
+window._init_illustration = function() {
+  const grid = document.getElementById("ill-grid");
+  grid.innerHTML = "";
+  const layout = ["row-feature", "span-7", "span-5", "span-6", "span-6", "span-4", "span-8", "span-4", "span-4", "span-4", "span-6"];
+  PROJECTS.illustration.forEach((p, i) => {
+    const el = document.createElement("a");
+    el.className = `proj reveal ${layout[i] || "span-6"}`;
+    el.style.setProperty("--reveal-delay", ((i % 3) * 80) + "ms");
+    el.href = `illustration-detail.html?p=${p.slug}`;
+    el.setAttribute("data-cursor-label", "view");
+    el.setAttribute("data-cursor-hover", "");
+    el.setAttribute("data-slug", p.slug);
+    const isGif = p.thumb && p.thumb.startsWith('data:image/gif');
+    el.innerHTML = `
+      <div class="proj-thumb">${isGif
+        ? `<img src="${p.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+        : `<div class="proj-thumb-inner" style="background-image:url('${p.thumb}')"></div>`
+      }</div>
+      <div class="proj-meta">
+        <div>
+          <div class="proj-title">${p.title}</div>
+          ${p.tags ? `<div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join("")}</div>` : ""}
+        </div>
+        <div class="proj-desc">${p.desc}</div>
+      </div>`;
+    grid.appendChild(el);
+  });
+};
+
+window._init_about = function() { /* static */ return; 
+  const exp = [
+    { year: "2023→", role: "Independent Studio", org: "Shuang.", desc: "Brand identity, editorial, illustration." },
+    { year: "2019–23", role: "Senior Designer", org: "Underline Studio", desc: "Cultural institutions and editorial." },
+    { year: "2016–19", role: "Designer", org: "Bruce Mau Design", desc: "Brand systems for civic and cultural clients." },
+    { year: "2014–16", role: "MA, Visual Communication", org: "Royal College of Art", desc: "London, UK." },
+    { year: "2010–14", role: "BDes, Graphic Design", org: "OCAD University", desc: "Toronto, Canada." }
+  ];
+  document.getElementById("exp-rows").innerHTML = exp.map((r, i) =>
+    `<div class="about-row reveal" style="--reveal-delay: ${i*40}ms"><div class="year">${r.year}</div><div class="role">${r.role}</div><div class="org">${r.org}</div><div class="desc">${r.desc}</div></div>`
+  ).join("");
+
+  const rec = [
+    { name: "Brand New Awards — Winner", src: "Underconsideration, 2024" },
+    { name: "Type Directors Club — Certificate", src: "TDC, 2023" },
+    { name: "AIGA 50 Books / 50 Covers", src: "AIGA, 2022" },
+    { name: "Applied Arts — Editorial", src: "Applied Arts, 2022" },
+    { name: "D&AD Wood Pencil — Identity", src: "D&AD, 2021" },
+    { name: "Communication Arts — Typography", src: "CA, 2020" }
+  ];
+  document.getElementById("rec-list").innerHTML = rec.map((r, i) =>
+    `<div class="rec-item reveal" style="--reveal-delay: ${i*30}ms"><div class="name">${r.name}</div><div class="src">${r.src}</div></div>`
+  ).join("");
+
+};
+
+window._init_contact = function() {
+
+};
+
+window._init_design_detail = function() {
+  if (window._carouselTimer) { clearInterval(window._carouselTimer); window._carouselTimer = null; }
+  var params = window._routerParams || {};
+  var slug = params.p || "";
+  var list = PROJECTS.design;
+  var idx = list.findIndex(function(x){ return x.slug === slug; });
+  if (idx < 0) idx = 0;
+  var p = list[idx];
+  var next = list[(idx + 1) % list.length];
+
+  document.title = p.title + " — Shuang.";
+
+  // Carousel
+  var track = document.getElementById("carousel-track");
+  var dotsEl = document.getElementById("carousel-dots");
+  var imgSlides = (p.sections || []).filter(function(s){ return s.kind === "image"; }).slice(0,5);
+  var allSlides = p.hero ? [{ src: p.hero }].concat(imgSlides) : imgSlides;
+  var current = 0;
+  var elapsed = 0;
+  var INTERVAL = 4000;
+  var TRANSITION = "transform 700ms cubic-bezier(0.4,0,0.2,1)";
+
+  function goTo(n) {
+    current = (n + allSlides.length) % allSlides.length;
+    track.style.transition = TRANSITION;
+    track.style.transform = "translateX(-" + (current * 100) + "%)";
+    dotsEl.querySelectorAll(".detail-carousel-dot").forEach(function(d, i){
+      d.classList.toggle("is-active", i === current);
+    });
+    elapsed = 0;
+  }
+
+  function startProgress() {
+    clearInterval(window._carouselTimer);
+    window._carouselTimer = null;
+    elapsed = 0;
+    window._carouselTimer = setInterval(function(){
+      elapsed += 100;
+      if (elapsed >= INTERVAL) {
+        elapsed = 0;
+        goTo(current + 1);
+      }
+    }, 100);
+  }
+
+  if (allSlides.length > 0) {
+    track.style.transition = "none";
+    track.style.transform = "translateX(0%)";
+    track.innerHTML = allSlides.map(function(s){
+      return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\')"></div>';
+    }).join("");
+    dotsEl.innerHTML = allSlides.map(function(_, i){
+      return '<button class="detail-carousel-dot' + (i===0?" is-active":"") + '" data-i="' + i + '"></button>';
+    }).join("");
+    dotsEl.querySelectorAll(".detail-carousel-dot").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        goTo(parseInt(btn.dataset.i));
+        startProgress();
+      });
+    });
+    setTimeout(function(){
+      track.style.transition = TRANSITION;
+      startProgress();
+    }, 150);
+  }
+  // Intro
+  document.getElementById("di-client").textContent = "Client";
+  document.getElementById("di-title").textContent = p.title;
+  var summaryText = p.summary || p.desc || "";
+  var summaryParas = summaryText.split("||");
+  document.getElementById("di-desc").innerHTML = summaryParas.map(function(para){ return '<p style="margin:0 0 16px;">' + para + '</p>'; }).join("");
+  var tagsToShow = p.detailTags || p.tags || [];
+  document.getElementById("di-tags").innerHTML = tagsToShow.map(function(t){
+    return '<span class="proj-tag">' + t + '</span>';
+  }).join("");
+
+  // Sections
+  var sec = document.getElementById("sections");
+  sec.innerHTML = "";
+  (p.sections || []).forEach(function(s) {
+    if (s.kind === "image") {
+      var isGif = s.src && s.src.startsWith("data:image/gif");
+      var w = document.createElement("div");
+      w.className = "detail-img-full reveal";
+      if (isGif) { w.innerHTML = '<img src="' + s.src + '" style="width:100%;height:100%;object-fit:cover;">'; }
+      else { w.style.backgroundImage = "url('" + s.src + "')"; }
+      if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
+      sec.appendChild(w);
+    } else if (s.kind === "split") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split reveal";
+      w.innerHTML = '<div class="detail-img-half" style="background-image:url(\'' + s.left + '\')" ></div><div class="detail-img-half" style="background-image:url(\'' + s.right + '\')" ></div>';
+      sec.appendChild(w);
+    } else if (s.kind === "split-equal") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split-equal reveal";
+      w.innerHTML = '<div class="detail-img-half"><img src="' + s.left + '" loading="lazy"></div>' +
+        '<div class="detail-img-half"><img src="' + s.right + '" loading="lazy"></div>';
+      sec.appendChild(w);
+    } else if (s.kind === "split-asymmetric-rev") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split-asymmetric-rev reveal";
+      var isGifRight = s.right && s.right.startsWith("data:image/gif");
+      w.innerHTML = '<div class="detail-img-half-large" style="background-image:url(\'' + s.left + '\')"></div>' +
+        '<div class="detail-img-half-small">' +
+        (isGifRight ? '<img src="' + s.right + '">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.right + '\');background-size:cover;background-position:center;"></div>') +
+        '</div>';
+      sec.appendChild(w);
+    } else if (s.kind === "split-asymmetric") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split-asymmetric reveal";
+      var isGifLeft = s.left && s.left.startsWith("data:image/gif");
+      w.innerHTML = '<div class="detail-img-half-small">' +
+        (isGifLeft ? '<img src="' + s.left + '">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.left + '\');background-size:cover;background-position:center;"></div>') +
+        '</div>' +
+        '<div class="detail-img-half-large" style="background-image:url(\'' + s.right + '\')"></div>';
+      sec.appendChild(w);
+    } else if (s.kind === "video") {
+      var w = document.createElement("div");
+      w.className = "detail-video-section reveal";
+      if (s.src) {
+        w.innerHTML = '<div class="detail-video-inner"><video id="br-vid" muted playsinline style="width:100%;height:100%;object-fit:contain;display:block;"></video></div>';
+        setTimeout(function() {
+          var v = document.getElementById("br-vid");
+          if (!v) return;
+          var clips = ["data:video/mp4;base64,AA==","data:video/mp4;base64,AA==","data:video/mp4;base64,AA=="];
+          var ci = 0;
+          var changing = false;
+          function playClip(i) {
+            changing = false;
+            ci = i;
+            v.src = clips[i];
+            v.load();
+            var p = v.play();
+            if (p) p.catch(function(){});
+          }
+          v.addEventListener("timeupdate", function() {
+            if (!changing && v.duration && v.currentTime >= v.duration - 0.3) {
+              changing = true;
+              playClip((ci + 1) % clips.length);
+            }
+          });
+          v.addEventListener("error", function() {
+            setTimeout(function(){ playClip((ci + 1) % clips.length); }, 500);
+          });
+          playClip(0);
+        }, 800);
+      } else if (s.url) {
+        w.innerHTML = '<div class="detail-video-inner"><iframe src="' + s.url + '" allow="autoplay; fullscreen" allowfullscreen></iframe></div>';
+      } else {
+        w.innerHTML = '<div class="detail-video-inner"><video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;"><source src="data:video/mp4;base64,AA==" type="video/mp4"></video></div>';
+      }
+      sec.appendChild(w);
+    }
+  });
+
+  // Next project
+  document.getElementById("nexttitle").textContent = next.title;
+  document.getElementById("nextdesc").textContent = next.desc || "";
+  document.getElementById("nexttags").innerHTML = (next.tags || []).map(function(t){
+    return '<span class="detail-next-tag">' + t + '</span>';
+  }).join("");
+  document.getElementById("nextlink").addEventListener("click", function(e){
+    e.preventDefault();
+    if (typeof showPage === "function") showPage("design-detail.html", { p: next.slug });
+  });
+};
+
+window._init_illustration_detail = function() {
+  var params = window._routerParams || {};
+  var slug = params.p || "";
+  var list = PROJECTS.illustration;
+  var idx = list.findIndex(function(x){ return x.slug === slug; });
+  if (idx < 0) idx = 0;
+  var p = list[idx];
+  var next = list[(idx + 1) % list.length];
+
+  document.title = p.title + " — Shuang.";
+
+  // Carousel
+  var track = document.getElementById("ill-carousel-track");
+  var dotsEl = document.getElementById("ill-carousel-dots");
+  var imgSlides = (p.sections || []).filter(function(s){ return s.kind === "image"; }).slice(0,5);
+  var allSlides = p.hero ? [{ src: p.hero }].concat(imgSlides) : imgSlides;
+  var current = 0;
+  var elapsed = 0;
+  var INTERVAL = 4000;
+  var TRANSITION = "transform 700ms cubic-bezier(0.4,0,0.2,1)";
+
+  function goTo(n) {
+    current = (n + allSlides.length) % allSlides.length;
+    track.style.transition = TRANSITION;
+    track.style.transform = "translateX(-" + (current * 100) + "%)";
+    dotsEl.querySelectorAll(".detail-carousel-dot").forEach(function(d, i){
+      d.classList.toggle("is-active", i === current);
+    });
+    elapsed = 0;
+  }
+
+  function startProgress() {
+    clearInterval(window._carouselTimer);
+    window._carouselTimer = null;
+    elapsed = 0;
+    window._carouselTimer = setInterval(function(){
+      elapsed += 100;
+      if (elapsed >= INTERVAL) {
+        elapsed = 0;
+        goTo(current + 1);
+      }
+    }, 100);
+  }
+
+  if (allSlides.length > 0) {
+    track.style.transition = "none";
+    track.style.transform = "translateX(0%)";
+    track.innerHTML = allSlides.map(function(s){
+      return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\')"></div>';
+    }).join("");
+    dotsEl.innerHTML = allSlides.map(function(_, i){
+      return '<button class="detail-carousel-dot' + (i===0?" is-active":"") + '" data-i="' + i + '"></button>';
+    }).join("");
+    dotsEl.querySelectorAll(".detail-carousel-dot").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        goTo(parseInt(btn.dataset.i));
+        startProgress();
+      });
+    });
+    setTimeout(function(){
+      track.style.transition = TRANSITION;
+      startProgress();
+    }, 150);
+  }
+  // Intro
+  document.getElementById("ill-di-client").textContent = "Client";
+  document.getElementById("ill-di-title").textContent = p.title;
+  var summaryText = p.summary || p.desc || "";
+  var summaryParas = summaryText.split("||");
+  document.getElementById("ill-di-desc").innerHTML = summaryParas.map(function(para){
+    return '<p style="margin:0 0 16px;">' + para + '</p>';
+  }).join("");
+  var tagsToShow = p.detailTags || p.tags || [];
+  document.getElementById("ill-di-tags").innerHTML = tagsToShow.map(function(t){
+    return '<span class="proj-tag">' + t + '</span>';
+  }).join("");
+
+  // Sections
+  var sec = document.getElementById("ill-sections");
+  sec.innerHTML = "";
+  (p.sections || []).forEach(function(s) {
+    if (s.kind === "image") {
+      var isGif = s.src && s.src.startsWith("data:image/gif");
+      var w = document.createElement("div");
+      w.className = "detail-img-full reveal";
+      if (isGif) { w.innerHTML = '<img src="' + s.src + '" style="width:100%;height:100%;object-fit:cover;">'; }
+      else { w.style.backgroundImage = "url('" + s.src + "')"; }
+      if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
+      sec.appendChild(w);
+    } else if (s.kind === "split") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split reveal";
+      w.innerHTML = '<div class="detail-img-half" style="background-image:url(\'' + s.left + '\')"></div><div class="detail-img-half" style="background-image:url(\'' + s.right + '\')"></div>';
+      sec.appendChild(w);
+    }
+  });
+
+  // Next project
+  document.getElementById("ill-nexttitle").textContent = next.title;
+  document.getElementById("ill-nextdesc").textContent = next.desc || "";
+  document.getElementById("ill-nexttags").innerHTML = (next.tags || []).map(function(t){
+    return '<span class="detail-next-tag">' + t + '</span>';
+  }).join("");
+  document.getElementById("ill-nextlink").addEventListener("click", function(e){
+    e.preventDefault();
+    if (typeof showPage === "function") showPage("illustration-detail.html", { p: next.slug });
+  });
+};
+
+// ===== SPA ROUTER =====
+var _currentPage = null;
+var _initRan = {};
+
+function showPage(pageName, params) {
+  params = params || {};
+
+  // Always close mobile menu first
+  var overlay = document.querySelector('.nav-overlay');
+  var burger = document.querySelector('.nav-hamburger');
+  if (overlay) { overlay.classList.remove('is-open'); }
+  if (burger) { burger.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); burger.style.removeProperty('color'); }
+  document.body.style.overflow = '';
+
+  // Hide all
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('is-active');
+  });
+  
+  // Remove old nav/footer/cursor/overlay injected by SHUANG
+  var oldOverlay = document.querySelector('.nav-overlay');
+  if (oldOverlay) oldOverlay.remove();
+  var oldNav = document.querySelector('header.nav');
+  if (oldNav) oldNav.remove();
+  var oldFooter = document.querySelector('footer.footer');
+  if (oldFooter) oldFooter.remove();
+  var oldBtt = document.querySelector('.back-to-top');
+  if (oldBtt) oldBtt.remove();
+  var oldVeil = document.querySelector('.page-veil');
+  if (oldVeil) oldVeil.remove();
+  var oldDot = document.querySelector('.cursor-dot');
+  if (oldDot) oldDot.remove();
+  var oldRing = document.querySelector('.cursor-ring');
+  if (oldRing) oldRing.remove();
+  document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
+
+  // Show target
+  var pid = pageName.replace('.html','').replace(/-/g,'_');
+  var el = document.getElementById('page_' + pid);
+  if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
+  el.classList.add('is-active');
+  
+  _currentPage = pageName;
+  window.scrollTo(0,0);
+
+  // Store params for detail pages
+  window._routerParams = params;
+
+  // Re-init SHUANG
+  var theme = (pageName === 'design-detail.html' || pageName === 'illustration-detail.html' || pageName === 'index.html') ? 'light' : undefined;
+  SHUANG.init(theme ? {theme: theme} : {});
+
+  // Run page-specific init
+  var fn = window['_init_' + pid];
+  if (fn) fn();
+
+  // Re-init reveal for newly shown page
+  el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
+  setTimeout(function(){
+    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
+  }, 80);
+}
+
+// Intercept ALL link clicks — capture phase to beat any parent handlers
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a[href]');
+  if (!a) return;
+  var href = a.getAttribute('href');
+  if (!href || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel') || a.target === '_blank') return;
+  
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+
+  if (href === '#') return;
+
+  // Parse page + query
+  var parts = href.split('?');
+  var page = parts[0];
+  var qs = parts[1] || '';
+  var params = {};
+  if (qs) {
+    qs.split('&').forEach(function(pair){
+      var kv = pair.split('=');
+      params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1]||'');
+    });
+  }
+  
+  window._routerParams = params;
+  showPage(page || 'index.html', params);
+}, true); // <-- capture phase
+
+// Also prevent any scroll-triggered navigation by blocking popstate/hashchange
+window.addEventListener('hashchange', function(e){ e.preventDefault(); }, true);
+window.addEventListener('beforeunload', function(e){ e.preventDefault(); e.returnValue=''; }, true);
+
+// Override location.search for detail pages
+Object.defineProperty(window, '_getParam', { value: function(k) {
+  return (window._routerParams || {})[k] || '';
+}});
+
+// Start on index
+showPage('index.html');
+</script>
+
+</body>
+</html>
