@@ -2915,35 +2915,54 @@ window._init_design_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-video-section reveal";
       if (s.clips && s.clips.length) {
-        var vidId = "vid-" + Math.random().toString(36).slice(2);
-        w.innerHTML = '<div class="detail-video-inner"><video id="' + vidId + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;background:#000;"></video></div>';
-        (function(capturedClips, capturedId) {
+        var uid = Math.random().toString(36).slice(2);
+        var idA = "vid-a-" + uid, idB = "vid-b-" + uid;
+        var wrapStyle = "position:relative;width:100%;height:100%;background:#000;";
+        var vStyle = "position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;transition:opacity 400ms ease;";
+        w.innerHTML = '<div class="detail-video-inner"><div style="' + wrapStyle + '">' +
+          '<video id="' + idA + '" autoplay muted playsinline style="' + vStyle + 'opacity:1;"></video>' +
+          '<video id="' + idB + '" muted playsinline style="' + vStyle + 'opacity:0;"></video>' +
+          '</div></div>';
+        (function(clips, idA, idB) {
           setTimeout(function() {
-            var v = document.getElementById(capturedId);
-            if (!v) return;
-            var clips = capturedClips;
+            var vA = document.getElementById(idA);
+            var vB = document.getElementById(idB);
+            if (!vA || !vB) return;
             var ci = 0;
-            var changing = false;
-            function playClip(i) {
-              changing = false;
-              ci = i;
-              v.src = clips[i];
-              v.load();
-              var p = v.play();
-              if (p) p.catch(function(){});
+            var active = vA, next = vB;
+            // Preload next clip silently
+            function preloadNext() {
+              var ni = (ci + 1) % clips.length;
+              next.src = clips[ni];
+              next.load();
             }
-            v.addEventListener("timeupdate", function() {
-              if (!changing && v.duration && v.currentTime >= v.duration - 0.3) {
-                changing = true;
-                playClip((ci + 1) % clips.length);
+            function switchClip() {
+              ci = (ci + 1) % clips.length;
+              // next is already loaded — fade it in
+              next.style.opacity = "1";
+              var p = next.play();
+              if (p) p.catch(function(){});
+              // fade out active
+              active.style.opacity = "0";
+              // swap roles
+              var tmp = active; active = next; next = tmp;
+              // preload the one after
+              preloadNext();
+            }
+            // Start first clip
+            active.src = clips[0];
+            active.load();
+            var p = active.play();
+            if (p) p.catch(function(){});
+            preloadNext();
+            // Watch active video and switch 0.4s before end (matches fade duration)
+            setInterval(function() {
+              if (active.duration && active.currentTime >= active.duration - 0.45) {
+                switchClip();
               }
-            });
-            v.addEventListener("error", function() {
-              setTimeout(function(){ playClip((ci + 1) % clips.length); }, 500);
-            });
-            playClip(0);
+            }, 100);
           }, 800);
-        })(s.clips, vidId);
+        })(s.clips, idA, idB);
       } else if (s.url) {
         w.innerHTML = '<div class="detail-video-inner"><iframe src="' + s.url + '" allow="autoplay; fullscreen" allowfullscreen></iframe></div>';
       } else {
