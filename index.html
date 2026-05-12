@@ -2612,7 +2612,7 @@ window._init_index = function() {
       a.href = `design-detail.html?p=${it.slug}`;
       a.setAttribute('data-cursor-hover', '');
       a.setAttribute('data-cursor-label', 'view');
-      if (it.src.startsWith('data:image/gif')) {
+      if ((it.src.startsWith('data:image/gif') || it.src.toLowerCase().endsWith('.gif'))) {
         a.className = 'slide slide-gif';
         const img = document.createElement('img');
         img.src = it.src;
@@ -2671,10 +2671,10 @@ window._init_index = function() {
       const tags = (item.p.tags && item.p.tags.length)
         ? item.p.tags
         : [item.cat === "design" ? "Design" : "Illustration"];
-      const isGif = item.p.thumb.startsWith('data:image/gif');
+      const isGif = (item.p.thumb.startsWith('data:image/gif') || item.p.thumb.toLowerCase().endsWith('.gif'));
       el.innerHTML = `
         <div class="proj-thumb">${isGif
-          ? `<img src="${item.p.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+          ? `<img src="${item.p.thumb}" class="gif-thumb" style="width:100%;height:100%;object-fit:cover;display:block;">`
           : `<div class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
         }</div>
         <div class="proj-meta">
@@ -2686,6 +2686,7 @@ window._init_index = function() {
         </div>
       `;
       grid.appendChild(el);
+
     });
     // Force-reveal newly-rendered cards (IntersectionObserver was set up
     // before these elements existed, so it won't fire for them).
@@ -2718,7 +2719,7 @@ window._init_design = function() {
     el.href = `design-detail.html?p=${p.slug}`;
     el.setAttribute("data-cursor-label", "view");
     el.setAttribute("data-cursor-hover", "");
-    const isGif = p.thumb && p.thumb.startsWith('data:image/gif');
+    const isGif = (p.thumb && (p.thumb.startsWith('data:image/gif') || p.thumb.toLowerCase().endsWith('.gif')));
     el.innerHTML = `
       <div class="proj-thumb">${isGif
         ? `<img src="${p.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">`
@@ -2747,7 +2748,7 @@ window._init_illustration = function() {
     el.setAttribute("data-cursor-label", "view");
     el.setAttribute("data-cursor-hover", "");
     el.setAttribute("data-slug", p.slug);
-    const isGif = p.thumb && p.thumb.startsWith('data:image/gif');
+    const isGif = (p.thumb && (p.thumb.startsWith('data:image/gif') || p.thumb.toLowerCase().endsWith('.gif')));
     el.innerHTML = `
       <div class="proj-thumb">${isGif
         ? `<img src="${p.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">`
@@ -2875,7 +2876,7 @@ window._init_design_detail = function() {
   sec.innerHTML = "";
   (p.sections || []).forEach(function(s) {
     if (s.kind === "image") {
-      var isGif = s.src && s.src.startsWith("data:image/gif");
+      var isGif = (s.src && (s.src.startsWith("data:image/gif") || s.src.toLowerCase().endsWith(".gif")));
       var w = document.createElement("div");
       w.className = "detail-img-full reveal";
       if (isGif) { w.innerHTML = '<img src="' + s.src + '" style="width:100%;height:100%;object-fit:cover;">'; }
@@ -2896,7 +2897,7 @@ window._init_design_detail = function() {
     } else if (s.kind === "split-asymmetric-rev") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric-rev reveal";
-      var isGifRight = s.right && s.right.startsWith("data:image/gif");
+      var isGifRight = (s.right && (s.right.startsWith("data:image/gif") || s.right.toLowerCase().endsWith(".gif")));
       w.innerHTML = '<div class="detail-img-half-large" style="background-image:url(\'' + s.left + '\')"></div>' +
         '<div class="detail-img-half-small">' +
         (isGifRight ? '<img src="' + s.right + '">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.right + '\');background-size:cover;background-position:center;"></div>') +
@@ -2905,7 +2906,7 @@ window._init_design_detail = function() {
     } else if (s.kind === "split-asymmetric") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric reveal";
-      var isGifLeft = s.left && s.left.startsWith("data:image/gif");
+      var isGifLeft = (s.left && (s.left.startsWith("data:image/gif") || s.left.toLowerCase().endsWith(".gif")));
       w.innerHTML = '<div class="detail-img-half-small">' +
         (isGifLeft ? '<img src="' + s.left + '">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.left + '\');background-size:cover;background-position:center;"></div>') +
         '</div>' +
@@ -3066,7 +3067,7 @@ window._init_illustration_detail = function() {
   sec.innerHTML = "";
   (p.sections || []).forEach(function(s) {
     if (s.kind === "image") {
-      var isGif = s.src && s.src.startsWith("data:image/gif");
+      var isGif = (s.src && (s.src.startsWith("data:image/gif") || s.src.toLowerCase().endsWith(".gif")));
       var w = document.createElement("div");
       w.className = "detail-img-full reveal";
       if (isGif) { w.innerHTML = '<img src="' + s.src + '" style="width:100%;height:100%;object-fit:cover;">'; }
