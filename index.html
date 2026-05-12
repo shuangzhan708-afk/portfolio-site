@@ -1699,8 +1699,9 @@ body { background: #fff; }
     .detail-video-inner video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
+      background: #000;
     }
     .detail-video-inner iframe {
       width: 100%;
@@ -2915,7 +2916,7 @@ window._init_design_detail = function() {
       w.className = "detail-video-section reveal";
       if (s.clips && s.clips.length) {
         var vidId = "vid-" + Math.random().toString(36).slice(2);
-        w.innerHTML = '<div class="detail-video-inner"><video id="' + vidId + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video></div>';
+        w.innerHTML = '<div class="detail-video-inner"><video id="' + vidId + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;background:#000;"></video></div>';
         (function(capturedClips, capturedId) {
           setTimeout(function() {
             var v = document.getElementById(capturedId);
