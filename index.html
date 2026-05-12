@@ -2059,8 +2059,8 @@ window.PROJECTS = {
       title: "Two Cats Cannabis Co.",
       desc: "A logo design project for a cannabis retail brand focused on creating a distinctive identity through research-driven visual exploration and concept development.",
       tags: ["Logo Design", "Brand Identity", "Visual Direction"],
-      hero: "images/home/banner/Two Cats.png",
-      thumb: "images/home/banner/Two Cats.png",
+      hero: "images/home/banner/two-cats-mockup-01.jpg",
+      thumb: "images/home/banner/two-cats-mockup-01.jpg",
       client: "Two Cats Cannabis Co.",
       year: "2024",
       role: "Identity, Packaging, Photography Direction",
@@ -2600,8 +2600,8 @@ window._init_index = function() {
       'images/home/banner/kinton-ramen-cover.png',
       'images/home/banner/reach-web-gif-cover.gif',
       'images/home/banner/shingyu-mockup-cover.png',
-      'images/home/banner/Two Cats.png',
-      'images/home/banner/Two Cats - 2.png'
+      'images/home/banner/two-cats-mockup-01.jpg',
+      'images/home/banner/two-cats-photo-01.png'
     ];
     const slugMap = ['broad-reach','kinton-ramen','kinton-ramen','reach-eshop','shingyu','two-cats','two-cats'];
     const imgs = placeholders.map((src, i) => ({ src, slug: slugMap[i] || PROJECTS.design[0].slug }));
@@ -2913,12 +2913,13 @@ window._init_design_detail = function() {
     } else if (s.kind === "video") {
       var w = document.createElement("div");
       w.className = "detail-video-section reveal";
-      if (s.src) {
-        w.innerHTML = '<div class="detail-video-inner"><video id="br-vid" muted playsinline style="width:100%;height:100%;object-fit:contain;display:block;"></video></div>';
+      if (s.clips && s.clips.length) {
+        var vidId = "vid-" + Math.random().toString(36).slice(2);
+        w.innerHTML = '<div class="detail-video-inner"><video id="' + vidId + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video></div>';
         setTimeout(function() {
-          var v = document.getElementById("br-vid");
+          var v = document.getElementById(vidId);
           if (!v) return;
-          var clips = ["data:video/mp4;base64,AA==","data:video/mp4;base64,AA==","data:video/mp4;base64,AA=="];
+          var clips = s.clips;
           var ci = 0;
           var changing = false;
           function playClip(i) {
