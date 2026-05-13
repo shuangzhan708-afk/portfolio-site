@@ -3012,6 +3012,11 @@ window._init_design_detail = function() {
     }
   });
 
+  // Force-reveal all section elements (IntersectionObserver won't catch dynamically added ones)
+  requestAnimationFrame(function() {
+    sec.querySelectorAll('.reveal').forEach(function(e) { e.classList.add('is-in'); });
+  });
+
   // Next project
   document.getElementById("nexttitle").textContent = next.title;
   document.getElementById("nextdesc").textContent = next.desc || "";
