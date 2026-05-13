@@ -2951,6 +2951,7 @@ window._init_design_detail = function() {
       }).join('');
       sec.appendChild(w);
     } else if (s.kind === "video") {
+      if (!s.clips && !s.url) return; // skip empty video placeholders
       var w = document.createElement("div");
       w.className = "detail-video-section reveal";
       if (s.clips && s.clips.length) {
