@@ -2068,11 +2068,11 @@ window.PROJECTS = {
       desc: "A logo design project for a cannabis retail brand focused on creating a distinctive identity through research-driven visual exploration and concept development.",
       tags: ["Logo Design", "Brand Identity", "Visual Direction"],
       hero: [
-        "images/design/two-cats-cannabis/banner/two-cats-mockup-02.webp",
+        "images/design/two-cats-cannabis/banner/two-cats-photo-02.jpg",
         "images/design/two-cats-cannabis/banner/two-cats-mockup-05.jpg",
         "images/design/two-cats-cannabis/banner/two-cats-photo-01.png",
-        "images/design/two-cats-cannabis/banner/two-cats-photo-03.jpg",
-        "images/design/two-cats-cannabis/banner/two cats 06.jpg"
+        "images/design/two-cats-cannabis/banner/two-cats-mockup-02.webp",
+        "images/design/two-cats-cannabis/banner/two-cats-photo-03.jpg"
       ],
       thumb: "images/home/featured/two-cats-cover.png",
       client: "Two Cats Cannabis Co.",
@@ -2097,7 +2097,8 @@ window.PROJECTS = {
           "images/design/two-cats-cannabis/photo/two-cats-photo-08.jpg"
         ]},
         { kind: "image", src: "images/design/two-cats-cannabis/mockup/two-cats-mockup-04.jpg" },
-        { kind: "image", src: "images/design/two-cats-cannabis/mockup/two-cats-mockup-05.jpg" }
+        { kind: "image", src: "images/design/two-cats-cannabis/mockup/two-cats-mockup-05.jpg" },
+        { kind: "image", src: "images/design/two-cats-cannabis/photo/two cats 06.jpg" }
       ]
     },
     {
@@ -2901,14 +2902,14 @@ window._init_design_detail = function() {
     if (s.kind === "image") {
       var isGif = (s.src && (s.src.startsWith("data:image/gif") || s.src.toLowerCase().endsWith(".gif")));
       var w = document.createElement("div");
-      w.className = "detail-img-full reveal";
+      w.className = "detail-img-full";
       if (isGif) { w.innerHTML = '<img src="' + s.src + '" style="width:100%;height:100%;object-fit:cover;">'; }
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
       sec.appendChild(w);
     } else if (s.kind === "split") {
       var w = document.createElement("div");
-      w.className = "detail-img-split reveal";
+      w.className = "detail-img-split";
       w.innerHTML = '<div class="detail-img-half" style="background-image:url(\'' + s.left + '\')" ></div><div class="detail-img-half" style="background-image:url(\'' + s.right + '\')" ></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-equal") {
@@ -2919,7 +2920,7 @@ window._init_design_detail = function() {
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric-rev") {
       var w = document.createElement("div");
-      w.className = "detail-img-split-asymmetric-rev reveal";
+      w.className = "detail-img-split-asymmetric-rev";
       var isGifLeft = (s.left && (s.left.startsWith("data:image/gif") || s.left.toLowerCase().endsWith(".gif")));
       var isGifRight = (s.right && (s.right.startsWith("data:image/gif") || s.right.toLowerCase().endsWith(".gif")));
       w.innerHTML =
@@ -2932,7 +2933,7 @@ window._init_design_detail = function() {
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric") {
       var w = document.createElement("div");
-      w.className = "detail-img-split-asymmetric reveal";
+      w.className = "detail-img-split-asymmetric";
       var isGifLeft = (s.left && (s.left.startsWith("data:image/gif") || s.left.toLowerCase().endsWith(".gif")));
       var isGifRight = (s.right && (s.right.startsWith("data:image/gif") || s.right.toLowerCase().endsWith(".gif")));
       w.innerHTML =
@@ -2945,7 +2946,7 @@ window._init_design_detail = function() {
       sec.appendChild(w);
     } else if (s.kind === "grid-4") {
       var w = document.createElement("div");
-      w.className = "detail-img-grid-4 reveal";
+      w.className = "detail-img-grid-4";
       w.innerHTML = (s.images || []).map(function(img) {
         return '<div class="detail-img-grid-4-item"><img src="' + img + '" loading="lazy"></div>';
       }).join('');
@@ -2953,7 +2954,7 @@ window._init_design_detail = function() {
     } else if (s.kind === "video") {
       if (!s.clips && !s.url) return; // skip empty video placeholders
       var w = document.createElement("div");
-      w.className = "detail-video-section reveal";
+      w.className = "detail-video-section";
       if (s.clips && s.clips.length) {
         var uid = Math.random().toString(36).slice(2);
         var idA = "vid-a-" + uid, idB = "vid-b-" + uid;
@@ -3013,9 +3014,9 @@ window._init_design_detail = function() {
   });
 
   // Force-reveal all section elements (IntersectionObserver won't catch dynamically added ones)
-  requestAnimationFrame(function() {
+  setTimeout(function() {
     sec.querySelectorAll('.reveal').forEach(function(e) { e.classList.add('is-in'); });
-  });
+  }, 100);
 
   // Next project
   document.getElementById("nexttitle").textContent = next.title;
@@ -3113,14 +3114,14 @@ window._init_illustration_detail = function() {
     if (s.kind === "image") {
       var isGif = (s.src && (s.src.startsWith("data:image/gif") || s.src.toLowerCase().endsWith(".gif")));
       var w = document.createElement("div");
-      w.className = "detail-img-full reveal";
+      w.className = "detail-img-full";
       if (isGif) { w.innerHTML = '<img src="' + s.src + '" style="width:100%;height:100%;object-fit:cover;">'; }
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
       sec.appendChild(w);
     } else if (s.kind === "split") {
       var w = document.createElement("div");
-      w.className = "detail-img-split reveal";
+      w.className = "detail-img-split";
       w.innerHTML = '<div class="detail-img-half" style="background-image:url(\'' + s.left + '\')"></div><div class="detail-img-half" style="background-image:url(\'' + s.right + '\')"></div>';
       sec.appendChild(w);
     }
