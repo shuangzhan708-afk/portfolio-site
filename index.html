@@ -2814,8 +2814,8 @@ window._init_design_detail = function() {
   // Carousel
   var track = document.getElementById("carousel-track");
   var dotsEl = document.getElementById("carousel-dots");
-  var imgSlides = (p.sections || []).filter(function(s){ return s.kind === "image"; }).slice(0,5);
-  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []); var allSlides = heroSlides.concat(imgSlides);
+  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []);
+  var allSlides = heroSlides;
   var current = 0;
   var elapsed = 0;
   var INTERVAL = 4000;
@@ -3011,8 +3011,8 @@ window._init_illustration_detail = function() {
   // Carousel
   var track = document.getElementById("ill-carousel-track");
   var dotsEl = document.getElementById("ill-carousel-dots");
-  var imgSlides = (p.sections || []).filter(function(s){ return s.kind === "image"; }).slice(0,5);
-  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []); var allSlides = heroSlides.concat(imgSlides);
+  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []);
+  var allSlides = heroSlides;
   var current = 0;
   var elapsed = 0;
   var INTERVAL = 4000;
