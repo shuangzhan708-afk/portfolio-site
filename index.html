@@ -1989,7 +1989,13 @@ window.PROJECTS = {
       desc: "Kinton Ramen is a campaign and visual communication project for an established restaurant brand within a multi-brand group.",
       tags: ["Campaign Design", "Print & Digital", "Social Media"],
       detailTags: ["Art Direction", "Campaign Design", "Marketing Design", "Social Media Design", "Print Design", "Typography", "Layout Design", "Visual Communication"],
-      hero: "images/home/banner/kinton-ramen-cover.png",
+      hero: [
+        "images/design/kinton-ramen/banner/kinton-ramen-mockup-01.png",
+        "images/design/kinton-ramen/banner/kinton-ramen-mockup-04.webp",
+        "images/design/kinton-ramen/banner/kinton-ramen-photo-02.png",
+        "images/design/kinton-ramen/banner/kinton-ramen-mockup-03.webp",
+        "images/design/kinton-ramen/banner/kinton-ramen-mockup-05.webp"
+      ],
       thumb: "images/home/featured/kinton-ramen-cover.png",
       client: "Kinton Ramen",
       year: "2024",
@@ -2809,7 +2815,7 @@ window._init_design_detail = function() {
   var track = document.getElementById("carousel-track");
   var dotsEl = document.getElementById("carousel-dots");
   var imgSlides = (p.sections || []).filter(function(s){ return s.kind === "image"; }).slice(0,5);
-  var allSlides = p.hero ? [{ src: p.hero }].concat(imgSlides) : imgSlides;
+  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []); var allSlides = heroSlides.concat(imgSlides);
   var current = 0;
   var elapsed = 0;
   var INTERVAL = 4000;
@@ -3006,7 +3012,7 @@ window._init_illustration_detail = function() {
   var track = document.getElementById("ill-carousel-track");
   var dotsEl = document.getElementById("ill-carousel-dots");
   var imgSlides = (p.sections || []).filter(function(s){ return s.kind === "image"; }).slice(0,5);
-  var allSlides = p.hero ? [{ src: p.hero }].concat(imgSlides) : imgSlides;
+  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []); var allSlides = heroSlides.concat(imgSlides);
   var current = 0;
   var elapsed = 0;
   var INTERVAL = 4000;
