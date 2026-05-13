@@ -3110,7 +3110,7 @@ window._init_illustration_detail = function() {
 var _currentPage = null;
 var _initRan = {};
 
-function showPage(pageName, params) {
+function showPage(pageName, params, skipHistory) {
   params = params || {};
 
   // Always close mobile menu first
@@ -3153,6 +3153,13 @@ function showPage(pageName, params) {
 
   // Store params for detail pages
   window._routerParams = params;
+
+  // Push browser history so back button works
+  if (!skipHistory) {
+    var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
+    var url = pageName + (qs ? '?' + qs : '');
+    history.pushState({ page: pageName, params: params }, '', '#' + url);
+  }
 
   // Re-init SHUANG
   var theme = (pageName === 'design-detail.html' || pageName === 'illustration-detail.html' || pageName === 'index.html') ? 'light' : undefined;
@@ -3198,9 +3205,14 @@ document.addEventListener('click', function(e) {
   showPage(page || 'index.html', params);
 }, true); // <-- capture phase
 
-// Also prevent any scroll-triggered navigation by blocking popstate/hashchange
-window.addEventListener('hashchange', function(e){ e.preventDefault(); }, true);
-window.addEventListener('beforeunload', function(e){ e.preventDefault(); e.returnValue=''; }, true);
+// Handle browser back/forward buttons
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.page) {
+    showPage(e.state.page, e.state.params || {}, true);
+  } else {
+    showPage('index.html', {}, true);
+  }
+});
 
 // Override location.search for detail pages
 Object.defineProperty(window, '_getParam', { value: function(k) {
@@ -3208,7 +3220,8 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
 }});
 
 // Start on index
-showPage('index.html');
+history.replaceState({ page: 'index.html', params: {} }, '', '#index.html');
+showPage('index.html', {}, true);
 </script>
 
 </body>
