@@ -1657,6 +1657,9 @@ body { background: #fff; }
     .detail-img-split-asymmetric .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-split-asymmetric .detail-img-half-large { aspect-ratio: 4/3; background-size: cover; background-position: center; border-radius: 4px; }
     .detail-img-split-asymmetric-rev { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: start; }
+    .detail-img-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .detail-img-grid-4 .detail-img-grid-4-item { aspect-ratio: 1/1; overflow: hidden; }
+    .detail-img-grid-4 .detail-img-grid-4-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-split-asymmetric-rev .detail-img-half-large { aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 4px; }
     .detail-img-split-asymmetric-rev .detail-img-half-small { aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
     .detail-img-split-asymmetric-rev .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -2075,10 +2078,17 @@ window.PROJECTS = {
       summary: "Two Cats Cannabis is a logo design project for a new retail direction within a cannabis brand extension.||The project focused on creating a distinctive and recognizable visual identity that could differentiate the brand within a highly competitive category, while aligning with an existing interior design direction provided by the client.||The work involved translating spatial and material references into a refined visual concept, supported by competitive research and iterative design exploration.",
       detailTags: ["Logo Design", "Brand Identity", "Art Direction", "Visual Exploration", "Competitive Research", "Concept Development", "Typography", "Symbol Design"],
       sections: [
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", ratio: "3/2", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+        { kind: "image", src: "images/design/two-cats-cannabis/banner/two-cats-mockup-02.webp" },
+        { kind: "image", src: "images/design/two-cats-cannabis/banner/two-cats-mockup-05.jpg" },
+        { kind: "image", src: "images/design/two-cats-cannabis/banner/two-cats-photo-01.png" },
+        { kind: "grid-4", images: [
+          "images/design/two-cats-cannabis/photo/two-cats-photo-04.jpg",
+          "images/design/two-cats-cannabis/photo/two-cats-photo-05.jpg",
+          "images/design/two-cats-cannabis/photo/two-cats-photo-07.jpg",
+          "images/design/two-cats-cannabis/photo/two cats 06.jpg"
+        ]},
+        { kind: "image", src: "images/design/two-cats-cannabis/banner/two-cats-photo-03.jpg" },
+        { kind: "image", src: "images/design/two-cats-cannabis/banner/two cats 06.jpg" }
       ]
     },
     {
@@ -2923,6 +2933,13 @@ window._init_design_detail = function() {
         '<div class="detail-img-half-large">' +
         (isGifRight ? '<img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.right + '\');background-size:cover;background-position:center;"></div>') +
         '</div>';
+      sec.appendChild(w);
+    } else if (s.kind === "grid-4") {
+      var w = document.createElement("div");
+      w.className = "detail-img-grid-4 reveal";
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="detail-img-grid-4-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
       sec.appendChild(w);
     } else if (s.kind === "video") {
       var w = document.createElement("div");
