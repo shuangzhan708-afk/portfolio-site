@@ -1660,6 +1660,7 @@ body { background: #fff; }
     .detail-img-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .detail-img-grid-4 .detail-img-grid-4-item { aspect-ratio: 1/1; overflow: hidden; }
     .detail-img-grid-4 .detail-img-grid-4-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .detail-img-contain img { width: 100%; height: auto; display: block; }
     .detail-img-split-asymmetric-rev .detail-img-half-large { aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 4px; }
     .detail-img-split-asymmetric-rev .detail-img-half-small { aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
     .detail-img-split-asymmetric-rev .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -2044,7 +2045,13 @@ window.PROJECTS = {
       title: "SHINGYU",
       desc: "A full-scope restaurant branding project focused on developing and applying a cohesive visual system across digital and physical touchpoints, from concept to final execution.",
       tags: ["Brand Identity", "Visual System", "Digital & Print"],
-      hero: "images/home/banner/shingyu-mockup-cover.png",
+      hero: [
+        "images/design/shingyu/banner/shingyu-mockup-03.png",
+        "images/design/shingyu/banner/shingyu-mockup-02.png",
+        "images/design/shingyu/banner/shingyu-mockup-05.jpg",
+        "images/design/shingyu/banner/shingyu-mockup-10.jpg",
+        "images/design/shingyu/banner/shingyu-mockup-09.png"
+      ],
       thumb: "images/home/featured/shingyu-mockup-cover.png",
       client: "SHINGYU Motor Company",
       year: "2025",
@@ -2054,12 +2061,16 @@ window.PROJECTS = {
         "ShinGyu is a full-scope brand development project for a restaurant, delivered within a design agency environment.||Working from initial client discussions through to final execution, the project focused on building a cohesive visual system that could be consistently applied across both digital and physical touchpoints.||Based on an existing logo, the work centered on defining a clear visual direction and extending it into a complete brand experience, covering everything from typography and color to menu design, website, and marketing materials.",
       detailTags: ["Brand Identity", "Visual System", "Art Direction", "Typography", "Menu Design", "Website Design", "Social Media Design", "Print Design", "Brand Collateral", "Pattern Design"],
       sections: [
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "video" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+        { kind: "image", src: "images/design/shingyu/mockup/shingyu-mockup-01.png" },
+        { kind: "image", src: "images/design/shingyu/mockup/shingyu-mockup-02.png" },
+        { kind: "image", src: "images/design/shingyu/mockup/shingyu-mockup-04.jpg" },
+        { kind: "split", left: "images/design/shingyu/mockup/shingyu-mockup-13.png", right: "images/design/shingyu/mockup/shingyu-mockup-05.jpg" },
+        { kind: "split", left: "images/design/shingyu/mockup/shingyu-mockup-07.png", right: "images/design/shingyu/mockup/shingyu-mockup-08.png" },
+        { kind: "image-contain", src: "images/design/shingyu/mockup/shingyu-mockup-11.jpg" },
+        { kind: "image", src: "images/design/shingyu/mockup/shingyu-mockup-03.png" },
+        { kind: "split", left: "images/design/shingyu/mockup/shingyu-mockup-06.png", right: "images/design/shingyu/mockup/shingyu-mockup-09.png" },
+        { kind: "image-contain", src: "images/design/shingyu/mockup/shingyu-mockup-12.jpg" },
+        { kind: "image", src: "images/design/shingyu/mockup/shingyu-mockup-10.jpg" }
       ]
     },
     {
@@ -2906,6 +2917,11 @@ window._init_design_detail = function() {
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
       sec.appendChild(w);
+    } else if (s.kind === "image-contain") {
+      var w = document.createElement("div");
+      w.className = "detail-img-contain";
+      w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
+      sec.appendChild(w);
     } else if (s.kind === "split") {
       var w = document.createElement("div");
       w.className = "detail-img-split";
@@ -3117,6 +3133,11 @@ window._init_illustration_detail = function() {
       if (isGif) { w.innerHTML = '<img src="' + s.src + '" style="width:100%;height:100%;object-fit:cover;">'; }
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
+      sec.appendChild(w);
+    } else if (s.kind === "image-contain") {
+      var w = document.createElement("div");
+      w.className = "detail-img-contain";
+      w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
       sec.appendChild(w);
     } else if (s.kind === "split") {
       var w = document.createElement("div");
