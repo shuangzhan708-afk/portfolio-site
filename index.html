@@ -1988,10 +1988,10 @@ window.PROJECTS = {
         { kind: "video-inline", clips: ["images/design/broad-reach/video/Broad Reach Figma Presentation Screen Recording.mp4"] },
         { kind: "image", src: "images/design/broad-reach/brand/br-brand-01.jpg" },
         { kind: "image", src: "images/design/broad-reach/mockup/br-design-mockup-01.png" },
-        { kind: "video", clips: ["images/design/broad-reach/video/br-web-prototype-clip-01.mp4", "images/design/broad-reach/video/br-web-prototype-clip-02.mp4", "images/design/broad-reach/video/br-web-prototype-clip-03.mp4"], innerSize: "55%" },
+        { kind: "video", clips: ["images/design/broad-reach/video/br-web-prototype-clip-01.mp4", "images/design/broad-reach/video/br-web-prototype-clip-02.mp4", "images/design/broad-reach/video/br-web-prototype-clip-03.mp4"] },
         { kind: "image", src: "images/design/broad-reach/mockup/br-design-mockup-02.png" },
         { kind: "image", src: "images/design/broad-reach/photo/br-photo-01.png" },
-        { kind: "video-inline", clips: ["images/design/broad-reach/video/BR xWizmo.mp4"] },
+        { kind: "video-inline", clips: ["images/design/broad-reach/video/BR xWizmo.mp4"], innerSize: "55%" },
         { kind: "image-contain", src: "images/design/broad-reach/mockup/br-design-mockup-03.png" },
         { kind: "image-contain", src: "images/design/broad-reach/mockup/br-design-mockup-04.png" },
         { kind: "image", src: "images/design/broad-reach/photo/br-photo-02.png" }
@@ -2966,6 +2966,7 @@ window._init_design_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-video-inline";
       w.style.position = "relative";
+      if (s.innerSize) { w.style.width = s.innerSize; w.style.margin = "0 auto"; }
       w.innerHTML = '<video id="' + idA + '" autoplay muted playsinline style="' + vStyle + 'opacity:1;"></video>' +
                     '<video id="' + idB + '" muted playsinline style="' + vStyle + 'opacity:0;"></video>';
       sec.appendChild(w);
@@ -3227,6 +3228,7 @@ window._init_illustration_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-video-inline";
       w.style.position = "relative";
+      if (s.innerSize) { w.style.width = s.innerSize; w.style.margin = "0 auto"; }
       w.innerHTML = '<video id="' + idA + '" autoplay muted playsinline style="' + vStyle + 'opacity:1;"></video>' +
                     '<video id="' + idB + '" muted playsinline style="' + vStyle + 'opacity:0;"></video>';
       sec.appendChild(w);
