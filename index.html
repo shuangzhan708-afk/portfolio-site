@@ -1988,7 +1988,7 @@ window.PROJECTS = {
         { kind: "video-inline", clips: ["images/design/broad-reach/video/Broad Reach Figma Presentation Screen Recording.mp4"] },
         { kind: "image", src: "images/design/broad-reach/brand/br-brand-01.jpg" },
         { kind: "image", src: "images/design/broad-reach/mockup/br-design-mockup-01.png" },
-        { kind: "video", clips: ["images/design/broad-reach/video/br-web-prototype-clip-01.mp4", "images/design/broad-reach/video/br-web-prototype-clip-02.mp4", "images/design/broad-reach/video/br-web-prototype-clip-03.mp4"] },
+        { kind: "video", clips: ["images/design/broad-reach/video/br-web-prototype-clip-01.mp4", "images/design/broad-reach/video/br-web-prototype-clip-02.mp4", "images/design/broad-reach/video/br-web-prototype-clip-03.mp4"], innerSize: "55%" },
         { kind: "image", src: "images/design/broad-reach/mockup/br-design-mockup-02.png" },
         { kind: "image", src: "images/design/broad-reach/photo/br-photo-01.png" },
         { kind: "video-inline", clips: ["images/design/broad-reach/video/BR xWizmo.mp4"] },
@@ -3049,12 +3049,13 @@ window._init_design_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-video-section";
       if (s.bg) w.style.background = s.bg;
+      var innerMaxWidth = s.innerSize || "80%";
       if (s.clips && s.clips.length) {
         var uid = Math.random().toString(36).slice(2);
         var idA = "vid-a-" + uid, idB = "vid-b-" + uid;
         var wrapStyle = "position:relative;width:100%;height:100%;background:#000;";
         var vStyle = "position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;transition:opacity 400ms ease;";
-        w.innerHTML = '<div class="detail-video-inner"><div style="' + wrapStyle + '">' +
+        w.innerHTML = '<div class="detail-video-inner" style="max-width:' + innerMaxWidth + ';"><div style="' + wrapStyle + '">' +
           '<video id="' + idA + '" autoplay muted playsinline style="' + vStyle + 'opacity:1;"></video>' +
           '<video id="' + idB + '" muted playsinline style="' + vStyle + 'opacity:0;"></video>' +
           '</div></div>';
