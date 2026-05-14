@@ -2971,7 +2971,7 @@ window._init_design_detail = function() {
         wrapper.style.display = "flex";
         wrapper.style.alignItems = "center";
         wrapper.style.justifyContent = "center";
-        wrapper.style.padding = "12%";
+        wrapper.style.padding = "6%";
       }
       var w = document.createElement("div");
       w.className = "detail-video-inline";
@@ -3244,7 +3244,7 @@ window._init_illustration_detail = function() {
         wrapper.style.display = "flex";
         wrapper.style.alignItems = "center";
         wrapper.style.justifyContent = "center";
-        wrapper.style.padding = "12%";
+        wrapper.style.padding = "6%";
       }
       var w = document.createElement("div");
       w.className = "detail-video-inline";
@@ -3412,8 +3412,27 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
 }});
 
 // Start on index
-history.replaceState({ page: 'index.html', params: {} }, '', '#index.html');
-showPage('index.html', {}, true);
+// On load, restore page from URL hash if present
+(function() {
+  var hash = window.location.hash.slice(1); // remove #
+  if (hash && hash !== 'index.html') {
+    var parts = hash.split('?');
+    var page = parts[0];
+    var qs = parts[1] || '';
+    var params = {};
+    if (qs) {
+      qs.split('&').forEach(function(pair) {
+        var kv = pair.split('=');
+        params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '');
+      });
+    }
+    history.replaceState({ page: page, params: params }, '', '#' + hash);
+    showPage(page, params, true);
+  } else {
+    history.replaceState({ page: 'index.html', params: {} }, '', '#index.html');
+    showPage('index.html', {}, true);
+  }
+})();
 </script>
 
 </body>
