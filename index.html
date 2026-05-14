@@ -1652,6 +1652,8 @@ body { background: #fff; }
     .detail-img-full { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
     .detail-video-inline { width: 100%; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; background: #000; }
     .detail-video-inline video { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .detail-img-fullwidth { width: 100vw; margin: 0 calc(-1 * clamp(60px, 10vw, 180px)); padding: 80px clamp(60px, 10vw, 180px); }
+    .detail-img-fullwidth img { width: 100%; display: block; }
     .detail-img-full.ratio-4-3 { aspect-ratio: 4/3; }
     .detail-img-full.ratio-3-2 { aspect-ratio: 3/2; }
     .detail-img-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -2140,7 +2142,13 @@ window.PROJECTS = {
       title: "Vegas Infinite",
       desc: "A visual system rollout project following a full rebrand, focused on translating an externally developed system into scalable in-house applications across marketing and product touchpoints.",
       tags: ["Visual System", "Campaign Design", "Digital Content Design"],
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: [
+        "images/design/vegas-infinite/banner/Vegas Infinite Cover.png",
+        "images/design/vegas-infinite/banner/vegas-infinite-mockup-04.webp",
+        "images/design/vegas-infinite/banner/vegas-infinite-mockup-06.webp",
+        "images/design/vegas-infinite/banner/vegas-infinite-mockup-07.webp",
+        "images/design/vegas-infinite/banner/vegas-infinite-mockup-01.png"
+      ],
       thumb: "images/home/featured/pokerstars-vr-gif-cover.gif",
       client: "Vegas Infinite",
       year: "2025",
@@ -2149,12 +2157,17 @@ window.PROJECTS = {
       summary: "Vegas Infinite is a visual system rollout project following the rebrand of PokerStars VR into a new live-service digital product.||The visual system was developed by an external agency, while the in-house role focused on translating and implementing the system across ongoing product and marketing touchpoints.||Working within structured but limited guidelines, the focus was on adapting the system into scalable and practical design applications.",
       detailTags: ["Brand System Adaptation", "Visual System Implementation", "Art Direction", "Campaign Design", "In-game Visual Assets", "Social Media Design", "Design System Rollout", "Promotional Design"],
       sections: [
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "video" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-04.webp" },
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-02.webp" },
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-03.webp" },
+        { kind: "split", left: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-05.png", right: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-06.webp" },
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-07.webp" },
+        { kind: "image-fullwidth", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-01.png", bg: "#2d2d2d" },
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-08.webp" },
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-09.webp" },
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-10.webp" },
+        { kind: "split", left: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-13.webp", right: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-12.png" },
+        { kind: "image", src: "images/design/vegas-infinite/mockup/vegas-infinite-mockup-11.webp" }
       ]
     },
     {
@@ -2960,6 +2973,13 @@ window._init_design_detail = function() {
       w.className = "detail-img-contain";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
       sec.appendChild(w);
+    } else if (s.kind === "image-fullwidth") {
+      var w = document.createElement("div");
+      w.className = "detail-img-fullwidth";
+      if (s.bg) w.style.background = s.bg;
+      var innerWidth = s.innerSize || "75%";
+      w.innerHTML = '<img src="' + s.src + '" loading="lazy" style="width:' + innerWidth + ';max-width:' + innerWidth + ';display:block;margin:0 auto;">';
+      sec.appendChild(w);
     } else if (s.kind === "video-inline") {
       if (!s.clips && !s.url) return;
       var uid = Math.random().toString(36).slice(2);
@@ -3231,6 +3251,13 @@ window._init_illustration_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-img-contain";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
+      sec.appendChild(w);
+    } else if (s.kind === "image-fullwidth") {
+      var w = document.createElement("div");
+      w.className = "detail-img-fullwidth";
+      if (s.bg) w.style.background = s.bg;
+      var innerWidth = s.innerSize || "75%";
+      w.innerHTML = '<img src="' + s.src + '" loading="lazy" style="width:' + innerWidth + ';max-width:' + innerWidth + ';display:block;margin:0 auto;">';
       sec.appendChild(w);
     } else if (s.kind === "video-inline") {
       if (!s.clips && !s.url) return;
