@@ -1975,7 +1975,7 @@ window.PROJECTS = {
       title: "Broad Reach",
       desc: "A system-driven branding project exploring how visual identity can scale across campaigns, digital platforms, and communication touchpoints with clarity and consistency.",
       tags: ["Brand System", "Campaign Design", "Web & UX/UI"],
-      detailTags: ["Brand Identity", "Brand System", "Art Direction", "Marketing & Social Media Design", "Website & UX/UI Design", "Presentation Design", "Typography", "Layout & Visual Hierarchy", "Information Design", "Brand Guidelines"],
+      detailTags: ["Brand Identity", "Brand System", "Art Direction", "Marketing & Social Media Design", "Website & UX/UI Design", "Presentation Design", "Typography", "Layout & Visual Hierarchy", "Information Design", "Brand Guidelines", "Rebranding"],
       hero: "images/design/broad-reach/banner/br-design-mockup-cover.png",
       thumb: "images/home/featured/br-design-mockup-cover.png",
       client: "Reach Canadian Art Collection",
@@ -1985,17 +1985,16 @@ window.PROJECTS = {
       summary:
         "Broad Reach is a system-driven brand project focused on building a cohesive visual identity across digital and physical touchpoints.||The project explores how a structured visual language can scale across campaigns, web, and communication materials while maintaining clarity, consistency, and flexibility.||It focuses on developing a clear system logic that supports both brand expression and practical application across multiple formats.",
       sections: [
-        { kind: "image-contain", src: "images/design/broad-reach/brand/br-brand-02.png" },
         { kind: "video-inline", clips: ["images/design/broad-reach/video/Broad Reach Figma Presentation Screen Recording.mp4"] },
         { kind: "image", src: "images/design/broad-reach/brand/br-brand-01.jpg" },
         { kind: "image", src: "images/design/broad-reach/mockup/br-design-mockup-01.png" },
         { kind: "video", clips: ["images/design/broad-reach/video/br-web-prototype-clip-01.mp4", "images/design/broad-reach/video/br-web-prototype-clip-02.mp4", "images/design/broad-reach/video/br-web-prototype-clip-03.mp4"] },
         { kind: "image", src: "images/design/broad-reach/mockup/br-design-mockup-02.png" },
         { kind: "image", src: "images/design/broad-reach/photo/br-photo-01.png" },
+        { kind: "video-inline", clips: ["images/design/broad-reach/video/BR xWizmo.mp4"] },
         { kind: "image-contain", src: "images/design/broad-reach/mockup/br-design-mockup-03.png" },
         { kind: "image-contain", src: "images/design/broad-reach/mockup/br-design-mockup-04.png" },
-        { kind: "image", src: "images/design/broad-reach/photo/br-photo-02.png" },
-        { kind: "video-inline", clips: ["images/design/broad-reach/video/BR xWizmo.mp4"] }
+        { kind: "image", src: "images/design/broad-reach/photo/br-photo-02.png" }
       ]
     },
     {
@@ -2929,6 +2928,20 @@ window._init_design_detail = function() {
   }).join("");
 
   // Sections
+  // Scroll-triggered video play/pause using IntersectionObserver
+  function watchVideoScroll(videoEl) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var p = videoEl.play(); if (p) p.catch(function(){});
+        } else {
+          videoEl.pause();
+        }
+      });
+    }, { threshold: 0.3 });
+    io.observe(videoEl);
+  }
+
   var sec = document.getElementById("sections");
   sec.innerHTML = "";
   (p.sections || []).forEach(function(s) {
@@ -2972,10 +2985,11 @@ window._init_design_detail = function() {
             preloadNext();
           }
           active.src = clips[0]; active.load();
-          var p = active.play(); if (p) p.catch(function(){});
           preloadNext();
+          watchVideoScroll(active);
+          watchVideoScroll(next);
           setInterval(function() {
-            if (active.duration && active.currentTime >= active.duration - 0.45) switchClip();
+            if (!active.paused && active.duration && active.currentTime >= active.duration - 0.45) switchClip();
           }, 100);
         }, 800);
       })(s.clips, idA, idB);
@@ -3073,12 +3087,12 @@ window._init_design_detail = function() {
             // Start first clip
             active.src = clips[0];
             active.load();
-            var p = active.play();
-            if (p) p.catch(function(){});
             preloadNext();
+            watchVideoScroll(active);
+            watchVideoScroll(next);
             // Watch active video and switch 0.4s before end (matches fade duration)
             setInterval(function() {
-              if (active.duration && active.currentTime >= active.duration - 0.45) {
+              if (!active.paused && active.duration && active.currentTime >= active.duration - 0.45) {
                 switchClip();
               }
             }, 100);
@@ -3231,10 +3245,11 @@ window._init_illustration_detail = function() {
             preloadNext();
           }
           active.src = clips[0]; active.load();
-          var p = active.play(); if (p) p.catch(function(){});
           preloadNext();
+          watchVideoScroll(active);
+          watchVideoScroll(next);
           setInterval(function() {
-            if (active.duration && active.currentTime >= active.duration - 0.45) switchClip();
+            if (!active.paused && active.duration && active.currentTime >= active.duration - 0.45) switchClip();
           }, 100);
         }, 800);
       })(s.clips, idA, idB);
