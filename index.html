@@ -2042,14 +2042,14 @@ window.PROJECTS = {
       detailTags: ["Art Direction", "Brand Refresh", "Marketing & Social Media Design", "Website & UX/UI Support", "Visual Identity Upgrade", "Typography", "Layout Design", "Editorial / Collage Style System"],
       sections: [
         { kind: "grid-3", images: [
-          "images/design/reach-e-shop/mockup/reach-e-shop-mockup-03.png",
+          "images/design/reach-e-shop/mockup/reach-e-shop-mockup-04.webp",
           "images/design/reach-e-shop/mockup/reach-e-shop-gif-01.webp",
           "images/design/reach-e-shop/photo/reach-e-shop-photo-02.png"
         ]},
+        { kind: "image", src: "images/design/reach-e-shop/mockup/reach-e-shop-mockup-02.png" },
         { kind: "image", src: "images/design/reach-e-shop/mockup/reach-web-gif-cover.gif" },
         { kind: "image", src: "images/design/reach-e-shop/photo/reach-e-shop-photo-03.png" },
-        { kind: "image", src: "images/design/reach-e-shop/mockup/reach-e-shop-mockup-02.png" },
-        { kind: "video", clips: ["images/design/reach-e-shop/video/Reach Website Recording.mp4"] },
+        { kind: "video", clips: ["images/design/reach-e-shop/video/Reach Website Recording.mp4"], bg: "#0E423E" },
         { kind: "image", src: "images/design/reach-e-shop/mockup/reach-e-shop-mockup-01.png" },
         { kind: "image", src: "images/design/reach-e-shop/photo/reach-e-shop-photo-01.png" },
         { kind: "image-contain", src: "images/design/reach-e-shop/mockup/reach-e-shop-mockup-03.png" }
@@ -2992,6 +2992,7 @@ window._init_design_detail = function() {
       if (!s.clips && !s.url) return; // skip empty video placeholders
       var w = document.createElement("div");
       w.className = "detail-video-section";
+      if (s.bg) w.style.background = s.bg;
       if (s.clips && s.clips.length) {
         var uid = Math.random().toString(36).slice(2);
         var idA = "vid-a-" + uid, idB = "vid-b-" + uid;
