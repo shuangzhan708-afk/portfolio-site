@@ -1657,11 +1657,12 @@ body { background: #fff; }
     .detail-img-full.ratio-4-3 { aspect-ratio: 4/3; }
     .detail-img-full.ratio-3-2 { aspect-ratio: 3/2; }
     .detail-img-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
-    .detail-img-split-asymmetric { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: start; }
-    .detail-img-split-asymmetric .detail-img-half-small { aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
+    .detail-img-split-asymmetric { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: stretch; }
+    .detail-img-split-asymmetric .detail-img-half-small { border-radius: 4px; overflow: hidden; }
     .detail-img-split-asymmetric .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .detail-img-split-asymmetric .detail-img-half-large { aspect-ratio: 4/3; background-size: cover; background-position: center; border-radius: 4px; }
-    .detail-img-split-asymmetric-rev { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: start; }
+    .detail-img-split-asymmetric .detail-img-half-large { border-radius: 4px; overflow: hidden; }
+    .detail-img-split-asymmetric .detail-img-half-large img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .detail-img-split-asymmetric-rev { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: stretch; }
     .detail-img-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .detail-img-grid-4 .detail-img-grid-4-item { aspect-ratio: 1/1; overflow: hidden; }
     .detail-img-grid-4 .detail-img-grid-4-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1670,12 +1671,13 @@ body { background: #fff; }
     .detail-img-grid-3 .detail-img-grid-3-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-contain img { width: 100%; height: auto; display: block; }
     .detail-img-split-asymmetric-rev .detail-img-half-large { border-radius: 4px; overflow: hidden; }
+    .detail-img-split-asymmetric-rev .detail-img-half-large img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
     .detail-img-split-asymmetric-rev .detail-img-half-small { border-radius: 4px; overflow: hidden; }
-    .detail-img-split-asymmetric-rev .detail-img-half-small img { width: 100%; height: auto; display: block; }
+    .detail-img-split-asymmetric-rev .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-split-equal { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; }
     .detail-img-split-equal .detail-img-half { border-radius: 4px; overflow: hidden; }
     .detail-img-split-equal .detail-img-half img { width: 100%; height: auto; display: block; border-radius: 4px; }
-    .detail-img-half { aspect-ratio: 4/3; background-size: cover; background-position: center; border-radius: 4px; }
+    .detail-img-half { border-radius: 4px; overflow: hidden; }
     .detail-caption { font-size: 13px; color: var(--color-ink-muted-48); padding: 10px 0 0; font-style: italic; }
     /* ── Detail: Next project ── */
     .detail-next { padding: 80px clamp(60px, 10vw, 180px) 0; max-width: var(--max); margin: 0 auto; }
