@@ -1991,7 +1991,7 @@ window.PROJECTS = {
         { kind: "video", clips: ["images/design/broad-reach/video/br-web-prototype-clip-01.mp4", "images/design/broad-reach/video/br-web-prototype-clip-02.mp4", "images/design/broad-reach/video/br-web-prototype-clip-03.mp4"] },
         { kind: "image", src: "images/design/broad-reach/mockup/br-design-mockup-02.png" },
         { kind: "image", src: "images/design/broad-reach/photo/br-photo-01.png" },
-        { kind: "video-inline", clips: ["images/design/broad-reach/video/BR xWizmo.mp4"], innerSize: "55%", bg: "#0a0a0a" },
+        { kind: "video-inline", clips: ["images/design/broad-reach/video/BR xWizmo.mp4"], bg: "#0a0a0a" },
         { kind: "image-contain", src: "images/design/broad-reach/mockup/br-design-mockup-03.png" },
         { kind: "image-contain", src: "images/design/broad-reach/mockup/br-design-mockup-04.png" },
         { kind: "image", src: "images/design/broad-reach/photo/br-photo-02.png" }
@@ -2966,12 +2966,16 @@ window._init_design_detail = function() {
       var wrapper = document.createElement("div");
       if (s.bg) {
         wrapper.style.background = s.bg;
-        wrapper.style.padding = "40px";
+        wrapper.style.aspectRatio = "16/9";
         wrapper.style.borderRadius = "4px";
+        wrapper.style.display = "flex";
+        wrapper.style.alignItems = "center";
+        wrapper.style.justifyContent = "center";
       }
       var w = document.createElement("div");
       w.className = "detail-video-inline";
       w.style.position = "relative";
+      if (s.bg) { w.style.width = "100%"; w.style.height = "100%"; w.style.borderRadius = "0"; w.style.background = "transparent"; }
       if (s.innerSize) { w.style.width = s.innerSize; w.style.margin = "0 auto"; }
       w.innerHTML = '<video id="' + idA + '" autoplay muted playsinline style="' + vStyle + 'opacity:1;"></video>' +
                     '<video id="' + idB + '" muted playsinline style="' + vStyle + 'opacity:0;"></video>';
@@ -3234,12 +3238,16 @@ window._init_illustration_detail = function() {
       var wrapper = document.createElement("div");
       if (s.bg) {
         wrapper.style.background = s.bg;
-        wrapper.style.padding = "40px";
+        wrapper.style.aspectRatio = "16/9";
         wrapper.style.borderRadius = "4px";
+        wrapper.style.display = "flex";
+        wrapper.style.alignItems = "center";
+        wrapper.style.justifyContent = "center";
       }
       var w = document.createElement("div");
       w.className = "detail-video-inline";
       w.style.position = "relative";
+      if (s.bg) { w.style.width = "100%"; w.style.height = "100%"; w.style.borderRadius = "0"; w.style.background = "transparent"; }
       if (s.innerSize) { w.style.width = s.innerSize; w.style.margin = "0 auto"; }
       w.innerHTML = '<video id="' + idA + '" autoplay muted playsinline style="' + vStyle + 'opacity:1;"></video>' +
                     '<video id="' + idB + '" muted playsinline style="' + vStyle + 'opacity:0;"></video>';
