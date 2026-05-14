@@ -920,7 +920,7 @@ body.is-entering {
     
     /* === contact.html styles === */
 
-    body { background: #eae8e4; }
+    #page_contact { background: #eae8e4; }
     .contact-wrap { padding: 200px var(--gutter) 120px; max-width: var(--max); margin: 0 auto; }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     .contact-col-left { grid-column: 1; }
@@ -3342,6 +3342,10 @@ function showPage(pageName, params, skipHistory) {
   
   _currentPage = pageName;
   window.scrollTo(0,0);
+
+  // Page-specific background colors
+  var bgMap = { 'contact.html': '#eae8e4' };
+  document.body.style.background = bgMap[pageName] || '';
 
   // Store params for detail pages
   window._routerParams = params;
