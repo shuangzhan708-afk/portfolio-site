@@ -2191,16 +2191,16 @@ window.PROJECTS = {
       summary: "Lucky Penny Real Estate is a visual identity application project for a real estate brand, working under an established art direction and brand system.||The focus was on translating an existing visual identity into a wide range of real-world applications across print, signage, and digital templates, ensuring consistency across all customer-facing touchpoints.||The project spans both physical and digital brand materials used in real estate marketing and sales environments.",
       detailTags: ["Brand Identity Application", "Visual System Execution", "Print Design", "Signage Design", "Marketing Collateral", "Social Media Templates", "Stationery Design", "Layout Design", "Template System", "Production Design"],
       sections: [
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-01.jpg" },
-        { kind: "split", left: "images/design/lucky-penny-real-estate/photo/lucky-penny-mockup-02.jpg", right: "images/design/lucky-penny-real-estate/photo/lucky-penny-mockup-03.jpg" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-04.png" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-05.jpg" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-06.jpg" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-07.png" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-08.png" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-09.png" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-10.png" },
-        { kind: "image", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-11.png" }
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-01.jpg" },
+        { kind: "split", left: "images/design/lucky-penny-real-estate/photo/lucky-penny-mockup-02.jpg", right: "images/design/lucky-penny-real-estate/photo/lucky-penny-mockup-03.jpg", noClip: true },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-04.png" },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-05.jpg" },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-06.jpg" },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-07.png" },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-08.png" },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-09.png" },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-10.png" },
+        { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-11.png" }
       ]
     },
     {
@@ -3040,10 +3040,10 @@ window._init_design_detail = function() {
     } else if (s.kind === "split") {
       var w = document.createElement("div");
       w.className = "detail-img-split";
-      var isGifL = s.left && s.left.toLowerCase().endsWith('.gif');
-      var isGifR = s.right && s.right.toLowerCase().endsWith('.gif');
-      w.innerHTML = '<div class="detail-img-half"><img src="' + s.left + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>' +
-                    '<div class="detail-img-half"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
+      if (s.noClip) w.style.alignItems = "start";
+      var imgStyle = s.noClip ? "width:100%;height:auto;display:block;border-radius:4px;" : "width:100%;height:auto;display:block;border-radius:4px;";
+      w.innerHTML = '<div class="detail-img-half"><img src="' + s.left + '" style="' + imgStyle + '" loading="lazy"></div>' +
+                    '<div class="detail-img-half"><img src="' + s.right + '" style="' + imgStyle + '" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-equal") {
       var w = document.createElement("div");
