@@ -1656,7 +1656,7 @@ body { background: #fff; }
     .detail-img-fullwidth img { width: 100%; display: block; }
     .detail-img-full.ratio-4-3 { aspect-ratio: 4/3; }
     .detail-img-full.ratio-3-2 { aspect-ratio: 3/2; }
-    .detail-img-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .detail-img-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
     .detail-img-split-asymmetric { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: start; }
     .detail-img-split-asymmetric .detail-img-half-small { aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
     .detail-img-split-asymmetric .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1669,9 +1669,9 @@ body { background: #fff; }
     .detail-img-grid-3 .detail-img-grid-3-item { aspect-ratio: 1080/1350; overflow: hidden; }
     .detail-img-grid-3 .detail-img-grid-3-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-contain img { width: 100%; height: auto; display: block; }
-    .detail-img-split-asymmetric-rev .detail-img-half-large { aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 4px; }
-    .detail-img-split-asymmetric-rev .detail-img-half-small { aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; overflow: hidden; }
-    .detail-img-split-asymmetric-rev .detail-img-half-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .detail-img-split-asymmetric-rev .detail-img-half-large { border-radius: 4px; overflow: hidden; }
+    .detail-img-split-asymmetric-rev .detail-img-half-small { border-radius: 4px; overflow: hidden; }
+    .detail-img-split-asymmetric-rev .detail-img-half-small img { width: 100%; height: auto; display: block; }
     .detail-img-split-equal { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; }
     .detail-img-split-equal .detail-img-half { border-radius: 4px; overflow: hidden; }
     .detail-img-split-equal .detail-img-half img { width: 100%; height: auto; display: block; border-radius: 4px; }
@@ -2149,7 +2149,7 @@ window.PROJECTS = {
         "images/design/vegas-infinite/banner/vegas-infinite-mockup-07.webp",
         "images/design/vegas-infinite/banner/vegas-infinite-mockup-01.png"
       ],
-      thumb: "images/home/featured/pokerstars-vr-gif-cover.gif",
+      thumb: "images/design/vegas-infinite/banner/Vegas Infinite Cover.png",
       client: "Vegas Infinite",
       year: "2025",
       role: "Brand Identity, Digital Design",
@@ -3028,7 +3028,10 @@ window._init_design_detail = function() {
     } else if (s.kind === "split") {
       var w = document.createElement("div");
       w.className = "detail-img-split";
-      w.innerHTML = '<div class="detail-img-half" style="background-image:url(\'' + s.left + '\')" ></div><div class="detail-img-half" style="background-image:url(\'' + s.right + '\')" ></div>';
+      var isGifL = s.left && s.left.toLowerCase().endsWith('.gif');
+      var isGifR = s.right && s.right.toLowerCase().endsWith('.gif');
+      w.innerHTML = '<div class="detail-img-half"><img src="' + s.left + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>' +
+                    '<div class="detail-img-half"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-equal") {
       var w = document.createElement("div");
@@ -3039,28 +3042,16 @@ window._init_design_detail = function() {
     } else if (s.kind === "split-asymmetric-rev") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric-rev";
-      var isGifLeft = (s.left && (s.left.startsWith("data:image/gif") || s.left.toLowerCase().endsWith(".gif")));
-      var isGifRight = (s.right && (s.right.startsWith("data:image/gif") || s.right.toLowerCase().endsWith(".gif")));
       w.innerHTML =
-        '<div class="detail-img-half-large">' +
-        (isGifLeft ? '<img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.left + '\');background-size:cover;background-position:center;"></div>') +
-        '</div>' +
-        '<div class="detail-img-half-small">' +
-        (isGifRight ? '<img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.right + '\');background-size:cover;background-position:center;"></div>') +
-        '</div>';
+        '<div class="detail-img-half-large"><img src="' + s.left + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>' +
+        '<div class="detail-img-half-small"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric";
-      var isGifLeft = (s.left && (s.left.startsWith("data:image/gif") || s.left.toLowerCase().endsWith(".gif")));
-      var isGifRight = (s.right && (s.right.startsWith("data:image/gif") || s.right.toLowerCase().endsWith(".gif")));
       w.innerHTML =
-        '<div class="detail-img-half-small">' +
-        (isGifLeft ? '<img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.left + '\');background-size:cover;background-position:center;"></div>') +
-        '</div>' +
-        '<div class="detail-img-half-large">' +
-        (isGifRight ? '<img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;">' : '<div style="width:100%;height:100%;background-image:url(\'' + s.right + '\');background-size:cover;background-position:center;"></div>') +
-        '</div>';
+        '<div class="detail-img-half-small"><img src="' + s.left + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>' +
+        '<div class="detail-img-half-large"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "grid-4") {
       var w = document.createElement("div");
