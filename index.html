@@ -2387,6 +2387,7 @@ window.PROJECTS = {
         "images/illustration/nanxiang-express/banner/nanxiang-express-mascot-06.png"
       ],
       summary: "A mascot character design project for Nanxiang Express, a Chinese restaurant brand specialising in soup dumplings. The project focused on creating a lovable and expressive brand mascot that could be applied across packaging, signage, and digital communication.||The mascot was designed to embody the warmth and authenticity of the brand while appealing to a broad audience, translating the restaurant's identity into a distinctive and memorable visual character.",
+      detailTags: ["Illustration", "Character Design", "Brand Identity", "Mascot Design"],
       sections: [
         { kind: "image-contain", src: "images/illustration/nanxiang-express/mockup/nanxiang-express-mascot-01.webp" },
         { kind: "image-contain", src: "images/illustration/nanxiang-express/mockup/nanxiang-express-mascot-02.jpg" },
@@ -2396,11 +2397,28 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/illustration/nanxiang-express/mockup/nanxiang-express-mascot-06.png" },
         { kind: "image-contain", src: "images/illustration/nanxiang-express/mockup/nanxiang-express-mascot-07.png" }
       ] },
-    { slug: "real-fruit", title: "Real Fruit Bubble Tea", desc: "Coming soon.", year: "2014", role: "Illustration", tags: [],
-      thumb: "images/home/featured/real-fruit-cover.webp",
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
-      summary: "A cabinet-of-curiosities poster — drawn objects stacked into a face, then re-stacked into a sentence.",
-      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1600&q=80" }] },
+    { slug: "real-fruit", title: "Real Fruit Bubble Tea", desc: "A series of character illustrations and brand mockups created for Real Fruit Bubble Tea, combining playful illustration with product presentation.", year: "2024", role: "Illustration", tags: ["Illustration", "Character Design", "Brand Identity"],
+      thumb: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-cover.webp",
+      hero: [
+        "images/illustration/real-fruit-bubble-tea/banner/real-fruit-cover.webp",
+        "images/illustration/real-fruit-bubble-tea/banner/real-fruit-mockup-01.webp",
+        "images/illustration/real-fruit-bubble-tea/banner/real-fruit-mockup-02.webp",
+        "images/illustration/real-fruit-bubble-tea/banner/real-fruit-mockup-04.png"
+      ],
+      summary: "A character illustration and visual identity project for Real Fruit Bubble Tea, a bubble tea brand focused on fresh fruit ingredients.||The project involved creating a series of original character illustrations that capture the playful and vibrant energy of the brand, applied across packaging mockups and promotional materials.||Each illustration was designed to reflect the brand's personality while maintaining a cohesive visual language across different product and marketing touchpoints.",
+      detailTags: ["Illustration", "Character Design", "Brand Identity", "Packaging Design", "Promotional Design"],
+      sections: [
+        { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-cover.webp" },
+        { kind: "split-asymmetric", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-01.jpg", right: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-01.webp" },
+        { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-02.webp" },
+        { kind: "split", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-02.webp", right: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-03.jpg" },
+        { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-03.webp" },
+        { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-03.webp" },
+        { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-04.webp" },
+        { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-04.png" },
+        { kind: "split", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-05.jpg", right: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-06.jpg" },
+        { kind: "split", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-07.jpg", right: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-08.jpg" }
+      ] },
     { slug: "overview-of-types", title: "Overview Of The Types Of Printing", desc: "Coming soon.", year: "2023", role: "Illustration", tags: [],
       thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
       hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
@@ -3072,6 +3090,13 @@ window._init_design_detail = function() {
         '<div class="detail-img-half-large"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
         '<div class="detail-img-half-small"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
       sec.appendChild(w);
+    } else if (s.kind === "split-asymmetric") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split-asymmetric";
+      w.innerHTML =
+        '<div class="detail-img-half-small"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
+        '<div class="detail-img-half-large"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>';
+      sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
       var w = document.createElement("div");
       w.className = "detail-img-fullwidth";
@@ -3377,6 +3402,13 @@ window._init_illustration_detail = function() {
       w.innerHTML =
         '<div class="detail-img-half-large"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
         '<div class="detail-img-half-small"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
+      sec.appendChild(w);
+    } else if (s.kind === "split-asymmetric") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split-asymmetric";
+      w.innerHTML =
+        '<div class="detail-img-half-small"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
+        '<div class="detail-img-half-large"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
       var w = document.createElement("div");
