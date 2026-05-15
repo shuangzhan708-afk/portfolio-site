@@ -2876,20 +2876,25 @@ window._init_index = function() {
 
       // Auto-cycle thumbSlides like a gif
       if (thumbSlidesId && item.p.thumbSlides && item.p.thumbSlides.length) {
-        (function(id, slides) {
+        (function(id, slides, cover) {
+          var allSlides = [cover].concat(slides);
           var ci = 0;
-          setInterval(function() {
-            var el = document.getElementById(id);
-            if (!el) return;
-            ci = (ci + 1) % slides.length;
-            el.style.transition = 'opacity 400ms ease';
-            el.style.opacity = '0';
-            setTimeout(function() {
-              el.style.backgroundImage = "url('" + slides[ci] + "')";
-              el.style.opacity = '1';
-            }, 400);
-          }, 1500);
-        })(thumbSlidesId, item.p.thumbSlides);
+          setTimeout(function() {
+            setInterval(function() {
+              var thumbEl = document.getElementById(id);
+              if (!thumbEl) return;
+              ci = (ci + 1) % allSlides.length;
+              thumbEl.style.transition = 'opacity 400ms ease';
+              thumbEl.style.opacity = '0';
+              setTimeout(function() {
+                var el2 = document.getElementById(id);
+                if (!el2) return;
+                el2.style.backgroundImage = "url('" + allSlides[ci] + "')";
+                el2.style.opacity = '1';
+              }, 400);
+            }, 1500);
+          }, 500);
+        })(thumbSlidesId, item.p.thumbSlides, item.p.thumb);
       }
 
     });
