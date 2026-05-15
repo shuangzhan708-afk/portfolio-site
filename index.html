@@ -1653,6 +1653,7 @@ body { background: #fff; }
     .detail-video-inline { width: 100%; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; background: #000; }
     .detail-video-inline video { width: 100%; height: 100%; object-fit: contain; display: block; }
     .detail-img-fullwidth { width: 100vw; margin: 60px calc(-1 * clamp(60px, 10vw, 180px)); padding: 120px clamp(60px, 10vw, 180px); }
+    .detail-img-fullwidth.no-bg { padding: 0; margin: 20px calc(-1 * clamp(60px, 10vw, 180px)); }
     .detail-img-fullwidth img { width: 100%; display: block; }
     .detail-img-full.ratio-4-3 { aspect-ratio: 4/3; }
     .detail-img-full.ratio-3-2 { aspect-ratio: 3/2; }
@@ -2412,12 +2413,16 @@ window.PROJECTS = {
         { kind: "split-asymmetric", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-01.jpg", right: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-01.webp" },
         { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-02.webp" },
         { kind: "split", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-02.webp", right: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-03.jpg" },
-        { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-03.webp" },
+        { kind: "image-fullwidth", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-03.webp" },
         { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-03.webp" },
         { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-04.webp" },
         { kind: "image-contain", src: "images/illustration/real-fruit-bubble-tea/mockup/real-fruit-mockup-04.png" },
-        { kind: "split", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-05.jpg", right: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-06.jpg" },
-        { kind: "split", left: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-07.jpg", right: "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-08.jpg" }
+        { kind: "grid-4", images: [
+          "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-05.jpg",
+          "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-06.jpg",
+          "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-07.jpg",
+          "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-08.jpg"
+        ]}
       ] },
     { slug: "overview-of-types", title: "Overview Of The Types Of Printing", desc: "Coming soon.", year: "2023", role: "Illustration", tags: [],
       thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
@@ -3097,11 +3102,18 @@ window._init_design_detail = function() {
         '<div class="detail-img-half-small"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
         '<div class="detail-img-half-large"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>';
       sec.appendChild(w);
+    } else if (s.kind === "grid-4") {
+      var w = document.createElement("div");
+      w.className = "detail-img-grid-4";
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="detail-img-grid-4-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
+      sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
       var w = document.createElement("div");
-      w.className = "detail-img-fullwidth";
+      w.className = "detail-img-fullwidth" + (s.bg ? "" : " no-bg");
       if (s.bg) w.style.background = s.bg;
-      var innerWidth = s.innerSize || "75%";
+      var innerWidth = s.bg ? (s.innerSize || "75%") : "100%";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy" style="width:' + innerWidth + ';max-width:' + innerWidth + ';display:block;margin:0 auto;">';
       sec.appendChild(w);
     } else if (s.kind === "video-inline") {
@@ -3410,11 +3422,18 @@ window._init_illustration_detail = function() {
         '<div class="detail-img-half-small"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
         '<div class="detail-img-half-large"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>';
       sec.appendChild(w);
+    } else if (s.kind === "grid-4") {
+      var w = document.createElement("div");
+      w.className = "detail-img-grid-4";
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="detail-img-grid-4-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
+      sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
       var w = document.createElement("div");
-      w.className = "detail-img-fullwidth";
+      w.className = "detail-img-fullwidth" + (s.bg ? "" : " no-bg");
       if (s.bg) w.style.background = s.bg;
-      var innerWidth = s.innerSize || "75%";
+      var innerWidth = s.bg ? (s.innerSize || "75%") : "100%";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy" style="width:' + innerWidth + ';max-width:' + innerWidth + ';display:block;margin:0 auto;">';
       sec.appendChild(w);
     } else if (s.kind === "video-inline") {
