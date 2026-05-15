@@ -1687,6 +1687,7 @@ body { background: #fff; }
     .detail-img-half { border-radius: 4px; overflow: hidden; }
     .detail-caption { font-size: 13px; color: var(--color-ink-muted-48); padding: 10px 0 0; font-style: italic; }
     .detail-section-heading { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted-48); padding: 40px 0 12px; }
+    .detail-caption-right { font-size: 13px; color: var(--color-ink-muted-48); padding: 12px 0 0; font-style: italic; text-align: right; max-width: 480px; margin-left: auto; line-height: 1.6; }
     /* ── Detail: Next project ── */
     .detail-next { padding: 80px clamp(60px, 10vw, 180px) 0; max-width: var(--max); margin: 0 auto; }
     .detail-next-inner { border-top: 1px solid var(--color-hairline); padding-top: 60px; }
@@ -2440,7 +2441,7 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/overview-types-print-01.webp" },
         { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/overview-types-print-02.webp" },
         { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/overview-types-print-03.webp" },
-        { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/use-professional-interior-signage.png", heading: "Why Use Professional Interior Signage?" }
+        { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/use-professional-interior-signage.png", heading: "Why Use Professional Interior Signage?", captionRight: "Poor signage leaves people lost and frustrated. Professional interior signage communicates clearly, builds trust, and guides your visitors with confidence — because first impressions are made before anyone says a word." }
       ] },
     { slug: "ot", title: "O.T.", desc: "An illustration of the quiet exhaustion of office life — a dog in business casual, just trying to get through the day.", year: "2016", role: "Illustration", tags: ["Illustration", "Character Design", "Editorial"],
       thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
@@ -3113,6 +3114,12 @@ window._init_design_detail = function() {
       }
       w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
       sec.appendChild(w);
+      if (s.captionRight) {
+        var cr = document.createElement("div");
+        cr.className = "detail-caption-right";
+        cr.textContent = s.captionRight;
+        sec.appendChild(cr);
+      }
     } else if (s.kind === "split") {
       var w = document.createElement("div");
       w.className = "detail-img-split";
@@ -3439,6 +3446,12 @@ window._init_illustration_detail = function() {
       }
       w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
       sec.appendChild(w);
+      if (s.captionRight) {
+        var cr = document.createElement("div");
+        cr.className = "detail-caption-right";
+        cr.textContent = s.captionRight;
+        sec.appendChild(cr);
+      }
     } else if (s.kind === "split") {
       var w = document.createElement("div");
       w.className = "detail-img-split";
