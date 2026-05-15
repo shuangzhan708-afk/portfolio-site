@@ -2351,9 +2351,9 @@ window.PROJECTS = {
       hero: [
         "images/illustration/mercatus-technologies/banner/mct-cover.png",
         "images/illustration/mercatus-technologies/banner/mct-illust-mockup-01.webp",
-        "images/illustration/mercatus-technologies/banner/mct-illustration-01.png",
-        "images/illustration/mercatus-technologies/banner/mct-illustration-07.webp",
-        "images/illustration/mercatus-technologies/banner/mct-illustration-11.webp"
+        { src: "images/illustration/mercatus-technologies/banner/mct-illustration-01.png", bg: "#F6F6F6" },
+        { src: "images/illustration/mercatus-technologies/banner/mct-illustration-07.webp", bg: "#F6F6F6" },
+        { src: "images/illustration/mercatus-technologies/banner/mct-illustration-11.webp", bg: "#F6F6F6" }
       ],
       summary: "A vibrant illustration system built around the everyday act of grocery shopping — characters, data visualisations, and digital interfaces woven into a single cohesive world.",
       sections: [
@@ -2945,7 +2945,7 @@ window._init_design_detail = function() {
   // Carousel
   var track = document.getElementById("carousel-track");
   var dotsEl = document.getElementById("carousel-dots");
-  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []);
+  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(item){ return typeof item === 'string' ? { src: item } : item; }) : (p.hero ? [{ src: p.hero }] : []);
   var allSlides = heroSlides;
   var current = 0;
   var elapsed = 0;
@@ -2979,7 +2979,8 @@ window._init_design_detail = function() {
     track.style.transition = "none";
     track.style.transform = "translateX(0%)";
     track.innerHTML = allSlides.map(function(s){
-      return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\')"></div>';
+      var bgStyle = s.bg ? 'background-color:' + s.bg + ';background-size:contain;background-repeat:no-repeat;background-position:center;' : '';
+      return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\');' + bgStyle + '"></div>';
     }).join("");
     dotsEl.innerHTML = allSlides.map(function(_, i){
       return '<button class="detail-carousel-dot' + (i===0?" is-active":"") + '" data-i="' + i + '"></button>';
@@ -3036,6 +3037,19 @@ window._init_design_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-img-contain";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
+      sec.appendChild(w);
+    } else if (s.kind === "split") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split";
+      if (s.noClip) {
+        w.style.alignItems = "start";
+        w.innerHTML = '<div class="detail-img-half"><img src="' + s.left + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>' +
+                      '<div class="detail-img-half"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
+      } else {
+        w.style.alignItems = "stretch";
+        w.innerHTML = '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
+                      '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
+      }
       sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
       var w = document.createElement("div");
@@ -3242,7 +3256,7 @@ window._init_illustration_detail = function() {
   // Carousel
   var track = document.getElementById("ill-carousel-track");
   var dotsEl = document.getElementById("ill-carousel-dots");
-  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(src){ return { src: src }; }) : (p.hero ? [{ src: p.hero }] : []);
+  var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(item){ return typeof item === 'string' ? { src: item } : item; }) : (p.hero ? [{ src: p.hero }] : []);
   var allSlides = heroSlides;
   var current = 0;
   var elapsed = 0;
@@ -3276,7 +3290,8 @@ window._init_illustration_detail = function() {
     track.style.transition = "none";
     track.style.transform = "translateX(0%)";
     track.innerHTML = allSlides.map(function(s){
-      return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\')"></div>';
+      var bgStyle = s.bg ? 'background-color:' + s.bg + ';background-size:contain;background-repeat:no-repeat;background-position:center;' : '';
+      return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\');' + bgStyle + '"></div>';
     }).join("");
     dotsEl.innerHTML = allSlides.map(function(_, i){
       return '<button class="detail-carousel-dot' + (i===0?" is-active":"") + '" data-i="' + i + '"></button>';
@@ -3321,6 +3336,19 @@ window._init_illustration_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-img-contain";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy">';
+      sec.appendChild(w);
+    } else if (s.kind === "split") {
+      var w = document.createElement("div");
+      w.className = "detail-img-split";
+      if (s.noClip) {
+        w.style.alignItems = "start";
+        w.innerHTML = '<div class="detail-img-half"><img src="' + s.left + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>' +
+                      '<div class="detail-img-half"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
+      } else {
+        w.style.alignItems = "stretch";
+        w.innerHTML = '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
+                      '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
+      }
       sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
       var w = document.createElement("div");
