@@ -2424,11 +2424,23 @@ window.PROJECTS = {
           "images/illustration/real-fruit-bubble-tea/illustration/real-fruit-illust-08.jpg"
         ]}
       ] },
-    { slug: "overview-of-types", title: "Overview Of The Types Of Printing", desc: "Coming soon.", year: "2023", role: "Illustration", tags: [],
-      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
-      summary: "Coming soon.",
-      sections: [{ kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }] },
+    { slug: "overview-of-types", title: "Overview Of The Types Of Printing", desc: "An editorial illustration project exploring different printing techniques through visual storytelling.", year: "2023", role: "Illustration", tags: ["Illustration", "Editorial", "Print Design"],
+      thumb: "images/illustration/overview-types-print/banner/overview-types-print-cover.webp",
+      thumbSlides: [
+        "images/illustration/overview-types-print/illustration/overview-types-print-01.webp",
+        "images/illustration/overview-types-print/illustration/overview-types-print-02.webp",
+        "images/illustration/overview-types-print/illustration/overview-types-print-03.webp",
+        "images/illustration/overview-types-print/illustration/use-professional-interior-signage.png"
+      ],
+      hero: "images/illustration/overview-types-print/banner/overview-types-print-cover.webp",
+      summary: "An editorial illustration project exploring the different types of printing techniques through a visually driven informational format.||Each illustration was created to explain and differentiate a specific printing method, combining clear visual communication with an engaging graphic style designed for editorial and educational contexts.",
+      detailTags: ["Illustration", "Editorial Design", "Print Design", "Infographic", "Visual Communication"],
+      sections: [
+        { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/overview-types-print-01.webp" },
+        { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/overview-types-print-02.webp" },
+        { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/overview-types-print-03.webp" },
+        { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/use-professional-interior-signage.png" }
+      ] },
     { slug: "ot", title: "O.T.", desc: "An illustration of the quiet exhaustion of office life — a dog in business casual, just trying to get through the day.", year: "2016", role: "Illustration", tags: ["Illustration", "Character Design", "Editorial"],
       thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
       hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
@@ -2844,10 +2856,13 @@ window._init_index = function() {
         ? item.p.tags
         : [item.cat === "design" ? "Design" : "Illustration"];
       const isGif = (item.p.thumb.startsWith('data:image/gif') || item.p.thumb.toLowerCase().endsWith('.gif'));
+      const thumbSlidesId = item.p.thumbSlides ? 'ts-' + Math.random().toString(36).slice(2) : null;
       el.innerHTML = `
         <div class="proj-thumb">${isGif
           ? `<img src="${item.p.thumb}" class="gif-thumb" style="width:100%;height:100%;object-fit:cover;display:block;">`
-          : `<div class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
+          : thumbSlidesId
+            ? `<div id="${thumbSlidesId}" class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
+            : `<div class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
         }</div>
         <div class="proj-meta">
           <div>
@@ -2858,6 +2873,24 @@ window._init_index = function() {
         </div>
       `;
       grid.appendChild(el);
+
+      // Auto-cycle thumbSlides like a gif
+      if (thumbSlidesId && item.p.thumbSlides && item.p.thumbSlides.length) {
+        (function(id, slides) {
+          var ci = 0;
+          setInterval(function() {
+            var el = document.getElementById(id);
+            if (!el) return;
+            ci = (ci + 1) % slides.length;
+            el.style.transition = 'opacity 400ms ease';
+            el.style.opacity = '0';
+            setTimeout(function() {
+              el.style.backgroundImage = "url('" + slides[ci] + "')";
+              el.style.opacity = '1';
+            }, 400);
+          }, 1500);
+        })(thumbSlidesId, item.p.thumbSlides);
+      }
 
     });
     // Force-reveal newly-rendered cards (IntersectionObserver was set up
