@@ -2856,13 +2856,10 @@ window._init_index = function() {
         ? item.p.tags
         : [item.cat === "design" ? "Design" : "Illustration"];
       const isGif = (item.p.thumb.startsWith('data:image/gif') || item.p.thumb.toLowerCase().endsWith('.gif'));
-      const thumbSlidesId = item.p.thumbSlides ? 'ts-' + Math.random().toString(36).slice(2) : null;
       el.innerHTML = `
         <div class="proj-thumb">${isGif
           ? `<img src="${item.p.thumb}" class="gif-thumb" style="width:100%;height:100%;object-fit:cover;display:block;">`
-          : thumbSlidesId
-            ? `<div id="${thumbSlidesId}" class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
-            : `<div class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
+          : `<div class="proj-thumb-inner" style="background-image:url('${item.p.thumb}')"></div>`
         }</div>
         <div class="proj-meta">
           <div>
@@ -2875,26 +2872,22 @@ window._init_index = function() {
       grid.appendChild(el);
 
       // Auto-cycle thumbSlides like a gif
-      if (thumbSlidesId && item.p.thumbSlides && item.p.thumbSlides.length) {
-        (function(id, slides, cover) {
+      if (item.p.thumbSlides && item.p.thumbSlides.length) {
+        (function(slides, cover) {
           var allSlides = [cover].concat(slides);
           var ci = 0;
-          setTimeout(function() {
-            setInterval(function() {
-              var thumbEl = document.getElementById(id);
-              if (!thumbEl) return;
-              ci = (ci + 1) % allSlides.length;
-              thumbEl.style.transition = 'opacity 400ms ease';
-              thumbEl.style.opacity = '0';
-              setTimeout(function() {
-                var el2 = document.getElementById(id);
-                if (!el2) return;
-                el2.style.backgroundImage = "url('" + allSlides[ci] + "')";
-                el2.style.opacity = '1';
-              }, 400);
-            }, 1500);
-          }, 500);
-        })(thumbSlidesId, item.p.thumbSlides, item.p.thumb);
+          var thumbEl = el.querySelector('.proj-thumb-inner');
+          if (!thumbEl) return;
+          setInterval(function() {
+            ci = (ci + 1) % allSlides.length;
+            thumbEl.style.transition = 'opacity 400ms ease';
+            thumbEl.style.opacity = '0';
+            setTimeout(function() {
+              thumbEl.style.backgroundImage = "url('" + allSlides[ci] + "')";
+              thumbEl.style.opacity = '1';
+            }, 400);
+          }, 1500);
+        })(item.p.thumbSlides, item.p.thumb);
       }
 
     });
