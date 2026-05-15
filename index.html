@@ -1669,6 +1669,8 @@ body { background: #fff; }
     .detail-img-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .detail-img-grid-3 .detail-img-grid-3-item { aspect-ratio: 1080/1350; overflow: hidden; }
     .detail-img-grid-3 .detail-img-grid-3-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .detail-img-grid-3.no-clip .detail-img-grid-3-item { aspect-ratio: unset; overflow: visible; }
+    .detail-img-grid-3.no-clip .detail-img-grid-3-item img { width: 100%; height: auto; object-fit: unset; }
     .detail-img-contain img { width: 100%; height: auto; display: block; }
     .detail-img-split-asymmetric-rev .detail-img-half-large { border-radius: 4px; overflow: hidden; }
     .detail-img-split-asymmetric-rev .detail-img-half-large img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
@@ -2189,7 +2191,7 @@ window.PROJECTS = {
       role: "Identity, Apparel, Web",
       partners: "In partnership with Biophi",
       summary: "Lucky Penny Real Estate is a visual identity application project for a real estate brand, working under an established art direction and brand system.||The focus was on translating an existing visual identity into a wide range of real-world applications across print, signage, and digital templates, ensuring consistency across all customer-facing touchpoints.||The project spans both physical and digital brand materials used in real estate marketing and sales environments.",
-      detailTags: ["Brand Identity Application", "Visual System Execution", "Print Design", "Signage Design", "Marketing Collateral", "Social Media Templates", "Stationery Design", "Layout Design", "Template System", "Production Design"],
+      detailTags: ["Brand Identity Application", "Visual System Execution", "Print Design", "Signage Design", "Marketing Collateral", "Social Media Templates", "Stationery Design", "Layout Design", "Template System", "Production Design", "Email Template"],
       sections: [
         { kind: "image-contain", src: "images/design/lucky-penny-real-estate/mockup/lucky-penny-mockup-01.jpg" },
         { kind: "split", left: "images/design/lucky-penny-real-estate/photo/lucky-penny-mockup-02.jpg", right: "images/design/lucky-penny-real-estate/photo/lucky-penny-mockup-03.jpg", noClip: true },
@@ -2208,7 +2210,12 @@ window.PROJECTS = {
       title: "Thallo",
       desc: "A full brand and packaging design project for a skincare brand inspired by the Greek goddess of spring, focusing on natural elegance and structured packaging storytelling.",
       tags: ["Brand Identity", "Packaging Design", "Art Direction"],
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      hero: [
+        "images/design/thallo/banner/thallo-cover.png",
+        "images/design/thallo/banner/thallo-mockup-02.png",
+        "images/design/thallo/banner/thallo-mockup-03.png",
+        "images/design/thallo/banner/thallo-mockup-04.png"
+      ],
       thumb: "images/home/featured/thallo-cover.png",
       client: "Kolm Studios",
       year: "2025",
@@ -2217,12 +2224,15 @@ window.PROJECTS = {
       summary: "Thallo Cosmetics is a high-end skincare brand designed for a female professional audience, built around the idea of nature-driven beauty and botanical purity.||The brand takes inspiration from Thallo, the Greek goddess of spring, symbolizing renewal, natural growth, and elegance. This narrative becomes the foundation for both the visual identity and packaging system, translating mythology and nature into a contemporary luxury skincare brand.||The project spans from brand concept and logo design to packaging structure, material exploration, and physical prototyping.",
       detailTags: ["Brand Identity", "Logo Design", "Packaging Design", "Structural Packaging", "Art Direction", "Concept Development", "Typography", "Visual System", "Product Photography"],
       sections: [
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "video" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" },
-        { kind: "image", src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==" }
+        { kind: "image-contain", src: "images/design/thallo/banner/thallo-cover.png" },
+        { kind: "grid-3", images: [
+          "images/design/thallo/mockup/thallo-01.png",
+          "images/design/thallo/mockup/thallo-02.png",
+          "images/design/thallo/mockup/thallo-03.png"
+        ], noClip: true },
+        { kind: "image-contain", src: "images/design/thallo/mockup/thallo-mockup-03.png" },
+        { kind: "image-contain", src: "images/design/thallo/mockup/thallo-mockup-02.png" },
+        { kind: "image-contain", src: "images/design/thallo/mockup/thallo-mockup-04.png" }
       ]
     },
     {
@@ -3074,7 +3084,7 @@ window._init_design_detail = function() {
       sec.appendChild(w);
     } else if (s.kind === "grid-3") {
       var w = document.createElement("div");
-      w.className = "detail-img-grid-3";
+      w.className = "detail-img-grid-3" + (s.noClip ? " no-clip" : "");
       w.innerHTML = (s.images || []).map(function(img) {
         return '<div class="detail-img-grid-3-item"><img src="' + img + '" loading="lazy"></div>';
       }).join('');
