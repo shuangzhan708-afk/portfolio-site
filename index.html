@@ -2387,10 +2387,10 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/brand/poker-stars-02.webp" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-03.webp" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-04.gif" },
-        { kind: "image-fullwidth", src: "images/illustration/pokerstars-vr/brand/poker-stars-05.webp", bg: "#0a0a0a" },
+        { kind: "image-fullwidth", src: "images/illustration/pokerstars-vr/brand/poker-stars-05.webp", bg: "#0a0a0a", innerPadding: "0" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-06.gif" },
         { kind: "split-asymmetric-rev", left: "images/illustration/pokerstars-vr/brand/poker-stars-07.png", right: "images/illustration/pokerstars-vr/mockup/poker-stars-08.gif" },
-        { kind: "split-asymmetric-rev", left: "images/illustration/pokerstars-vr/mockup/poker-stars-10.png", right: "images/illustration/pokerstars-vr/mockup/poker-stars-09.gif" },
+        { kind: "split-asymmetric", left: "images/illustration/pokerstars-vr/mockup/poker-stars-09.gif", right: "images/illustration/pokerstars-vr/mockup/poker-stars-10.png" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-11.gif" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-12.webp" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-13.webp" },
@@ -3205,16 +3205,18 @@ window._init_design_detail = function() {
     } else if (s.kind === "split-asymmetric-rev") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric-rev";
+      w.style.alignItems = "stretch";
       w.innerHTML =
-        '<div class="detail-img-half-large"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
-        '<div class="detail-img-half-small"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
+        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
+        '<div class="detail-img-half-small" style="display:flex;align-items:center;justify-content:center;overflow:hidden;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric";
+      w.style.alignItems = "stretch";
       w.innerHTML =
-        '<div class="detail-img-half-small"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
-        '<div class="detail-img-half-large"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>';
+        '<div class="detail-img-half-small" style="display:flex;align-items:center;justify-content:center;overflow:hidden;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>' +
+        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "grid-4") {
       var w = document.createElement("div");
@@ -3234,7 +3236,9 @@ window._init_design_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-img-fullwidth" + (s.bg ? "" : " no-bg");
       if (s.bg) w.style.background = s.bg;
+      if (s.innerPadding !== undefined) w.style.padding = s.innerPadding;
       var innerWidth = s.bg ? (s.innerSize || "75%") : "100%";
+      if (s.innerPadding === "0" || s.innerPadding === 0) innerWidth = "100%";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy" style="width:' + innerWidth + ';max-width:' + innerWidth + ';display:block;margin:0 auto;">';
       sec.appendChild(w);
     } else if (s.kind === "video-inline") {
@@ -3550,16 +3554,18 @@ window._init_illustration_detail = function() {
     } else if (s.kind === "split-asymmetric-rev") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric-rev";
+      w.style.alignItems = "stretch";
       w.innerHTML =
-        '<div class="detail-img-half-large"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
-        '<div class="detail-img-half-small"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
+        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
+        '<div class="detail-img-half-small" style="display:flex;align-items:center;justify-content:center;overflow:hidden;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric") {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric";
+      w.style.alignItems = "stretch";
       w.innerHTML =
-        '<div class="detail-img-half-small"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>' +
-        '<div class="detail-img-half-large"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;" loading="lazy"></div>';
+        '<div class="detail-img-half-small" style="display:flex;align-items:center;justify-content:center;overflow:hidden;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>' +
+        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "grid-4") {
       var w = document.createElement("div");
@@ -3579,7 +3585,9 @@ window._init_illustration_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-img-fullwidth" + (s.bg ? "" : " no-bg");
       if (s.bg) w.style.background = s.bg;
+      if (s.innerPadding !== undefined) w.style.padding = s.innerPadding;
       var innerWidth = s.bg ? (s.innerSize || "75%") : "100%";
+      if (s.innerPadding === "0" || s.innerPadding === 0) innerWidth = "100%";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy" style="width:' + innerWidth + ';max-width:' + innerWidth + ';display:block;margin:0 auto;">';
       sec.appendChild(w);
     } else if (s.kind === "video-inline") {
