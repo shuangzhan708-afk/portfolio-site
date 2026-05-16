@@ -2397,8 +2397,8 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-04.gif" },
         { kind: "image-fullwidth", src: "images/illustration/pokerstars-vr/brand/poker-stars-05.webp", bg: "#0a0a0a", innerPadding: "0" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-06.gif" },
-        { kind: "image-fullwidth-grid", images: ["images/illustration/pokerstars-vr/brand/poker-stars-07.png", "images/illustration/pokerstars-vr/mockup/poker-stars-08.gif", "images/illustration/pokerstars-vr/mockup/poker-stars-10.png"], bg: "#0a0a0a", innerPadding: "40px" },
-        { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-09.gif" },
+        { kind: "split", left: "images/illustration/pokerstars-vr/brand/poker-stars-07.png", right: "images/illustration/pokerstars-vr/mockup/poker-stars-08.gif" },
+        { kind: "split", left: "images/illustration/pokerstars-vr/mockup/poker-stars-09.gif", right: "images/illustration/pokerstars-vr/mockup/poker-stars-10.png" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-11.gif" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-12.webp" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-13.webp" },
@@ -3206,8 +3206,8 @@ window._init_design_detail = function() {
                       '<div class="detail-img-half"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
       } else {
         w.style.alignItems = "stretch";
-        w.innerHTML = '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
-                      '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
+        w.innerHTML = '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;display:flex;align-items:center;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>' +
+                      '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;display:flex;align-items:center;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>';
       }
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric-rev") {
@@ -3564,8 +3564,8 @@ window._init_illustration_detail = function() {
                       '<div class="detail-img-half"><img src="' + s.right + '" style="width:100%;height:auto;display:block;border-radius:4px;" loading="lazy"></div>';
       } else {
         w.style.alignItems = "stretch";
-        w.innerHTML = '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
-                      '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>';
+        w.innerHTML = '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;display:flex;align-items:center;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>' +
+                      '<div class="detail-img-half" style="overflow:hidden;border-radius:4px;display:flex;align-items:center;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>';
       }
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric-rev") {
