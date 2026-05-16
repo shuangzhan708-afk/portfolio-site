@@ -2383,6 +2383,7 @@ window.PROJECTS = {
       ] },
     { slug: "pokerstars-vr", title: "PokerStars VR", desc: "A game-focused illustration project creating themed visual assets, event identities, and environmental artwork for a live-service VR platform.", year: "2023", role: "Illustration", tags: ["Illustration", "Game Visuals", "Creative Direction"],
       thumb: "images/home/featured/pokerstars-vr-gif-cover.gif",
+      navLight: true,
       hero: [
         "images/illustration/pokerstars-vr/mockup/poker-stars-01.gif",
         "images/illustration/pokerstars-vr/mockup/poker-stars-06.gif",
@@ -3452,6 +3453,15 @@ window._init_illustration_detail = function() {
   var next = list[(idx + 1) % list.length];
 
   document.title = p.title + " — Shuang.";
+
+  // Apply light nav (white font) for specific projects
+  setTimeout(function() {
+    var nav = document.querySelector('header.nav');
+    if (nav) {
+      if (p.navLight) nav.classList.add('theme-light');
+      else nav.classList.remove('theme-light');
+    }
+  }, 50);
 
   // Carousel
   var track = document.getElementById("ill-carousel-track");
