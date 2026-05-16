@@ -881,6 +881,7 @@ body.is-entering {
     .ill-grid .proj[data-slug="66-day-gifs"] .proj-thumb { aspect-ratio: 3 / 2; }
     .ill-grid .proj[data-slug="ot"] .proj-thumb { aspect-ratio: 3 / 4; }
     .ill-grid .proj[data-slug="happy-new-year"] .proj-thumb { aspect-ratio: 3 / 4; }
+    .ill-grid .proj[data-slug="poker-card-back-design"] .proj-thumb { aspect-ratio: 3 / 4; }
     .ill-grid .proj[data-slug="overview-of-types"] .proj-thumb { aspect-ratio: 3 / 2; }
     .ill-grid .row-feature .proj-thumb { aspect-ratio: unset; height: 800px; }
     .ill-grid .span-4 .proj-thumb { aspect-ratio: 4 / 5; }
@@ -1678,6 +1679,9 @@ body { background: #fff; }
     .detail-img-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
     .detail-img-grid-5 .detail-img-grid-5-item { aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; }
     .detail-img-grid-5 .detail-img-grid-5-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .detail-img-grid-3-custom { display: grid; gap: 12px; align-items: stretch; }
+    .detail-img-grid-3-custom .g3c-item { overflow: hidden; border-radius: 4px; }
+    .detail-img-grid-3-custom .g3c-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-split-tall { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
     .detail-img-split-tall .detail-img-split-tall-left img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
     .detail-img-split-tall .detail-img-split-tall-right { display: flex; flex-direction: column; gap: 12px; }
@@ -2535,6 +2539,7 @@ window.PROJECTS = {
       ] },
     { slug: "poker-card-back-design", title: "Poker Card Back Design", desc: "Coming soon.", year: "2024", role: "Illustration", tags: ["Illustration", "Graphic Design"],
       thumb: "images/illustration/poker-cardback-design/banner/cardback-01.webp",
+      navLight: true,
       hero: [
         "images/illustration/poker-cardback-design/banner/cardback-01.webp",
         "images/illustration/poker-cardback-design/banner/cardback-03.webp",
@@ -2549,17 +2554,17 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-05.webp" },
         { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-06.webp" },
         { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-07.png" },
-        { kind: "grid-3", images: [
+        { kind: "grid-3-custom", cols: "1fr 1.5fr 1.5fr", images: [
           "images/illustration/poker-cardback-design/mockup/cardback-08.png",
           "images/illustration/poker-cardback-design/mockup/cardback-09.jpg",
           "images/illustration/poker-cardback-design/mockup/cardback-10.jpg"
-        ], noClip: true },
+        ] },
         { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-11.webp" },
-        { kind: "split", left: "images/illustration/poker-cardback-design/mockup/cardback-12.png", right: "images/illustration/poker-cardback-design/mockup/cardback-12-2.png", noClip: true },
-        { kind: "split", left: "images/illustration/poker-cardback-design/mockup/cardback-13.png", right: "images/illustration/poker-cardback-design/mockup/cardback-14.jpg", noClip: true },
-        { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-15.webp" },
-        { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-16.webp" },
-        { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-17.webp" }
+        { kind: "split-asymmetric-rev", left: "images/illustration/poker-cardback-design/mockup/cardback-12.png", right: "images/illustration/poker-cardback-design/mockup/cardback-12-2.png" },
+        { kind: "split-asymmetric", left: "images/illustration/poker-cardback-design/mockup/cardback-13.png", right: "images/illustration/poker-cardback-design/mockup/cardback-14.jpg" },
+        { kind: "image", src: "images/illustration/poker-cardback-design/mockup/cardback-15.webp" },
+        { kind: "image", src: "images/illustration/poker-cardback-design/mockup/cardback-16.webp" },
+        { kind: "image", src: "images/illustration/poker-cardback-design/mockup/cardback-17.webp" }
       ] },
     { slug: "happy-new-year", title: "Happy New Year!", desc: "A personal illustration celebrating the new year with a city at midnight.", year: "2019", role: "Editorial Illustration", tags: ["Illustration", "Personal", "Editorial"],
       thumb: "images/illustration/happy-new-year/happy-new-year-illust.webp",
@@ -3638,6 +3643,14 @@ window._init_illustration_detail = function() {
       if (s.innerPadding) w.style.padding = s.innerPadding;
       w.innerHTML = (s.images || []).map(function(img) {
         return '<div class="fwg-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
+      sec.appendChild(w);
+    } else if (s.kind === "grid-3-custom") {
+      var w = document.createElement("div");
+      w.className = "detail-img-grid-3-custom";
+      w.style.gridTemplateColumns = s.cols || "repeat(3, 1fr)";
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="g3c-item"><img src="' + img + '" loading="lazy"></div>';
       }).join('');
       sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
