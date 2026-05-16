@@ -2560,7 +2560,7 @@ window.PROJECTS = {
           "images/illustration/poker-cardback-design/mockup/cardback-10.jpg"
         ] },
         { kind: "image-contain", src: "images/illustration/poker-cardback-design/mockup/cardback-11.webp" },
-        { kind: "split-asymmetric-rev", left: "images/illustration/poker-cardback-design/mockup/cardback-12.png", right: "images/illustration/poker-cardback-design/mockup/cardback-12-2.png" },
+        { kind: "split-asymmetric-rev", left: "images/illustration/poker-cardback-design/mockup/cardback-12.png", right: "images/illustration/poker-cardback-design/mockup/cardback-12-2.png", noClipLeft: true },
         { kind: "split-asymmetric", left: "images/illustration/poker-cardback-design/mockup/cardback-13.png", right: "images/illustration/poker-cardback-design/mockup/cardback-14.jpg" },
         { kind: "image", src: "images/illustration/poker-cardback-design/mockup/cardback-15.webp" },
         { kind: "image", src: "images/illustration/poker-cardback-design/mockup/cardback-16.webp" },
@@ -3243,8 +3243,9 @@ window._init_design_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric-rev";
       w.style.alignItems = "stretch";
+      var leftFit = s.noClipLeft ? "contain" : "cover";
       w.innerHTML =
-        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
+        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;display:flex;align-items:center;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:' + leftFit + ';display:block;" loading="lazy"></div>' +
         '<div class="detail-img-half-small" style="display:flex;align-items:center;justify-content:center;overflow:hidden;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric") {
@@ -3610,8 +3611,9 @@ window._init_illustration_detail = function() {
       var w = document.createElement("div");
       w.className = "detail-img-split-asymmetric-rev";
       w.style.alignItems = "stretch";
+      var leftFit = s.noClipLeft ? "contain" : "cover";
       w.innerHTML =
-        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>' +
+        '<div class="detail-img-half-large" style="overflow:hidden;border-radius:4px;display:flex;align-items:center;"><img src="' + s.left + '" style="width:100%;height:100%;object-fit:' + leftFit + ';display:block;" loading="lazy"></div>' +
         '<div class="detail-img-half-small" style="display:flex;align-items:center;justify-content:center;overflow:hidden;"><img src="' + s.right + '" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy"></div>';
       sec.appendChild(w);
     } else if (s.kind === "split-asymmetric") {
