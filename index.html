@@ -878,6 +878,7 @@ body.is-entering {
     .ill-grid .span-4 { grid-column: span 4; }
     .ill-grid .span-8 { grid-column: span 8; }
     .ill-grid .span-12 { grid-column: 1 / -1; }
+    .ill-grid .span-8 .proj[data-slug="the-gay-essay"] .proj-thumb,
     .ill-grid .span-12 .proj-thumb { aspect-ratio: 21 / 9; width: 100%; position: relative; overflow: hidden; }
     .ill-grid .span-12 .proj-thumb .proj-thumb-inner { position: absolute; inset: 0; width: 100%; height: 100%; background-size: cover; background-position: center; }
     .ill-grid .proj-thumb { aspect-ratio: 16 / 9; }
@@ -3069,7 +3070,7 @@ window._init_design = function() {
 window._init_illustration = function() {
   const grid = document.getElementById("ill-grid");
   grid.innerHTML = "";
-  const layout = ["row-feature", "span-7", "span-5", "span-6", "span-6", "span-4", "span-8", "span-4", "span-4", "span-4", "span-6", "span-12"];
+  const layout = ["row-feature", "span-7", "span-5", "span-6", "span-6", "span-4", "span-8", "span-4", "span-4", "span-4", "span-6", "span-8"];
   PROJECTS.illustration.forEach((p, i) => {
     const el = document.createElement("a");
     el.className = `proj reveal ${layout[i] || "span-6"}`;
