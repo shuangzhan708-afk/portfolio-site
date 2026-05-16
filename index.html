@@ -2444,10 +2444,11 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/illustration/overview-types-print/illustration/use-professional-interior-signage.png", heading: "Why Use Professional Interior Signage?", captionRight: "Poor signage leaves people lost and frustrated. Professional interior signage communicates clearly, builds trust, and guides your visitors with confidence — because first impressions are made before anyone says a word." }
       ] },
     { slug: "ot", title: "O.T.", desc: "An illustration of the quiet exhaustion of office life — a dog in business casual, just trying to get through the day.", year: "2016", role: "Illustration", tags: ["Illustration", "Character Design", "Editorial"],
-      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
+      thumb: "images/illustration/O.T/happy-new-year-illustration.webp",
+      hero: "images/illustration/O.T/happy-new-year-illustration.webp",
+      heroContain: true,
       summary: "A serif F sprouting instruments — drawn until each one read at logo scale.",
-      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=1600&q=80" }] },
+      sections: [{ kind: "image-contain", src: "images/illustration/O.T/happy-new-year-illustration.webp" }] },
     { slug: "baitme", title: "Baitme", desc: "An illustration-led awareness campaign using narrative storytelling and digital animation to communicate online privacy risks, recognized with an RGD Student Awards Honourable Mention (Print Design).", year: "2010", role: "Editorial Illustration", tags: ["Illustration", "Awareness Campaign", "Digital Storytelling"],
       thumb: "images/illustration/baitme/banner/baitme-cover.webp",
       hero: [
@@ -3081,8 +3082,10 @@ window._init_design_detail = function() {
   if (allSlides.length > 0) {
     track.style.transition = "none";
     track.style.transform = "translateX(0%)";
+    var heroContain = p.heroContain || false;
     track.innerHTML = allSlides.map(function(s){
       var bgStyle = s.bg ? 'background-color:' + s.bg + ';background-size:contain;background-repeat:no-repeat;background-position:center;' : '';
+      if (heroContain && !s.bg) bgStyle = 'background-size:contain;background-repeat:no-repeat;background-position:center;';
       return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\');' + bgStyle + '"></div>';
     }).join("");
     dotsEl.innerHTML = allSlides.map(function(_, i){
@@ -3425,8 +3428,10 @@ window._init_illustration_detail = function() {
   if (allSlides.length > 0) {
     track.style.transition = "none";
     track.style.transform = "translateX(0%)";
+    var heroContain = p.heroContain || false;
     track.innerHTML = allSlides.map(function(s){
       var bgStyle = s.bg ? 'background-color:' + s.bg + ';background-size:contain;background-repeat:no-repeat;background-position:center;' : '';
+      if (heroContain && !s.bg) bgStyle = 'background-size:contain;background-repeat:no-repeat;background-position:center;';
       return '<div class="detail-carousel-slide" style="background-image:url(\'' + s.src + '\');' + bgStyle + '"></div>';
     }).join("");
     dotsEl.innerHTML = allSlides.map(function(_, i){
