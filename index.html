@@ -1654,6 +1654,9 @@ body { background: #fff; }
     .detail-video-inline video { width: 100%; height: 100%; object-fit: contain; display: block; }
     .detail-img-fullwidth { width: 100vw; margin: 60px calc(-1 * clamp(60px, 10vw, 180px)); padding: 120px clamp(60px, 10vw, 180px); }
     .detail-img-fullwidth.no-bg { padding: 0; margin: 20px calc(-1 * clamp(60px, 10vw, 180px)); }
+    .detail-img-fullwidth-grid { width: 100vw; margin: 60px calc(-1 * clamp(60px, 10vw, 180px)); display: flex; align-items: center; justify-content: center; gap: 0; }
+    .detail-img-fullwidth-grid .fwg-item { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .detail-img-fullwidth-grid .fwg-item img { width: 100%; height: auto; display: block; object-fit: contain; }
     .detail-img-fullwidth img { width: 100%; display: block; }
     .detail-img-full.ratio-4-3 { aspect-ratio: 4/3; }
     .detail-img-full.ratio-3-2 { aspect-ratio: 3/2; }
@@ -2380,7 +2383,12 @@ window.PROJECTS = {
       ] },
     { slug: "pokerstars-vr", title: "PokerStars VR", desc: "A game-focused illustration project creating themed visual assets, event identities, and environmental artwork for a live-service VR platform.", year: "2023", role: "Illustration", tags: ["Illustration", "Game Visuals", "Creative Direction"],
       thumb: "images/home/featured/pokerstars-vr-gif-cover.gif",
-      hero: "images/illustration/pokerstars-vr/banner/poker-stars-13.webp",
+      hero: [
+        "images/illustration/pokerstars-vr/mockup/poker-stars-01.gif",
+        "images/illustration/pokerstars-vr/mockup/poker-stars-06.gif",
+        "images/illustration/pokerstars-vr/mockup/poker-stars-08.gif",
+        "images/illustration/pokerstars-vr/mockup/poker-stars-11.gif"
+      ],
       summary: "A bold animated illustration for PokerStars VR's Summer Sizzle campaign — vivid characters and kinetic energy built for virtual reality.",
       sections: [
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-01.gif" },
@@ -2389,8 +2397,8 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-04.gif" },
         { kind: "image-fullwidth", src: "images/illustration/pokerstars-vr/brand/poker-stars-05.webp", bg: "#0a0a0a", innerPadding: "0" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-06.gif" },
-        { kind: "split-asymmetric-rev", left: "images/illustration/pokerstars-vr/brand/poker-stars-07.png", right: "images/illustration/pokerstars-vr/mockup/poker-stars-08.gif" },
-        { kind: "split-asymmetric", left: "images/illustration/pokerstars-vr/mockup/poker-stars-09.gif", right: "images/illustration/pokerstars-vr/mockup/poker-stars-10.png" },
+        { kind: "image-fullwidth-grid", images: ["images/illustration/pokerstars-vr/brand/poker-stars-07.png", "images/illustration/pokerstars-vr/mockup/poker-stars-08.gif", "images/illustration/pokerstars-vr/mockup/poker-stars-10.png"], bg: "#0a0a0a", innerPadding: "40px" },
+        { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-09.gif" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-11.gif" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-12.webp" },
         { kind: "image-contain", src: "images/illustration/pokerstars-vr/mockup/poker-stars-13.webp" },
@@ -3241,6 +3249,15 @@ window._init_design_detail = function() {
       if (s.innerPadding === "0" || s.innerPadding === 0) innerWidth = "100%";
       w.innerHTML = '<img src="' + s.src + '" loading="lazy" style="width:' + innerWidth + ';max-width:' + innerWidth + ';display:block;margin:0 auto;">';
       sec.appendChild(w);
+    } else if (s.kind === "image-fullwidth-grid") {
+      var w = document.createElement("div");
+      w.className = "detail-img-fullwidth-grid";
+      if (s.bg) w.style.background = s.bg;
+      if (s.innerPadding) w.style.padding = s.innerPadding;
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="fwg-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
+      sec.appendChild(w);
     } else if (s.kind === "video-inline") {
       if (!s.clips && !s.url) return;
       var uid = Math.random().toString(36).slice(2);
@@ -3579,6 +3596,15 @@ window._init_illustration_detail = function() {
       w.className = "detail-img-grid-5";
       w.innerHTML = (s.images || []).map(function(img) {
         return '<div class="detail-img-grid-5-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
+      sec.appendChild(w);
+    } else if (s.kind === "image-fullwidth-grid") {
+      var w = document.createElement("div");
+      w.className = "detail-img-fullwidth-grid";
+      if (s.bg) w.style.background = s.bg;
+      if (s.innerPadding) w.style.padding = s.innerPadding;
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="fwg-item"><img src="' + img + '" loading="lazy"></div>';
       }).join('');
       sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
