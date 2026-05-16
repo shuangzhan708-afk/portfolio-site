@@ -878,9 +878,8 @@ body.is-entering {
     .ill-grid .span-4 { grid-column: span 4; }
     .ill-grid .span-8 { grid-column: span 8; }
     .ill-grid .span-12 { grid-column: span 12; }
-    .ill-grid .span-12 .proj-thumb { aspect-ratio: 21 / 9; width: 100%; }
-    .ill-grid .span-12 .proj-thumb .proj-thumb-inner { width: 100%; height: 100%; background-size: cover; background-position: center; position: absolute; inset: 0; }
-    .ill-grid .span-12 .proj-thumb { position: relative; overflow: hidden; }
+    .ill-grid .span-12 .proj-thumb { aspect-ratio: 21 / 9; width: 100%; position: relative; overflow: hidden; }
+    .ill-grid .span-12 .proj-thumb .proj-thumb-inner { position: absolute; inset: 0; width: 100%; height: 100%; background-size: cover; background-position: center; }
     .ill-grid .proj-thumb { aspect-ratio: 16 / 9; }
     .ill-grid .proj[data-slug="66-day-gifs"] .proj-thumb { aspect-ratio: 3 / 2; }
     .ill-grid .proj[data-slug="ot"] .proj-thumb { aspect-ratio: 3 / 4; }
@@ -2581,11 +2580,11 @@ window.PROJECTS = {
       heroContain: true,
       heroBg: "#F6F6F6",
       hero: [
-        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-01.webp", bg: "#F6F6F6" },
-        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-06.webp", bg: "#F6F6F6" },
-        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-08.webp", bg: "#F6F6F6" },
-        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-12.webp", bg: "#F6F6F6" },
-        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-14.webp", bg: "#F6F6F6" }
+        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-01.webp", bg: "#000000" },
+        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-06.webp", bg: "#000000" },
+        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-08.webp", bg: "#000000" },
+        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-12.webp", bg: "#000000" },
+        { src: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-14.webp", bg: "#000000" }
       ],
       summary: "A series of thematic wall illustrations created for a VR game environment, each designed to establish a distinct visual atmosphere and spatial identity within the virtual space.",
       sections: [
