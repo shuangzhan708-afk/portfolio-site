@@ -1672,6 +1672,9 @@ body { background: #fff; }
     .detail-img-grid-3 .detail-img-grid-3-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-grid-3.no-clip .detail-img-grid-3-item { aspect-ratio: unset; overflow: visible; }
     .detail-img-grid-3.no-clip .detail-img-grid-3-item img { width: 100%; height: auto; object-fit: unset; }
+    .detail-img-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .detail-img-grid-5 .detail-img-grid-5-item { aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; }
+    .detail-img-grid-5 .detail-img-grid-5-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .detail-img-split-tall { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
     .detail-img-split-tall .detail-img-split-tall-left img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
     .detail-img-split-tall .detail-img-split-tall-right { display: flex; flex-direction: column; gap: 12px; }
@@ -2487,11 +2490,26 @@ window.PROJECTS = {
         { kind: "split", left: "images/illustration/baitme/mockup-yellow/baitme-mockup-29.webp", right: "images/illustration/baitme/mockup-yellow/baitme-mockup-30.webp" },
         { kind: "image-contain", src: "images/illustration/baitme/illustration/baitme-illust-06.webp" }
       ] },
-    { slug: "66-day-gifs", title: "66 Day Gifs", desc: "Coming soon.", year: "2018", role: "Illustration", tags: ["Animation", "Motion Graphic", "Illustration"],
-      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2UwZTBlMCIvPjwvc3ZnPg==",
-      summary: "A dot-matrix identity for a children's research foundation — a different colour for every kid we asked.",
-      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=1600&q=80" }] },
+    { slug: "66-day-gifs", title: "66 Day Gifs", desc: "A personal daily illustration challenge — one animated GIF every day for 66 days.", year: "2018", role: "Illustration", tags: ["Animation", "Motion Graphic", "Illustration"],
+      thumb: "images/illustration/66-days-gifs/banner/66-day-gifs-cover.gif",
+      hero: "images/illustration/66-days-gifs/banner/66-day-gifs-cover.gif",
+      summary: "A personal daily illustration challenge — one animated GIF every day for 66 consecutive days.||Each piece explores a different subject, mood, or technique, forming a collection that documents both creative growth and daily commitment over the course of the project.",
+      sections: [
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day1.gif", "images/illustration/66-days-gifs/mockup/day2.gif", "images/illustration/66-days-gifs/mockup/day3.gif", "images/illustration/66-days-gifs/mockup/day4.gif", "images/illustration/66-days-gifs/mockup/day5.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day6.gif", "images/illustration/66-days-gifs/mockup/day7.gif", "images/illustration/66-days-gifs/mockup/day8.gif", "images/illustration/66-days-gifs/mockup/day9.gif", "images/illustration/66-days-gifs/mockup/day10.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day11.gif", "images/illustration/66-days-gifs/mockup/day12.gif", "images/illustration/66-days-gifs/mockup/day13.gif", "images/illustration/66-days-gifs/mockup/day14.gif", "images/illustration/66-days-gifs/mockup/day15.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day16.gif", "images/illustration/66-days-gifs/mockup/day17.gif", "images/illustration/66-days-gifs/mockup/day18.gif", "images/illustration/66-days-gifs/mockup/day19.gif", "images/illustration/66-days-gifs/mockup/day20.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day21.gif", "images/illustration/66-days-gifs/mockup/day22.gif", "images/illustration/66-days-gifs/mockup/day23.gif", "images/illustration/66-days-gifs/mockup/day24.gif", "images/illustration/66-days-gifs/mockup/day25.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day26.gif", "images/illustration/66-days-gifs/mockup/day27.gif", "images/illustration/66-days-gifs/mockup/day28.gif", "images/illustration/66-days-gifs/mockup/day29.gif", "images/illustration/66-days-gifs/mockup/day30.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day31.gif", "images/illustration/66-days-gifs/mockup/day32.gif", "images/illustration/66-days-gifs/mockup/day33.gif", "images/illustration/66-days-gifs/mockup/day34.gif", "images/illustration/66-days-gifs/mockup/day35.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day36.gif", "images/illustration/66-days-gifs/mockup/day37.gif", "images/illustration/66-days-gifs/mockup/day38.gif", "images/illustration/66-days-gifs/mockup/day39.gif", "images/illustration/66-days-gifs/mockup/day40.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day41.gif", "images/illustration/66-days-gifs/mockup/day42.gif", "images/illustration/66-days-gifs/mockup/day43.gif", "images/illustration/66-days-gifs/mockup/day44.gif", "images/illustration/66-days-gifs/mockup/day45.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day46.gif", "images/illustration/66-days-gifs/mockup/day47.gif", "images/illustration/66-days-gifs/mockup/day48.gif", "images/illustration/66-days-gifs/mockup/day49.gif", "images/illustration/66-days-gifs/mockup/day50.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day51.gif", "images/illustration/66-days-gifs/mockup/day52.gif", "images/illustration/66-days-gifs/mockup/day53.gif", "images/illustration/66-days-gifs/mockup/day54.gif", "images/illustration/66-days-gifs/mockup/day55.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day56.gif", "images/illustration/66-days-gifs/mockup/day57.gif", "images/illustration/66-days-gifs/mockup/day58.gif", "images/illustration/66-days-gifs/mockup/day59.gif", "images/illustration/66-days-gifs/mockup/day60.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day61.gif", "images/illustration/66-days-gifs/mockup/day62.gif", "images/illustration/66-days-gifs/mockup/day63.gif", "images/illustration/66-days-gifs/mockup/day64.gif", "images/illustration/66-days-gifs/mockup/day65.gif"] },
+        { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day66.gif"] }
+      ] },
     { slug: "toronto-airport", title: "Toronto International Airport", desc: "Michael Gericke, 2008", year: "2008", role: "Illustration", tags: ["Environmental", "Wayfinding"],
       thumb: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=900&q=70",
       hero: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80",
@@ -3191,6 +3209,13 @@ window._init_design_detail = function() {
         return '<div class="detail-img-grid-4-item"><img src="' + img + '" loading="lazy"></div>';
       }).join('');
       sec.appendChild(w);
+    } else if (s.kind === "grid-5") {
+      var w = document.createElement("div");
+      w.className = "detail-img-grid-5";
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="detail-img-grid-5-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
+      sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
       var w = document.createElement("div");
       w.className = "detail-img-fullwidth" + (s.bg ? "" : " no-bg");
@@ -3523,6 +3548,13 @@ window._init_illustration_detail = function() {
       w.className = "detail-img-grid-4";
       w.innerHTML = (s.images || []).map(function(img) {
         return '<div class="detail-img-grid-4-item"><img src="' + img + '" loading="lazy"></div>';
+      }).join('');
+      sec.appendChild(w);
+    } else if (s.kind === "grid-5") {
+      var w = document.createElement("div");
+      w.className = "detail-img-grid-5";
+      w.innerHTML = (s.images || []).map(function(img) {
+        return '<div class="detail-img-grid-5-item"><img src="' + img + '" loading="lazy"></div>';
       }).join('');
       sec.appendChild(w);
     } else if (s.kind === "image-fullwidth") {
