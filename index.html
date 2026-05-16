@@ -879,6 +879,7 @@ body.is-entering {
     .ill-grid .span-8 { grid-column: span 8; }
     .ill-grid .span-12 { grid-column: span 12; }
     .ill-grid .span-12 .proj-thumb { aspect-ratio: 21 / 9; }
+    .ill-grid .span-12 .proj-thumb .proj-thumb-inner { background-size: cover; background-position: center; }
     .ill-grid .proj-thumb { aspect-ratio: 16 / 9; }
     .ill-grid .proj[data-slug="66-day-gifs"] .proj-thumb { aspect-ratio: 3 / 2; }
     .ill-grid .proj[data-slug="ot"] .proj-thumb { aspect-ratio: 3 / 4; }
@@ -2574,11 +2575,31 @@ window.PROJECTS = {
       heroContain: true,
       summary: "A personal illustration celebrating the new year with a city at midnight.",
       sections: [] },
-    { slug: "the-gay-essay", title: "VR Game: Thematic Wall", desc: "Bob Aufuldish / Anthony Friedkin, 2014", year: "2014", role: "Photo Editorial", tags: ["Book", "Editorial"],
-      thumb: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=70",
-      hero: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1600&q=80",
-      summary: "A black-and-white book design for a long-running photo essay — set in a single Didone, generously leaded.",
-      sections: [{ kind: "image", src: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1600&q=80" }] }
+    { slug: "the-gay-essay", title: "VR Game: Thematic Wall", desc: "A series of thematic wall illustrations created for a VR game environment.", year: "2024", role: "Illustration", tags: ["Illustration", "Game Visuals"],
+      thumb: "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-01.webp",
+      hero: [
+        "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-01.webp",
+        "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-06.webp",
+        "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-08.webp",
+        "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-12.webp",
+        "images/illustration/vr-game-thematic-wall-designs/banner/thematic-wall-14.webp"
+      ],
+      summary: "A series of thematic wall illustrations created for a VR game environment, each designed to establish a distinct visual atmosphere and spatial identity within the virtual space.",
+      sections: [
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-01.webp" },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-02.jpg" },
+        { kind: "split", left: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-03.webp", right: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-04.webp", noClip: true },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-05.webp" },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-06.webp" },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-07.webp" },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-08.webp" },
+        { kind: "split", left: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-09.webp", right: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-10.webp", noClip: true },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-11.webp" },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-12.webp" },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/mockup/thematic-wall-13.gif" },
+        { kind: "image-contain", src: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-14.webp" },
+        { kind: "split", left: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-15.webp", right: "images/illustration/vr-game-thematic-wall-designs/illustration/thematic-wall-16.png", noClip: true }
+      ] }
   ]
 };
 
