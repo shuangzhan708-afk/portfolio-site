@@ -877,6 +877,7 @@ body.is-entering {
     .ill-grid .span-6 { grid-column: span 6; }
     .ill-grid .span-4 { grid-column: span 4; }
     .ill-grid .span-8 { grid-column: span 8; }
+    .ill-grid .span-12 { grid-column: span 12; }
     .ill-grid .proj-thumb { aspect-ratio: 16 / 9; }
     .ill-grid .proj[data-slug="66-day-gifs"] .proj-thumb { aspect-ratio: 3 / 2; }
     .ill-grid .proj[data-slug="ot"] .proj-thumb { aspect-ratio: 3 / 4; }
@@ -3043,7 +3044,7 @@ window._init_design = function() {
 window._init_illustration = function() {
   const grid = document.getElementById("ill-grid");
   grid.innerHTML = "";
-  const layout = ["row-feature", "span-7", "span-5", "span-6", "span-6", "span-4", "span-8", "span-4", "span-4", "span-4", "span-6", "span-4"];
+  const layout = ["row-feature", "span-7", "span-5", "span-6", "span-6", "span-4", "span-8", "span-4", "span-4", "span-4", "span-6", "span-12"];
   PROJECTS.illustration.forEach((p, i) => {
     const el = document.createElement("a");
     el.className = `proj reveal ${layout[i] || "span-6"}`;
