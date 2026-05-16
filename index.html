@@ -2493,6 +2493,8 @@ window.PROJECTS = {
     { slug: "66-day-gifs", title: "66 Day Gifs", desc: "A personal daily illustration challenge — one animated GIF every day for 66 days.", year: "2018", role: "Illustration", tags: ["Animation", "Motion Graphic", "Illustration"],
       thumb: "images/illustration/66-days-gifs/banner/66-day-gifs-cover.gif",
       hero: "images/illustration/66-days-gifs/banner/66-day-gifs-cover.gif",
+      heroContain: true,
+      heroAspect: "4/3",
       summary: "A personal daily illustration challenge — one animated GIF every day for 66 consecutive days.||Each piece explores a different subject, mood, or technique, forming a collection that documents both creative growth and daily commitment over the course of the project.",
       sections: [
         { kind: "grid-5", images: ["images/illustration/66-days-gifs/mockup/day1.gif", "images/illustration/66-days-gifs/mockup/day2.gif", "images/illustration/66-days-gifs/mockup/day3.gif", "images/illustration/66-days-gifs/mockup/day4.gif", "images/illustration/66-days-gifs/mockup/day5.gif"] },
@@ -3421,6 +3423,9 @@ window._init_illustration_detail = function() {
   // Carousel
   var track = document.getElementById("ill-carousel-track");
   var dotsEl = document.getElementById("ill-carousel-dots");
+  var carouselEl = track ? track.closest('.detail-carousel') : null;
+  if (carouselEl && p.heroAspect) carouselEl.style.aspectRatio = p.heroAspect;
+  else if (carouselEl) carouselEl.style.aspectRatio = '';
   var heroSlides = Array.isArray(p.hero) ? p.hero.map(function(item){ return typeof item === 'string' ? { src: item } : item; }) : (p.hero ? [{ src: p.hero }] : []);
   var allSlides = heroSlides;
   var current = 0;
