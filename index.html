@@ -3102,8 +3102,11 @@ window._init_index = function() {
     { p: PROJECTS.illustration[3], cat: "illustration", span: 4 },
     { p: PROJECTS.design[6], cat: "design", span: 4 }
   ];
-  // Design tab: 8 projects, all 4-col
-  const designOnly = PROJECTS.design.slice(0, 9).map(p => ({ p, cat: "design", span: 4 }));
+  // Design tab: 8 projects, all 4-col — replace marguerite (8) with website-design-collection (10)
+  const designOnly = [
+    ...PROJECTS.design.slice(0, 8).map(p => ({ p, cat: "design", span: 4 })),
+    { p: PROJECTS.design[10], cat: "design", span: 4 }
+  ];
   // Illustration tab: 6 projects, all 4-col (2 rows of 3)
   const illustrationOnly = PROJECTS.illustration.slice(0, 6).map(p => ({ p, cat: "illustration", span: 4 }));
 
