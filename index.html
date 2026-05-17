@@ -775,40 +775,42 @@ body.is-entering {
     }
     .pillar:hover { transform: translateY(-4px); }
     .pillar.is-open { transform: none; }
-    .pillar-dropdown {
+    .pillar-floating-dropdown {
       display: none;
       position: absolute;
-      top: calc(100% + 12px);
-      left: 0;
-      right: 0;
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: 12px;
-      padding: 6px 0;
-      z-index: 200;
-      min-width: 220px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
-      animation: dropdownFade 200ms ease forwards;
+      background: rgba(245, 245, 243, 0.82);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 10px;
+      padding: 4px 0;
+      z-index: 9999;
+      min-width: 200px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      pointer-events: auto;
+    }
+    .pillar-floating-dropdown.is-visible {
+      display: block;
+      animation: dropdownFade 180ms ease forwards;
     }
     @keyframes dropdownFade {
-      from { opacity: 0; transform: translateY(-6px); }
+      from { opacity: 0; transform: translateY(-4px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .pillar.is-open .pillar-dropdown { display: block; }
     .pillar-dropdown-item {
       display: block;
-      padding: 9px 16px;
+      padding: 8px 14px;
       font-family: var(--font-display);
       font-size: 13px;
       font-weight: 500;
       color: var(--color-ink);
       cursor: pointer;
-      transition: background 150ms;
+      transition: background 120ms;
       letter-spacing: -0.01em;
+      border-radius: 6px;
+      margin: 2px 4px;
     }
-    .pillar-dropdown-item:hover { background: rgba(0,0,0,0.05); }
+    .pillar-dropdown-item:hover { background: rgba(0,0,0,0.06); }
     .pillar-chevron { transition: transform 300ms var(--ease-out); }
     .pillar.is-open .pillar-chevron { transform: rotate(180deg); }
     /* Staggered tall / short rhythm */
@@ -1400,6 +1402,29 @@ body { background: #fff; }
 .about-hero { padding: 160px var(--gutter) 60px !important; }
 .contact-wrap { padding: 160px var(--gutter) 80px !important; }
 @media (max-width: 600px) {
+/* Pillar grid — vertical stack on mobile */
+.pillar-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  transform: none !important;
+  overflow: visible !important;
+  gap: 0 !important;
+}
+.pillar {
+  flex: none !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 32px !important;
+  border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+}
+.pillar:last-child { border-bottom: none !important; }
+.pillar-img { aspect-ratio: 16/9 !important; margin-bottom: 14px !important; }
+.pillar-title { font-size: 18px !important; }
+.home-services { overflow: visible !important; }
+.home-services-inner { overflow: visible !important; }
+
 .listing-grid,
 .ill-grid {
   grid-template-columns: 1fr !important;
@@ -1486,7 +1511,16 @@ body { background: #fff; }
   .grid-projects .span-4 { grid-column: span 4 !important; }
   .grid-projects .span-6 { grid-column: span 6 !important; }
 
-  .pillar-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .pillar-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+  }
+  .pillar {
+    flex: 0 0 calc(50% - 14px) !important;
+    border-bottom: none !important;
+  }
 
   .listing-grid,
   .ill-grid {
@@ -1524,7 +1558,18 @@ body { background: #fff; }
   .home-hero h1 { font-size: 210px !important; }
   .home-hero .subhead { font-size: 22px; }
 
-  .pillar-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .pillar-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    width: calc(125% - 21px) !important;
+    overflow: visible !important;
+  }
+  .pillar {
+    flex: 0 0 calc(20% - 23px) !important;
+    min-width: 0 !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
   .pillar:nth-child(even) { padding-top: 96px !important; }
 
   .listing-grid .span-4, .ill-grid .span-4 { grid-column: span 4 !important; }
@@ -1848,7 +1893,6 @@ body { background: #fff; }
           <div class="pillar-title">Brand Identity
             <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-          <div class="pillar-dropdown"></div>
         </div>
         <div class="pillar reveal" style="--reveal-delay: 80ms" data-practice="production-packaging" data-cursor-hover>
           <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1542728928-0011f81446e5?w=900&q=70')"></div>
@@ -1856,7 +1900,6 @@ body { background: #fff; }
           <div class="pillar-title">Production &amp; Packaging
             <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-          <div class="pillar-dropdown"></div>
         </div>
         <div class="pillar reveal" style="--reveal-delay: 160ms" data-practice="website-uxui" data-cursor-hover>
           <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1493612276216-ee3925520721?w=900&q=70')"></div>
@@ -1864,7 +1907,6 @@ body { background: #fff; }
           <div class="pillar-title">Website &amp; UXUI
             <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-          <div class="pillar-dropdown"></div>
         </div>
         <div class="pillar reveal" style="--reveal-delay: 240ms" data-practice="campaign-social" data-cursor-hover>
           <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=900&q=70')"></div>
@@ -1872,7 +1914,6 @@ body { background: #fff; }
           <div class="pillar-title">Campaign &amp; Social Content
             <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-          <div class="pillar-dropdown"></div>
         </div>
         <div class="pillar reveal" style="--reveal-delay: 320ms" data-practice="commercial-illustration" data-cursor-hover>
           <div class="pillar-img" style="background-image:url('images/illustration/mercatus-technologies/illustration-small/mct-illustration-02.png')"></div>
@@ -1880,7 +1921,6 @@ body { background: #fff; }
           <div class="pillar-title">Commercial Illustration
             <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-          <div class="pillar-dropdown"></div>
         </div>
       </div>
     </div>
@@ -3940,68 +3980,137 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
 }});
 
 // Start on index
-// Practice area dropdown logic
+// Practice area dropdown logic — floating body-level dropdown
 (function() {
   var PRACTICE_MAP = {
     "brand-identity":           { cat: "design", tags: ["Brand Identity", "Brand System", "Rebranding", "Logo Design"] },
     "production-packaging":     { cat: "design", tags: ["Packaging Design", "Print Design", "Print & Menu Design", "Production Design"] },
     "website-uxui":             { cat: "design", tags: ["Website & UX/UI", "Web Design", "Website & UX/UI Design"] },
-    "campaign-social":          { cat: "design", tags: ["Campaign Design", "Social Media Design", "Marketing & Social Media Design", "Campaign Design"] },
+    "campaign-social":          { cat: "design", tags: ["Campaign Design", "Social Media Design", "Marketing & Social Media Design"] },
     "commercial-illustration":  { cat: "illustration", tags: ["Illustration", "Environmental Illustration", "Environmental Graphics", "Game Visuals", "Game Visual Design", "Game Visual Identity", "Card Design", "Character Design", "Mascot Design"], exclude: ["Personal Project", "Editorial", "Book", "Personal"] }
   };
 
-  function buildDropdowns() {
-    document.querySelectorAll('.pillar[data-practice]').forEach(function(pillar) {
-      var key = pillar.getAttribute('data-practice');
-      var map = PRACTICE_MAP[key];
-      if (!map) return;
+  // Single floating dropdown element attached to body
+  var floatingEl = null;
+  var currentPillar = null;
+  var hideTimer = null;
 
-      var projects = map.cat === "design" ? PROJECTS.design : PROJECTS.illustration;
-      var matched = projects.filter(function(p) {
-        var allTags = (p.detailTags || []).concat(p.tags || []);
-        // Exclude personal projects for illustration
-        if (map.exclude) {
-          var hasExclude = map.exclude.some(function(ex) { return allTags.indexOf(ex) > -1; });
-          if (hasExclude) return false;
-        }
-        return map.tags.some(function(t) { return allTags.indexOf(t) > -1; });
-      });
+  function getFloating() {
+    if (!floatingEl) {
+      floatingEl = document.createElement('div');
+      floatingEl.className = 'pillar-floating-dropdown';
+      document.body.appendChild(floatingEl);
 
-      var dropdown = pillar.querySelector('.pillar-dropdown');
-      if (!matched.length) {
-        dropdown.innerHTML = '<div class="pillar-dropdown-item" style="color:var(--color-ink-muted-48);cursor:default;">No projects yet</div>';
-      } else {
-        dropdown.innerHTML = matched.map(function(p) {
-          var page = map.cat === "design" ? "design-detail.html" : "illustration-detail.html";
-          return '<div class="pillar-dropdown-item" data-page="' + page + '" data-slug="' + p.slug + '">' +
-            p.title +
-            '</div>';
-        }).join('');
+      // Clicks inside dropdown are handled by item click handlers — no mouseenter/leave needed
+    }
+    return floatingEl;
+  }
+
+  function positionDropdown(pillar) {
+    var el = getFloating();
+    var rect = pillar.getBoundingClientRect();
+    var isMobile = window.innerWidth <= 600;
+
+    if (isMobile) {
+      // On mobile use absolute + scroll offset — dropdown sits right under the title row
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+      // Find the pillar-title element bottom instead of full pillar bottom
+      var titleEl = pillar.querySelector('.pillar-title');
+      var titleRect = titleEl ? titleEl.getBoundingClientRect() : rect;
+      el.style.position = 'absolute';
+      el.style.left = (titleRect.left + scrollX) + 'px';
+      el.style.top = (titleRect.bottom + scrollY + 4) + 'px';
+      el.style.width = titleRect.width + 'px';
+    } else {
+      // Desktop: fixed positioning is fine
+      el.style.position = 'fixed';
+      el.style.left = rect.left + 'px';
+      el.style.top = (rect.bottom + 8) + 'px';
+      el.style.width = rect.width + 'px';
+    }
+  }
+
+  function showDropdown(pillar) {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    var key = pillar.getAttribute('data-practice');
+    var map = PRACTICE_MAP[key];
+    if (!map) return;
+
+    var projects = map.cat === "design" ? PROJECTS.design : PROJECTS.illustration;
+    var matched = projects.filter(function(p) {
+      var allTags = (p.detailTags || []).concat(p.tags || []);
+      if (map.exclude) {
+        if (map.exclude.some(function(ex) { return allTags.indexOf(ex) > -1; })) return false;
       }
+      return map.tags.some(function(t) { return allTags.indexOf(t) > -1; });
+    }).slice(0, 3); // max 3
 
-      // Click on dropdown item → navigate
-      dropdown.querySelectorAll('.pillar-dropdown-item[data-slug]').forEach(function(item) {
+    var el = getFloating();
+    if (!matched.length) {
+      el.innerHTML = '<div class="pillar-dropdown-item" style="color:var(--color-ink-muted-48);cursor:default;">No projects yet</div>';
+    } else {
+      el.innerHTML = matched.map(function(p) {
+        var page = map.cat === "design" ? "design-detail.html" : "illustration-detail.html";
+        return '<div class="pillar-dropdown-item" data-page="' + page + '" data-slug="' + p.slug + '">' + p.title + '</div>';
+      }).join('');
+
+      el.querySelectorAll('.pillar-dropdown-item[data-slug]').forEach(function(item) {
         item.addEventListener('click', function(e) {
           e.stopPropagation();
-          var page = item.getAttribute('data-page');
-          var slug = item.getAttribute('data-slug');
-          showPage(page, { p: slug });
+          hideDropdownNow();
+          showPage(item.getAttribute('data-page'), { p: item.getAttribute('data-slug') });
         });
       });
+    }
 
-      // Toggle on pillar click
+    positionDropdown(pillar);
+    el.classList.add('is-visible');
+    currentPillar = pillar;
+    pillar.classList.add('is-open');
+  }
+
+  function scheduleHide() {
+    if (hideTimer) clearTimeout(hideTimer);
+    hideTimer = setTimeout(hideDropdownNow, 250);
+  }
+
+  function hideDropdownNow() {
+    var el = getFloating();
+    el.classList.remove('is-visible');
+    if (currentPillar) { currentPillar.classList.remove('is-open'); currentPillar = null; }
+    hideTimer = null;
+  }
+
+  function buildDropdowns() {
+    document.querySelectorAll('.pillar[data-practice]').forEach(function(pillar) {
+      // Click/tap only — no hover
       pillar.addEventListener('click', function(e) {
-        var isOpen = pillar.classList.contains('is-open');
-        // Close all
-        document.querySelectorAll('.pillar.is-open').forEach(function(p) { p.classList.remove('is-open'); });
-        if (!isOpen) pillar.classList.add('is-open');
+        e.stopPropagation();
+        if (currentPillar === pillar && getFloating().classList.contains('is-visible')) {
+          hideDropdownNow();
+        } else {
+          showDropdown(pillar);
+        }
       });
     });
 
-    // Click outside closes all
+    // Reposition on scroll/resize without closing
+    window.addEventListener('scroll', function() {
+      if (currentPillar && getFloating().classList.contains('is-visible')) {
+        positionDropdown(currentPillar);
+      }
+    }, true);
+    window.addEventListener('resize', function() {
+      if (currentPillar && getFloating().classList.contains('is-visible')) {
+        positionDropdown(currentPillar);
+      }
+    });
+
+    // Click outside (not on pillar, not inside dropdown) closes
     document.addEventListener('click', function(e) {
-      if (!e.target.closest('.pillar[data-practice]')) {
-        document.querySelectorAll('.pillar.is-open').forEach(function(p) { p.classList.remove('is-open'); });
+      if (!e.target.closest('.pillar[data-practice]') && !e.target.closest('.pillar-floating-dropdown')) {
+        hideDropdownNow();
       }
     });
   }
@@ -4009,6 +4118,8 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
   // Slide-in on 5th pillar — persistent state via document mousemove
   function initPillarSlide() {
     window.initPillarSlide = initPillarSlide; // expose for re-init
+    // Disable slide on touch/mobile devices
+    if (!window.matchMedia('(hover: hover) and (min-width: 961px)').matches) return;
     var grid = document.querySelector('.pillar-grid');
     var fifthPillar = document.querySelector('.pillar[data-practice="commercial-illustration"]');
     if (!grid || !fifthPillar) return;
