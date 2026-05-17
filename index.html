@@ -749,10 +749,25 @@ body.is-entering {
       max-width: 1100px;
     }
     .pillar-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      display: flex;
       gap: 28px;
       align-items: start;
+      overflow-x: visible;
+    }
+    .pillar {
+      flex: 0 0 calc(25% - 21px);
+      min-width: calc(25% - 21px);
+      transition: flex-basis 500ms cubic-bezier(0.4,0,0.2,1), min-width 500ms cubic-bezier(0.4,0,0.2,1), transform 360ms var(--ease-out);
+    }
+    .pillar:last-child {
+      flex: 0 0 calc(12%);
+      min-width: calc(12%);
+      overflow: hidden;
+    }
+    .pillar-grid:hover .pillar:last-child,
+    .pillar:last-child:hover {
+      flex: 0 0 calc(25% - 21px);
+      min-width: calc(25% - 21px);
     }
     .pillar {
       background: transparent;
@@ -760,11 +775,47 @@ body.is-entering {
       border-radius: 0;
       border: none;
       position: relative;
-      transition: transform 360ms var(--ease-out);
       display: flex;
       flex-direction: column;
     }
     .pillar:hover { transform: translateY(-4px); }
+    .pillar.is-open { transform: none; }
+    .pillar-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 12px;
+      padding: 6px 0;
+      z-index: 200;
+      min-width: 220px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      animation: dropdownFade 200ms ease forwards;
+    }
+    @keyframes dropdownFade {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .pillar.is-open .pillar-dropdown { display: block; }
+    .pillar-dropdown-item {
+      display: block;
+      padding: 9px 16px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-ink);
+      cursor: pointer;
+      transition: background 150ms;
+      letter-spacing: -0.01em;
+    }
+    .pillar-dropdown-item:hover { background: rgba(0,0,0,0.05); }
+    .pillar-chevron { transition: transform 300ms var(--ease-out); }
+    .pillar.is-open .pillar-chevron { transform: rotate(180deg); }
     /* Staggered tall / short rhythm */
     .pillar:nth-child(odd)  { padding-top: 0;   }
     .pillar:nth-child(even) { padding-top: 96px; }
@@ -1796,34 +1847,46 @@ body { background: #fff; }
     <div class="home-services-inner">
       <h2 class="reveal">Multidisciplinary design across brand, digital, and visual experiences.</h2>
       <div class="pillar-grid">
-        <a class="pillar reveal" style="--reveal-delay: 0ms" href="design.html" data-cursor-hover>
+        <div class="pillar reveal" style="--reveal-delay: 0ms" data-practice="brand-identity" data-cursor-hover>
           <div class="pillar-img" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=70')"></div>
           <div class="pillar-num">01 / Practice</div>
           <div class="pillar-title">Brand Identity
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-        </a>
-        <a class="pillar reveal" style="--reveal-delay: 80ms" href="design.html" data-cursor-hover>
+          <div class="pillar-dropdown"></div>
+        </div>
+        <div class="pillar reveal" style="--reveal-delay: 80ms" data-practice="production-packaging" data-cursor-hover>
           <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1542728928-0011f81446e5?w=900&q=70')"></div>
           <div class="pillar-num">02 / Practice</div>
           <div class="pillar-title">Production &amp; Packaging
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-        </a>
-        <a class="pillar reveal" style="--reveal-delay: 160ms" href="illustration.html" data-cursor-hover>
+          <div class="pillar-dropdown"></div>
+        </div>
+        <div class="pillar reveal" style="--reveal-delay: 160ms" data-practice="website-uxui" data-cursor-hover>
           <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1493612276216-ee3925520721?w=900&q=70')"></div>
           <div class="pillar-num">03 / Practice</div>
           <div class="pillar-title">Website &amp; UXUI
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-        </a>
-        <a class="pillar reveal" style="--reveal-delay: 240ms" href="design.html" data-cursor-hover>
+          <div class="pillar-dropdown"></div>
+        </div>
+        <div class="pillar reveal" style="--reveal-delay: 240ms" data-practice="campaign-social" data-cursor-hover>
           <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=900&q=70')"></div>
           <div class="pillar-num">04 / Practice</div>
           <div class="pillar-title">Campaign &amp; Social Content
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-        </a>
+          <div class="pillar-dropdown"></div>
+        </div>
+        <div class="pillar reveal" style="--reveal-delay: 320ms" data-practice="commercial-illustration" data-cursor-hover>
+          <div class="pillar-img" style="background-image:url('images/illustration/mercatus-technologies/illustration-small/mct-illustration-02.png')"></div>
+          <div class="pillar-num">05 / Practice</div>
+          <div class="pillar-title">Commercial Illustration
+            <svg class="pillar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="pillar-dropdown"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -3877,6 +3940,80 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
 }});
 
 // Start on index
+// Practice area dropdown logic
+(function() {
+  var PRACTICE_MAP = {
+    "brand-identity":           { cat: "design", tags: ["Brand Identity", "Brand System", "Rebranding", "Logo Design"] },
+    "production-packaging":     { cat: "design", tags: ["Packaging Design", "Print Design", "Print & Menu Design", "Production Design"] },
+    "website-uxui":             { cat: "design", tags: ["Website & UX/UI", "Web Design", "Website & UX/UI Design"] },
+    "campaign-social":          { cat: "design", tags: ["Campaign Design", "Social Media Design", "Marketing & Social Media Design", "Campaign Design"] },
+    "commercial-illustration":  { cat: "illustration", tags: ["Illustration", "Environmental Illustration", "Environmental Graphics", "Game Visuals", "Game Visual Design", "Game Visual Identity", "Card Design", "Character Design", "Mascot Design"], exclude: ["Personal Project", "Editorial", "Book", "Personal"] }
+  };
+
+  function buildDropdowns() {
+    document.querySelectorAll('.pillar[data-practice]').forEach(function(pillar) {
+      var key = pillar.getAttribute('data-practice');
+      var map = PRACTICE_MAP[key];
+      if (!map) return;
+
+      var projects = map.cat === "design" ? PROJECTS.design : PROJECTS.illustration;
+      var matched = projects.filter(function(p) {
+        var allTags = (p.detailTags || []).concat(p.tags || []);
+        // Exclude personal projects for illustration
+        if (map.exclude) {
+          var hasExclude = map.exclude.some(function(ex) { return allTags.indexOf(ex) > -1; });
+          if (hasExclude) return false;
+        }
+        return map.tags.some(function(t) { return allTags.indexOf(t) > -1; });
+      });
+
+      var dropdown = pillar.querySelector('.pillar-dropdown');
+      if (!matched.length) {
+        dropdown.innerHTML = '<div class="pillar-dropdown-item" style="color:var(--color-ink-muted-48);cursor:default;">No projects yet</div>';
+      } else {
+        dropdown.innerHTML = matched.map(function(p) {
+          var page = map.cat === "design" ? "design-detail.html" : "illustration-detail.html";
+          return '<div class="pillar-dropdown-item" data-page="' + page + '" data-slug="' + p.slug + '">' +
+            p.title +
+            '</div>';
+        }).join('');
+      }
+
+      // Click on dropdown item → navigate
+      dropdown.querySelectorAll('.pillar-dropdown-item[data-slug]').forEach(function(item) {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var page = item.getAttribute('data-page');
+          var slug = item.getAttribute('data-slug');
+          showPage(page, { p: slug });
+        });
+      });
+
+      // Toggle on pillar click
+      pillar.addEventListener('click', function(e) {
+        var isOpen = pillar.classList.contains('is-open');
+        // Close all
+        document.querySelectorAll('.pillar.is-open').forEach(function(p) { p.classList.remove('is-open'); });
+        if (!isOpen) pillar.classList.add('is-open');
+      });
+    });
+
+    // Click outside closes all
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.pillar[data-practice]')) {
+        document.querySelectorAll('.pillar.is-open').forEach(function(p) { p.classList.remove('is-open'); });
+      }
+    });
+  }
+
+  // Build after PROJECTS is defined
+  if (typeof PROJECTS !== 'undefined') {
+    buildDropdowns();
+  } else {
+    window.addEventListener('load', buildDropdowns);
+  }
+})();
+
 // On load, restore page from URL hash if present
 (function() {
   var hash = window.location.hash.slice(1); // remove #
