@@ -3170,13 +3170,19 @@ window._init_index = function() {
       grid.querySelectorAll(".reveal").forEach(e => e.classList.add("is-in"));
     });
   }
-  render("all");
+  // Restore previously active filter, default to "all"
+  var savedFilter = window._homeFilter || "all";
+  render(savedFilter);
+  document.querySelectorAll(".filter-pill").forEach(x => {
+    x.classList.toggle("is-active", x.dataset.filter === savedFilter);
+  });
 
   document.querySelectorAll(".filter-pill").forEach(b => { b.replaceWith(b.cloneNode(true)); });
   document.querySelectorAll(".filter-pill").forEach(b => {
     b.addEventListener("click", () => {
       document.querySelectorAll(".filter-pill").forEach(x => x.classList.remove("is-active"));
       b.classList.add("is-active");
+      window._homeFilter = b.dataset.filter;
       render(b.dataset.filter);
     });
   });
