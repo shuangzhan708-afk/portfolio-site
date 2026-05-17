@@ -1790,6 +1790,7 @@ body { background: #fff; }
     .detail-img-half { border-radius: 4px; overflow: hidden; }
     .detail-caption { font-size: 13px; color: var(--color-ink-muted-48); padding: 10px 0 0; font-style: italic; }
     .detail-section-heading { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted-48); padding: 40px 0 12px; }
+    .detail-section-title { font-family: var(--font-display); font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; letter-spacing: -0.02em; color: var(--color-ink); padding: 60px 0 20px; border-top: 1px solid rgba(0,0,0,0.08); margin-top: 20px; }
     .detail-caption-right { font-size: 13px; color: var(--color-ink-muted-48); padding: 12px 0 0; font-style: italic; text-align: right; max-width: 480px; margin-left: auto; line-height: 1.6; }
     /* ── Detail: Next project ── */
     .detail-next { padding: 80px clamp(60px, 10vw, 180px) 0; max-width: var(--max); margin: 0 auto; }
@@ -2163,7 +2164,7 @@ window.PROJECTS = {
       slug: "reach-eshop",
       title: "Reach E-Shop",
       desc: "A brand refresh project focused on upgrading an existing e-commerce identity into a more dynamic and visually engaging system for digital and social platforms.",
-      tags: ["Brand Refresh", "Visual Direction", "Campaign Design"],
+      tags: ["Brand Refresh", "Visual Direction", "Campaign Design", "Social Media", "Fashion Campaign"],
       hero: [
         "images/design/reach-e-shop/banner/reach-web-gif-cover.gif",
         "images/design/reach-e-shop/banner/reach-e-shop-photo-03.png",
@@ -2195,7 +2196,7 @@ window.PROJECTS = {
     },
     {
       slug: "shingyu",
-      title: "SHINGYU",
+      title: "ShinGyu",
       desc: "A full-scope restaurant branding project focused on developing and applying a cohesive visual system across digital and physical touchpoints, from concept to final execution.",
       tags: ["Brand Identity", "Visual System", "Digital & Print"],
       hero: [
@@ -2426,14 +2427,52 @@ window.PROJECTS = {
       title: "Website Design Collection",
       desc: "A curated showcase of multiple website design projects, demonstrating a range of digital experiences across different industries and visual styles.",
       tags: ["Web Design", "UX/UI", "Digital"],
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
-      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
-      client: "Reach / Early Days",
-      year: "2025",
-      role: "Identity, Print, Wayfinding",
-      partners: "In partnership with Reach",
-      summary: "A type-led campaign that puts Indigenous voices first — large-scale serif headlines, paired with curatorial sub-systems built from the artists' own marks.",
-      sections: []
+      hero: [
+        "images/design/website-design-collection/banner/bianka-cabinetry_case-study_website-13-1.webp",
+        "images/design/website-design-collection/banner/br-web-thumbnail.png",
+        "images/design/website-design-collection/banner/chatbar_case-study_website_v2-18-2.webp",
+        "images/design/website-design-collection/banner/cynthia-web-thumbnail.png",
+        "images/design/website-design-collection/banner/james-camron-web-thumbnail.png",
+        "images/design/website-design-collection/banner/shingyu-web-thumbnail.png"
+      ],
+      thumb: "images/design/website-design-collection/banner/bianka-cabinetry_case-study_website-13-1.webp",
+      client: "Various",
+      year: "2024–2025",
+      role: "Web Design, UX/UI",
+      partners: "",
+      summary: "A curated collection of website design projects spanning multiple industries. Each project explores a distinct visual direction while maintaining a consistent focus on user experience, layout clarity, and digital brand expression.",
+      detailTags: ["Web Design", "Website & UX/UI", "UX/UI Design", "Digital Design", "Brand Identity"],
+      sections: [
+        { kind: "section-title", title: "Bianka Cabinetry" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/bianka-cabinetry_case-study_website-13-1.webp" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/bianka_website_01-2.webp" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/bianka_website_02.webp" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/bianka_website_04.webp" },
+
+        { kind: "section-title", title: "Broad Reach" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/br-web-thumbnail.png" },
+        { kind: "video-inline", clips: ["images/design/broad-reach/video/Broad Reach Figma Presentation Screen Recording.mp4"] },
+
+        { kind: "section-title", title: "Chatbar" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/chatbar_case-study_website_v2-18-2.webp" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/chatbar-web-thumbnail.png" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/chatbar_website_01.webp" },
+
+        { kind: "section-title", title: "Cynthia Paradise" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/cynthia-web-thumbnail.png" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/cynthia_webmockup_02-edited-1.png" },
+        { kind: "video-inline", clips: ["images/design/website-design-collection/video/Cynthia Paradise WebMockup Demo.mp4"] },
+
+        { kind: "section-title", title: "IBEX" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/ibex-web-thumbnail.png" },
+
+        { kind: "section-title", title: "James Cameron" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/james-camron-web-thumbnail.png" },
+
+        { kind: "section-title", title: "ShinGyu" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/shingyu-web-thumbnail.png" },
+        { kind: "image-contain", src: "images/design/website-design-collection/mockup/shingyu_case-study_website-13.jpg" }
+      ]
     },
     {
       slug: "packaging-design-collection",
@@ -3341,6 +3380,12 @@ window._init_design_detail = function() {
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
       sec.appendChild(w);
+    } else if (s.kind === "section-title") {
+      var w = document.createElement("div");
+      w.className = "detail-section-title";
+      w.textContent = s.title;
+      sec.appendChild(w);
+      return;
     } else if (s.kind === "image-contain") {
       var w = document.createElement("div");
       w.className = "detail-img-contain";
@@ -3709,6 +3754,12 @@ window._init_illustration_detail = function() {
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
       sec.appendChild(w);
+    } else if (s.kind === "section-title") {
+      var w = document.createElement("div");
+      w.className = "detail-section-title";
+      w.textContent = s.title;
+      sec.appendChild(w);
+      return;
     } else if (s.kind === "image-contain") {
       var w = document.createElement("div");
       w.className = "detail-img-contain";
