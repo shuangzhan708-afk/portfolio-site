@@ -2459,7 +2459,6 @@ window.PROJECTS = {
         { kind: "image-contain", src: "images/design/website-design-collection/mockup/chatbar_website_01.webp" },
 
         { kind: "section-title", title: "Cynthia Paradise" },
-        { kind: "image-contain", src: "images/design/website-design-collection/mockup/cynthia-web-thumbnail.png" },
         { kind: "image-contain", src: "images/design/website-design-collection/mockup/cynthia_webmockup_02-edited-1.png" },
         { kind: "video-inline", clips: ["images/design/website-design-collection/video/Cynthia Paradise WebMockup Demo.mp4"] },
 
@@ -3504,9 +3503,11 @@ window._init_design_detail = function() {
           active.src = clips[0]; active.load();
           preloadNext();
           watchVideoScroll(active);
-          watchVideoScroll(next);
+          // next stays preloaded, not scroll-watched to avoid pausing before switch
           setInterval(function() {
-            if (!active.paused && active.duration && active.currentTime >= active.duration - 0.45) switchClip();
+            if (!active.paused && active.duration && active.currentTime >= active.duration - 0.45) {
+              next.play().catch(function(){}); setTimeout(function(){ switchClip(); }, 40);
+            }
           }, 100);
         }, 800);
       })(s.clips, idA, idB);
