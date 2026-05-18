@@ -1,20 +1,22 @@
 {
   "rewrites": [
-    { "source": "/design/:slug", "destination": "/api/og" },
-    { "source": "/illustration/:slug", "destination": "/api/og" },
-    { "source": "/design", "destination": "/api/og" },
-    { "source": "/illustration", "destination": "/api/og" },
-    { "source": "/about", "destination": "/api/og" },
-    { "source": "/contact", "destination": "/api/og" },
-    { "source": "/", "destination": "/api/og" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/design/:slug", "destination": "/index.html" },
+    { "source": "/illustration/:slug", "destination": "/index.html" },
+    { "source": "/design", "destination": "/index.html" },
+    { "source": "/illustration", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" },
+    { "source": "/((?!images|robots\\.txt|sitemap\\.xml|favicon).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Robots-Tag", "value": "index, follow" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, HEAD, OPTIONS" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
       ]
     },
     {
