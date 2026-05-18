@@ -1,7 +1,3 @@
-export const config = {
-  runtime: 'edge',
-};
-
 const BASE_URL = 'https://portfolio-site-fawn-eight-52.vercel.app';
 const ROUTES = {
   "/design/broad-reach": {
@@ -184,37 +180,29 @@ const BOT_RE = /facebookexternalhit|twitterbot|linkedinbot|whatsapp|slackbot|tel
 
 function buildHTML(meta, url) {
   const img = meta.image.startsWith('http') ? meta.image : BASE_URL + '/' + meta.image;
+  const desc = meta.desc.replace(/"/g, '&quot;');
   return `<!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8">
 <title>${meta.title}</title>
-<meta name="description" content="${meta.desc}">
+<meta name="description" content="${desc}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${url}">
 <meta property="og:title" content="${meta.title}">
-<meta property="og:description" content="${meta.desc}">
+<meta property="og:description" content="${desc}">
 <meta property="og:image" content="${img}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Shuang Portfolio">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${meta.title}">
-<meta name="twitter:description" content="${meta.desc}">
+<meta name="twitter:description" content="${desc}">
 <meta name="twitter:image" content="${img}">
 </head><body><h1>${meta.title}</h1><p>${meta.desc}</p></body></html>`;
 }
 
-export default async function handler(request) {
-  const url = new URL(request.url);
-  const ua = request.headers.get('user-agent') || '';
-  const pathname = url.pathname;
-
-  if (!BOT_RE.test(ua)) {
-    const resp = await fetch(BASE_URL + '/index.html');
-    const html = await resp.text();
-    return new Response(html, {
-      headers: { 'Content-Type': 'text/html; charset=utf-8' }
-    });
-  }
+module.exports = async function handler(req, res) {
+  const ua = req.headers['user-agent'] || '';
+  const pathname = req.url.split('?')[0];
 
   let meta = ROUTES[pathname];
   if (!meta) {
@@ -225,12 +213,19 @@ export default async function handler(request) {
   }
   if (!meta) meta = ROUTES['/'];
 
-  return new Response(buildHTML(meta, url.href), {
-    status: 200,
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600',
-      'X-Robots-Tag': 'index, follow',
-    }
-  });
-}
+  if (BOT_RE.test(ua)) {
+    // Bot: return OG HTML
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+    res.setHeader('X-Robots-Tag', 'index, follow');
+    res.status(200).send(buildHTML(meta, BASE_URL + pathname));
+  } else {
+    // Real user: serve index.html
+    const fs = require('fs');
+    const path = require('path');
+    const indexPath = path.join(process.cwd(), 'index.html');
+    const html = fs.readFileSync(indexPath, 'utf8');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(200).send(html);
+  }
+};
