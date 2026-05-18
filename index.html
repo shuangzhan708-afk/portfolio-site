@@ -3194,7 +3194,7 @@ window._init_index = function() {
       const el = document.createElement("a");
       el.className = `proj reveal span-${item.span}`;
       el.style.setProperty("--reveal-delay", (i * 60) + "ms");
-      el.href = `${detail}?p=${item.p.slug}`;
+      el.href = item.cat === "design" ? `/design/${item.p.slug}` : `/illustration/${item.p.slug}`;
       el.setAttribute("data-cursor-label", "view");
       el.setAttribute("data-cursor-hover", "");
       const tags = (item.p.tags && item.p.tags.length)
@@ -4143,6 +4143,10 @@ document.addEventListener('click', function(e) {
   var a = e.target.closest('a[href]');
   if (!a) return;
   var href = a.getAttribute('href');
+  // Normalize: strip origin if absolute URL pointing to same host
+  if (href && href.startsWith(window.location.origin)) {
+    href = href.slice(window.location.origin.length) || '/';
+  }
   if (!href || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel') || a.target === '_blank') return;
   
   e.preventDefault();
