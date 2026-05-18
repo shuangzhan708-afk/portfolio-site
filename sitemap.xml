@@ -1,155 +1,156 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- Main pages -->
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/</loc>
+    <loc>https://shuangzdesign.com/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design</loc>
+    <loc>https://shuangzdesign.com/design</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration</loc>
+    <loc>https://shuangzdesign.com/illustration</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/about</loc>
+    <loc>https://shuangzdesign.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/contact</loc>
+    <loc>https://shuangzdesign.com/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Design projects -->
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/broad-reach</loc>
+    <loc>https://shuangzdesign.com/design/broad-reach</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/kinton-ramen</loc>
+    <loc>https://shuangzdesign.com/design/kinton-ramen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/reach-eshop</loc>
+    <loc>https://shuangzdesign.com/design/reach-eshop</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/shingyu</loc>
+    <loc>https://shuangzdesign.com/design/shingyu</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/two-cats</loc>
+    <loc>https://shuangzdesign.com/design/two-cats</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/vegas-infinite</loc>
+    <loc>https://shuangzdesign.com/design/vegas-infinite</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/lucky-penny</loc>
+    <loc>https://shuangzdesign.com/design/lucky-penny</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/thallo</loc>
+    <loc>https://shuangzdesign.com/design/thallo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/marguerite-de-jardin</loc>
+    <loc>https://shuangzdesign.com/design/marguerite-de-jardin</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/captains-boil</loc>
+    <loc>https://shuangzdesign.com/design/captains-boil</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/website-design-collection</loc>
+    <loc>https://shuangzdesign.com/design/website-design-collection</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/packaging-design-collection</loc>
+    <loc>https://shuangzdesign.com/design/packaging-design-collection</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/design/printing-production-collection</loc>
+    <loc>https://shuangzdesign.com/design/printing-production-collection</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Illustration projects -->
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/mercatus-technologies</loc>
+    <loc>https://shuangzdesign.com/illustration/mercatus-technologies</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/pokerstars-vr</loc>
+    <loc>https://shuangzdesign.com/illustration/pokerstars-vr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/nanxiang-express</loc>
+    <loc>https://shuangzdesign.com/illustration/nanxiang-express</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/real-fruit</loc>
+    <loc>https://shuangzdesign.com/illustration/real-fruit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/overview-of-types</loc>
+    <loc>https://shuangzdesign.com/illustration/overview-of-types</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/ot</loc>
+    <loc>https://shuangzdesign.com/illustration/ot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/baitme</loc>
+    <loc>https://shuangzdesign.com/illustration/baitme</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/66-day-gifs</loc>
+    <loc>https://shuangzdesign.com/illustration/66-day-gifs</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/poker-card-back-design</loc>
+    <loc>https://shuangzdesign.com/illustration/poker-card-back-design</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/happy-new-year</loc>
+    <loc>https://shuangzdesign.com/illustration/happy-new-year</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-site-fawn-eight-52.vercel.app/illustration/vr-thematic-wall</loc>
+    <loc>https://shuangzdesign.com/illustration/vr-thematic-wall</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
 </urlset>
+
