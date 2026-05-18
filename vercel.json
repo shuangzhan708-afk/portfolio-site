@@ -1,17 +1,13 @@
 {
-  "functions": {
-    "middleware.js": {
-      "runtime": "edge"
-    }
-  },
   "rewrites": [
-    { "source": "/design/:slug", "destination": "/middleware.js" },
-    { "source": "/illustration/:slug", "destination": "/middleware.js" },
-    { "source": "/design", "destination": "/middleware.js" },
-    { "source": "/illustration", "destination": "/middleware.js" },
-    { "source": "/about", "destination": "/middleware.js" },
-    { "source": "/contact", "destination": "/middleware.js" },
-    { "source": "/", "destination": "/middleware.js" }
+    { "source": "/design/:slug", "destination": "/api/og" },
+    { "source": "/illustration/:slug", "destination": "/api/og" },
+    { "source": "/design", "destination": "/api/og" },
+    { "source": "/illustration", "destination": "/api/og" },
+    { "source": "/about", "destination": "/api/og" },
+    { "source": "/contact", "destination": "/api/og" },
+    { "source": "/", "destination": "/api/og" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
