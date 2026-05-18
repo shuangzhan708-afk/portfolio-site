@@ -3375,6 +3375,20 @@ window._init_design_detail = function() {
   if (ogTitleEl) ogTitleEl.setAttribute('content', p.title + ' | Shuang');
   var twTitleEl = document.querySelector('meta[name="twitter:title"]');
   if (twTitleEl) twTitleEl.setAttribute('content', p.title + ' | Shuang');
+  var _base = 'https://portfolio-site-fawn-eight-52.vercel.app';
+  var _pageUrl = _base + '/design/' + slug;
+  var _imgUrl = p.thumb ? _base + '/' + p.thumb : '';
+  var _plainDesc = (p.summary || p.desc || '').replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').substring(0, 155);
+  var _canonEl = document.querySelector('link[rel="canonical"]');
+  if (_canonEl) _canonEl.setAttribute('href', _pageUrl);
+  var _ogUrlEl = document.querySelector('meta[property="og:url"]');
+  if (_ogUrlEl) _ogUrlEl.setAttribute('content', _pageUrl);
+  var _ogImgEl = document.querySelector('meta[property="og:image"]');
+  if (_ogImgEl && _imgUrl) _ogImgEl.setAttribute('content', _imgUrl);
+  var _twDescEl = document.querySelector('meta[name="twitter:description"]');
+  if (_twDescEl) _twDescEl.setAttribute('content', _plainDesc);
+  var _twImgEl = document.querySelector('meta[name="twitter:image"]');
+  if (_twImgEl && _imgUrl) _twImgEl.setAttribute('content', _imgUrl);
 
   // Carousel
   var track = document.getElementById("carousel-track");
@@ -3765,6 +3779,20 @@ window._init_illustration_detail = function() {
   if (ogTitleEl) ogTitleEl.setAttribute('content', p.title + ' | Shuang');
   var twTitleEl = document.querySelector('meta[name="twitter:title"]');
   if (twTitleEl) twTitleEl.setAttribute('content', p.title + ' | Shuang');
+  var _base = 'https://portfolio-site-fawn-eight-52.vercel.app';
+  var _pageUrl = _base + '/illustration/' + slug;
+  var _imgUrl = p.thumb ? _base + '/' + p.thumb : '';
+  var _plainDesc = (p.summary || p.desc || '').replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').substring(0, 155);
+  var _canonEl = document.querySelector('link[rel="canonical"]');
+  if (_canonEl) _canonEl.setAttribute('href', _pageUrl);
+  var _ogUrlEl = document.querySelector('meta[property="og:url"]');
+  if (_ogUrlEl) _ogUrlEl.setAttribute('content', _pageUrl);
+  var _ogImgEl = document.querySelector('meta[property="og:image"]');
+  if (_ogImgEl && _imgUrl) _ogImgEl.setAttribute('content', _imgUrl);
+  var _twDescEl = document.querySelector('meta[name="twitter:description"]');
+  if (_twDescEl) _twDescEl.setAttribute('content', _plainDesc);
+  var _twImgEl = document.querySelector('meta[name="twitter:image"]');
+  if (_twImgEl && _imgUrl) _twImgEl.setAttribute('content', _imgUrl);
 
   // Apply light nav (white font) for specific projects
   setTimeout(function() {
@@ -4049,6 +4077,13 @@ function showPage(pageName, params, skipHistory, cleanPath) {
     if (twTitle) twTitle.setAttribute('content', seo.title);
     var twDesc = document.querySelector('meta[name="twitter:description"]');
     if (twDesc && seo.desc) twDesc.setAttribute('content', seo.desc);
+    var _seoBase = 'https://portfolio-site-fawn-eight-52.vercel.app';
+    var _seoPath = cleanPath || '/';
+    var _seoUrl = _seoBase + (_seoPath === '/' ? '' : _seoPath) || _seoBase;
+    var _seoCanon = document.querySelector('link[rel="canonical"]');
+    if (_seoCanon) _seoCanon.setAttribute('href', _seoUrl || _seoBase);
+    var _seoOgUrl = document.querySelector('meta[property="og:url"]');
+    if (_seoOgUrl) _seoOgUrl.setAttribute('content', _seoUrl || _seoBase);
   }
 
   // Always close mobile menu first
