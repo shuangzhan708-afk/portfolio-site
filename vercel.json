@@ -1,42 +1,30 @@
 {
+  "functions": {
+    "middleware.js": {
+      "runtime": "edge"
+    }
+  },
   "rewrites": [
-    { "source": "/design/:slug", "destination": "/index.html" },
-    { "source": "/illustration/:slug", "destination": "/index.html" },
-    { "source": "/design", "destination": "/index.html" },
-    { "source": "/illustration", "destination": "/index.html" },
-    { "source": "/about", "destination": "/index.html" },
-    { "source": "/contact", "destination": "/index.html" },
-    { "source": "/((?!images|robots\\.txt|sitemap\\.xml|favicon).*)", "destination": "/index.html" }
+    { "source": "/design/:slug", "destination": "/middleware.js" },
+    { "source": "/illustration/:slug", "destination": "/middleware.js" },
+    { "source": "/design", "destination": "/middleware.js" },
+    { "source": "/illustration", "destination": "/middleware.js" },
+    { "source": "/about", "destination": "/middleware.js" },
+    { "source": "/contact", "destination": "/middleware.js" },
+    { "source": "/", "destination": "/middleware.js" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Robots-Tag", "value": "index, follow" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, HEAD, OPTIONS" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
       ]
     },
     {
       "source": "/images/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/robots.txt",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0" },
-        { "key": "Content-Type", "value": "text/plain" }
-      ]
-    },
-    {
-      "source": "/sitemap.xml",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" },
-        { "key": "Content-Type", "value": "application/xml" }
       ]
     }
   ]
