@@ -1999,7 +1999,7 @@ body { background: #fff; }
   <section class="listing-head">
     <div class="title-row reveal">
       <h1 class="title-active">Design.</h1>
-      <a href="illustration.html" class="title-other-link" data-cursor-hover><h1 class="title-other">Illustration.</h1></a>
+      <a href="/illustration" class="title-other-link" data-cursor-hover><h1 class="title-other">Illustration.</h1></a>
     </div>
   </section>
 
@@ -2014,7 +2014,7 @@ body { background: #fff; }
   <section class="listing-head">
     <div class="title-row reveal">
       <h1 class="title-active">Illustration.</h1>
-      <a href="design.html" class="title-other-link" data-cursor-hover><h1 class="title-other">Design.</h1></a>
+      <a href="/design" class="title-other-link" data-cursor-hover><h1 class="title-other">Design.</h1></a>
     </div>
   </section>
 
@@ -2039,8 +2039,8 @@ body { background: #fff; }
     <div class="about-s1-right reveal" style="--reveal-delay:120ms">
       <h1>Shuang is a Toronto-based visual designer working across branding, digital design, and illustration, with a focus on creating clear, system-driven visual work across web and marketing touchpoints.</h1>
       <div class="about-btns">
-        <a class="about-btn-primary" href="contact.html" data-cursor-hover>Contact Me <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="about-btn-secondary" href="design.html" data-cursor-hover>View Case Studies <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="about-btn-primary" href="/contact" data-cursor-hover>Contact Me <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="about-btn-secondary" href="/design" data-cursor-hover>View Case Studies <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </section>
@@ -2820,15 +2820,15 @@ window.PROJECTS = {
 // Shared header / footer / cursor / transitions for Shuang. portfolio
 (function () {
   const PAGES = [
-    { href: "design.html", label: "Visual & Graphic Design" },
-    { href: "illustration.html", label: "Illustration" },
-    { href: "about.html", label: "About" },
-    { href: "contact.html", label: "Contact" },
+    { href: "/design", label: "Visual & Graphic Design" },
+    { href: "/illustration", label: "Illustration" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
   ];
 
   function curPage() {
-    const p = location.pathname.split("/").pop() || "index.html";
-    return p;
+    const segs = location.pathname.split('/').filter(Boolean);
+    return '/' + (segs[0] || '');
   }
 
   function injectNav(theme) {
@@ -2836,18 +2836,14 @@ window.PROJECTS = {
 
     // Desktop nav links
     const desktopLinks = PAGES.map(p =>
-      `<a class="nav-link${
-        here === p.href || (p.href === "design.html" && here === "design-detail.html")
-          || (p.href === "illustration.html" && here === "illustration-detail.html")
-          ? " is-active" : ""
-      }" href="${p.href}" data-cursor-hover>${p.label}</a>`
+      `<a class="nav-link${here === p.href ? " is-active" : ""}" href="${p.href}" data-cursor-hover>${p.label}</a>`
     ).join("");
 
     const nav = document.createElement("header");
     nav.className = "nav" + (theme === "light" ? " theme-light" : "");
     nav.innerHTML =
       '<div class="nav-row">' +
-        '<a class="nav-logo" href="index.html" data-cursor-hover>Shuang.</a>' +
+        '<a class="nav-logo" href="/" data-cursor-hover>Shuang.</a>' +
         '<nav class="nav-links">' + desktopLinks + '</nav>' +
         '<button class="nav-hamburger" aria-label="Menu" aria-expanded="false">' +
           '<span></span><span></span><span></span>' +
@@ -2864,12 +2860,12 @@ window.PROJECTS = {
         '</svg>' +
       '</button>' +
       '<div class="nav-overlay-primary">' +
-        '<a href="design.html">Design</a>' +
-        '<a href="illustration.html">Illustration</a>' +
+        '<a href="/design">Design</a>' +
+        '<a href="/illustration">Illustration</a>' +
       '</div>' +
       '<div class="nav-overlay-secondary">' +
-        '<a href="about.html">Info</a>' +
-        '<a href="contact.html">Contact</a>' +
+        '<a href="/about">Info</a>' +
+        '<a href="/contact">Contact</a>' +
       '</div>' +
       '<div class="nav-overlay-social">' +
         '<a href="#">Instagram</a>' +
@@ -2936,9 +2932,9 @@ window.PROJECTS = {
       "</div>" +
       '<nav class="footer-nav">' +
       '<div class="footer-block-title">Sitmap</div>' +
-      '<a class="footer-nav-link" href="design.html" data-cursor-hover>Design</a>' +
-      '<a class="footer-nav-link" href="illustration.html" data-cursor-hover>Illustration</a>' +
-      '<a class="footer-nav-link" href="about.html" data-cursor-hover>About</a>' +
+      '<a class="footer-nav-link" href="/design" data-cursor-hover>Design</a>' +
+      '<a class="footer-nav-link" href="/illustration" data-cursor-hover>Illustration</a>' +
+      '<a class="footer-nav-link" href="/about" data-cursor-hover>About</a>' +
       "</nav>" +
       '<div class="footer-social">' +
       '<div class="footer-block-title">Elsewhere</div>' +
@@ -3131,7 +3127,7 @@ window._init_index = function() {
     const seq = imgs.concat(imgs);
     seq.forEach(it => {
       const a = document.createElement('a');
-      a.href = `design-detail.html?p=${it.slug}`;
+      a.href = `/design/${it.slug}`;
       a.setAttribute('data-cursor-hover', '');
       a.setAttribute('data-cursor-label', 'view');
       if ((it.src.startsWith('data:image/gif') || it.src.toLowerCase().endsWith('.gif'))) {
@@ -3189,11 +3185,10 @@ window._init_index = function() {
     else list = selected;
 
     list.forEach((item, i) => {
-      const detail = item.cat === "design" ? "design-detail.html" : "illustration-detail.html";
       const el = document.createElement("a");
       el.className = `proj reveal span-${item.span}`;
       el.style.setProperty("--reveal-delay", (i * 60) + "ms");
-      el.href = `${detail}?p=${item.p.slug}`;
+      el.href = item.cat === "design" ? `/design/${item.p.slug}` : `/illustration/${item.p.slug}`;
       el.setAttribute("data-cursor-label", "view");
       el.setAttribute("data-cursor-hover", "");
       const tags = (item.p.tags && item.p.tags.length)
@@ -3274,7 +3269,7 @@ window._init_design = function() {
     const el = document.createElement("a");
     el.className = `proj reveal ${layout[i] || "span-6"}`;
     el.style.setProperty("--reveal-delay", ((i % 3) * 80) + "ms");
-    el.href = `design-detail.html?p=${p.slug}`;
+    el.href = `/design/${p.slug}`;
     el.setAttribute("data-cursor-label", "view");
     el.setAttribute("data-cursor-hover", "");
     const isGif = (p.thumb && (p.thumb.startsWith('data:image/gif') || p.thumb.toLowerCase().endsWith('.gif')));
@@ -3302,7 +3297,7 @@ window._init_illustration = function() {
     const el = document.createElement("a");
     el.className = `proj reveal ${layout[i] || "span-6"}`;
     el.style.setProperty("--reveal-delay", ((i % 3) * 80) + "ms");
-    el.href = `illustration-detail.html?p=${p.slug}`;
+    el.href = `/illustration/${p.slug}`;
     el.setAttribute("data-cursor-label", "view");
     el.setAttribute("data-cursor-hover", "");
     el.setAttribute("data-slug", p.slug);
@@ -3740,7 +3735,7 @@ window._init_design_detail = function() {
   }).join("");
   document.getElementById("nextlink").addEventListener("click", function(e){
     e.preventDefault();
-    if (typeof showPage === "function") showPage("design-detail.html", { p: next.slug });
+    if (typeof showPage === "function") showPage("design-detail.html", { p: next.slug }, false, `/design/${next.slug}`);
   });
 };
 
@@ -4019,7 +4014,7 @@ window._init_illustration_detail = function() {
   }).join("");
   document.getElementById("ill-nextlink").addEventListener("click", function(e){
     e.preventDefault();
-    if (typeof showPage === "function") showPage("illustration-detail.html", { p: next.slug });
+    if (typeof showPage === "function") showPage("illustration-detail.html", { p: next.slug }, false, `/illustration/${next.slug}`);
   });
 };
 
@@ -4027,7 +4022,7 @@ window._init_illustration_detail = function() {
 var _currentPage = null;
 var _initRan = {};
 
-function showPage(pageName, params, skipHistory) {
+function showPage(pageName, params, skipHistory, cleanPath) {
   params = params || {};
 
   // Update page-level SEO title and meta description
@@ -4100,11 +4095,26 @@ function showPage(pageName, params, skipHistory) {
   // Store params for detail pages
   window._routerParams = params;
 
-  // Push browser history so back button works
+  // Push browser history — use clean path if provided, else hash fallback
   if (!skipHistory) {
-    var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
-    var url = pageName + (qs ? '?' + qs : '');
-    history.pushState({ page: pageName, params: params }, '', '#' + url);
+    var pushPath;
+    if (cleanPath) {
+      pushPath = cleanPath;
+    } else if (pageName === 'index.html') {
+      pushPath = '/';
+    } else if (pageName === 'design.html') {
+      pushPath = '/design';
+    } else if (pageName === 'illustration.html') {
+      pushPath = '/illustration';
+    } else if (pageName === 'about.html') {
+      pushPath = '/about';
+    } else if (pageName === 'contact.html') {
+      pushPath = '/contact';
+    } else {
+      var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
+      pushPath = '/' + pageName + (qs ? '?' + qs : '');
+    }
+    history.pushState({ page: pageName, params: params, cleanPath: pushPath }, '', pushPath);
   }
 
   // Re-init SHUANG
@@ -4135,20 +4145,44 @@ document.addEventListener('click', function(e) {
 
   if (href === '#') return;
 
-  // Parse page + query
-  var parts = href.split('?');
-  var page = parts[0];
-  var qs = parts[1] || '';
-  var params = {};
-  if (qs) {
-    qs.split('&').forEach(function(pair){
-      var kv = pair.split('=');
-      params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1]||'');
-    });
+  // Handle clean path URLs
+  var page, params = {}, cleanPath = null;
+
+  if (href.startsWith('/design/') && href.length > 8) {
+    var slug = href.replace('/design/', '').split('?')[0];
+    page = 'design-detail.html';
+    params = { p: slug };
+    cleanPath = href;
+  } else if (href.startsWith('/illustration/') && href.length > 14) {
+    var slug = href.replace('/illustration/', '').split('?')[0];
+    page = 'illustration-detail.html';
+    params = { p: slug };
+    cleanPath = href;
+  } else if (href === '/' || href === '/index.html') {
+    page = 'index.html'; cleanPath = '/';
+  } else if (href === '/design' || href === '/design.html') {
+    page = 'design.html'; cleanPath = '/design';
+  } else if (href === '/illustration' || href === '/illustration.html') {
+    page = 'illustration.html'; cleanPath = '/illustration';
+  } else if (href === '/about' || href === '/about.html') {
+    page = 'about.html'; cleanPath = '/about';
+  } else if (href === '/contact' || href === '/contact.html') {
+    page = 'contact.html'; cleanPath = '/contact';
+  } else {
+    // Legacy hash/query fallback
+    var parts = href.split('?');
+    page = parts[0].replace(/^\//, '');
+    var qs = parts[1] || '';
+    if (qs) {
+      qs.split('&').forEach(function(pair){
+        var kv = pair.split('=');
+        params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1]||'');
+      });
+    }
   }
-  
+
   window._routerParams = params;
-  showPage(page || 'index.html', params);
+  showPage(page || 'index.html', params, false, cleanPath);
 }, true); // <-- capture phase
 
 // Handle browser back/forward buttons
@@ -4156,7 +4190,8 @@ window.addEventListener('popstate', function(e) {
   if (e.state && e.state.page) {
     showPage(e.state.page, e.state.params || {}, true);
   } else {
-    showPage('index.html', {}, true);
+    // Parse clean path directly
+    parseAndShowPath(window.location.pathname);
   }
 });
 
@@ -4253,7 +4288,10 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
         item.addEventListener('click', function(e) {
           e.stopPropagation();
           hideDropdownNow();
-          showPage(item.getAttribute('data-page'), { p: item.getAttribute('data-slug') });
+          var pg = item.getAttribute('data-page');
+          var sl = item.getAttribute('data-slug');
+          var cleanPath = pg === 'design-detail.html' ? '/design/' + sl : '/illustration/' + sl;
+          showPage(pg, { p: sl }, false, cleanPath);
         });
       });
     }
@@ -4378,26 +4416,54 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
   }
 })();
 
-// On load, restore page from URL hash if present
-(function() {
-  var hash = window.location.hash.slice(1); // remove #
-  if (hash && hash !== 'index.html') {
-    var parts = hash.split('?');
-    var page = parts[0];
-    var qs = parts[1] || '';
-    var params = {};
-    if (qs) {
-      qs.split('&').forEach(function(pair) {
-        var kv = pair.split('=');
-        params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '');
-      });
-    }
-    history.replaceState({ page: page, params: params }, '', '#' + hash);
-    showPage(page, params, true);
+// Parse and show page based on clean URL path
+function parseAndShowPath(pathname) {
+  var page, params = {}, cleanPath = pathname;
+
+  if (pathname === '/' || pathname === '/index.html' || pathname === '') {
+    page = 'index.html';
+  } else if (pathname.startsWith('/design/') && pathname.length > 8) {
+    var slug = pathname.replace('/design/', '').split('?')[0];
+    page = 'design-detail.html';
+    params = { p: slug };
+  } else if (pathname.startsWith('/illustration/') && pathname.length > 14) {
+    var slug = pathname.replace('/illustration/', '').split('?')[0];
+    page = 'illustration-detail.html';
+    params = { p: slug };
+  } else if (pathname === '/design' || pathname === '/design.html') {
+    page = 'design.html';
+  } else if (pathname === '/illustration' || pathname === '/illustration.html') {
+    page = 'illustration.html';
+  } else if (pathname === '/about' || pathname === '/about.html') {
+    page = 'about.html';
+  } else if (pathname === '/contact' || pathname === '/contact.html') {
+    page = 'contact.html';
   } else {
-    history.replaceState({ page: 'index.html', params: {} }, '', '#index.html');
-    showPage('index.html', {}, true);
+    // Fallback: try legacy hash
+    var hash = window.location.hash.slice(1);
+    if (hash && hash !== 'index.html') {
+      var parts = hash.split('?');
+      page = parts[0];
+      var qs = parts[1] || '';
+      if (qs) {
+        qs.split('&').forEach(function(pair) {
+          var kv = pair.split('=');
+          params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '');
+        });
+      }
+    } else {
+      page = 'index.html';
+    }
   }
+
+  window._routerParams = params;
+  history.replaceState({ page: page, params: params, cleanPath: cleanPath }, '', cleanPath);
+  showPage(page, params, true);
+}
+
+// On load, parse clean URL path
+(function() {
+  parseAndShowPath(window.location.pathname);
 })();
 </script>
 
