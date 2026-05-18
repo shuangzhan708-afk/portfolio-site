@@ -4050,8 +4050,8 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
 (function() {
   var PRACTICE_MAP = {
     "brand-identity":           { cat: "design", tags: ["Brand Identity", "Brand System", "Rebranding", "Logo Design"] },
-    "production-packaging":     { cat: "design", tags: ["Packaging Design", "Print Design", "Print & Menu Design", "Production Design"] },
-    "website-uxui":             { cat: "design", tags: ["Website & UX/UI", "Web Design", "Website & UX/UI Design"] },
+    "production-packaging":     { cat: "design", slugs: ["thallo", "kinton-ramen"] },
+    "website-uxui":             { cat: "design", slugs: ["website-design-collection", "shingyu", "broad-reach"] },
     "campaign-social":          { cat: "design", tags: ["Campaign Design", "Social Media Design", "Marketing & Social Media Design"] },
     "commercial-illustration":  { cat: "illustration", tags: ["Illustration", "Environmental Illustration", "Environmental Graphics", "Game Visuals", "Game Visual Design", "Game Visual Identity", "Card Design", "Character Design", "Mascot Design"], exclude: ["Personal Project", "Editorial", "Book", "Personal"] }
   };
@@ -4104,13 +4104,21 @@ Object.defineProperty(window, '_getParam', { value: function(k) {
     if (!map) return;
 
     var projects = map.cat === "design" ? PROJECTS.design : PROJECTS.illustration;
-    var matched = projects.filter(function(p) {
-      var allTags = (p.detailTags || []).concat(p.tags || []);
-      if (map.exclude) {
-        if (map.exclude.some(function(ex) { return allTags.indexOf(ex) > -1; })) return false;
-      }
-      return map.tags.some(function(t) { return allTags.indexOf(t) > -1; });
-    }).slice(0, 3); // max 3
+    var matched;
+    if (map.slugs) {
+      // Explicit ordered slug list
+      matched = map.slugs.map(function(slug) {
+        return projects.find(function(p) { return p.slug === slug; });
+      }).filter(Boolean);
+    } else {
+      matched = projects.filter(function(p) {
+        var allTags = (p.detailTags || []).concat(p.tags || []);
+        if (map.exclude) {
+          if (map.exclude.some(function(ex) { return allTags.indexOf(ex) > -1; })) return false;
+        }
+        return map.tags.some(function(t) { return allTags.indexOf(t) > -1; });
+      }).slice(0, 3);
+    }
 
     var el = getFloating();
     if (!matched.length) {
