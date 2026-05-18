@@ -3364,6 +3364,21 @@ window._init_design_detail = function() {
   var next = list[(idx + 1) % list.length];
 
   document.title = p.title + " | Shuang";
+  // Update meta description dynamically for project pages
+  var metaDescEl = document.querySelector('meta[name="description"]');
+  if (metaDescEl && p.summary) {
+    var plainDesc = p.summary.replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').substring(0, 155);
+    metaDescEl.setAttribute('content', plainDesc);
+  }
+  var ogDescEl = document.querySelector('meta[property="og:description"]');
+  if (ogDescEl && p.summary) {
+    var plainOgDesc = p.summary.replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').substring(0, 155);
+    ogDescEl.setAttribute('content', plainOgDesc);
+  }
+  var ogTitleEl = document.querySelector('meta[property="og:title"]');
+  if (ogTitleEl) ogTitleEl.setAttribute('content', p.title + ' | Shuang');
+  var twTitleEl = document.querySelector('meta[name="twitter:title"]');
+  if (twTitleEl) twTitleEl.setAttribute('content', p.title + ' | Shuang');
 
   // Carousel
   var track = document.getElementById("carousel-track");
@@ -3739,6 +3754,21 @@ window._init_illustration_detail = function() {
   var next = list[(idx + 1) % list.length];
 
   document.title = p.title + " | Shuang";
+  // Update meta description dynamically for project pages
+  var metaDescEl = document.querySelector('meta[name="description"]');
+  if (metaDescEl && p.summary) {
+    var plainDesc = p.summary.replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').substring(0, 155);
+    metaDescEl.setAttribute('content', plainDesc);
+  }
+  var ogDescEl = document.querySelector('meta[property="og:description"]');
+  if (ogDescEl && p.summary) {
+    var plainOgDesc = p.summary.replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').substring(0, 155);
+    ogDescEl.setAttribute('content', plainOgDesc);
+  }
+  var ogTitleEl = document.querySelector('meta[property="og:title"]');
+  if (ogTitleEl) ogTitleEl.setAttribute('content', p.title + ' | Shuang');
+  var twTitleEl = document.querySelector('meta[name="twitter:title"]');
+  if (twTitleEl) twTitleEl.setAttribute('content', p.title + ' | Shuang');
 
   // Apply light nav (white font) for specific projects
   setTimeout(function() {
