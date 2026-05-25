@@ -1,9 +1,22 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <base href="/">
+  <script>
+    // Smart base: works on Vercel, Live Server, subdirectory dev servers, and direct file://
+    (function() {
+      if (window.location.protocol !== 'file:') {
+        var b = document.createElement('base');
+        var pathname = window.location.pathname;
+        // If this is a known SPA clean route, always anchor to the host root
+        var isSPARoute = /^\/(design|illustration|about|contact)(\/|$)/.test(pathname);
+        var dir = isSPARoute ? '/' : pathname.substring(0, pathname.lastIndexOf('/') + 1);
+        b.href = window.location.protocol + '//' + window.location.host + dir;
+        document.head.appendChild(b);
+      }
+    })();
+  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FB3PBTY7F3"></script>
@@ -2553,16 +2566,43 @@ window.PROJECTS = {
     {
       slug: "packaging-design-collection",
       title: "Packaging Design Collection",
-      desc: "A curated showcase of packaging design projects.",
-      tags: ["Packaging Design", "Art Direction", "Brand Identity"],
-      hero: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
-      thumb: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjZThlOGU4Ii8+CiAgPHRleHQgeD0iODAwIiB5PSI0NjUiIGZvbnQtZmFtaWx5PSItYXBwbGUtc3lzdGVtLHN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjYWFhYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iLTEiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4=",
-      client: "Harry Rosen",
-      year: "2024",
-      role: "Editorial, Photography Direction, Print",
-      partners: "In partnership with Harry Rosen",
-      summary: "A long-form lookbook and seasonal magazine â€” printed on uncoated stock, set in a single weight, photographed in a single light.",
-      sections: []
+      desc: "A production-focused archive of print-ready packaging design files, showcasing structural design, dieline execution, and packaging systems across multiple brand identities.",
+      tags: ["Packaging Design", "Print Design", "Production Design"],
+      hero: [
+        "images/design/package-design-collection/banner/thallo-package-cover.jpg",
+        "images/design/package-design-collection/banner/nanoleaf-package.jpg",
+        "images/design/package-design-collection/banner/neo-package.jpg",
+        "images/design/package-design-collection/banner/noodle-package.jpg",
+        "images/design/package-design-collection/banner/pinch-package.jpg"
+      ],
+      thumb: "images/design/package-design-collection/banner/pinch-package.jpg",
+      client: "Various",
+      year: "2023–2025",
+      role: "Packaging Design, Print Production",
+      partners: "",
+      summary: "A production-focused archive of packaging design work spanning multiple brand identities and product categories. Rather than presenting finished mockups, this collection foregrounds the execution side of packaging — print-ready dielines, structural file preparation, and production-oriented design systems.||Each project reflects a distinct packaging direction, developed with attention to material constraints, print specifications, and real-world manufacturing requirements. The work spans retail packaging, brand packaging systems, and product-specific structural design.",
+      detailTags: ["Packaging Design", "Print Design", "Production Design", "Structural Design", "Dieline Design", "Brand Packaging"],
+      sections: [
+        { kind: "section-title", title: "Nanoleaf" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/nanoleaf-package-cover.jpg" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/nanoleaf-package.jpg" },
+
+        { kind: "section-title", title: "Neo" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/neo-package-cover.jpg" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/neo-package-02.jpg" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/neo-package.jpg" },
+
+        { kind: "section-title", title: "MagicNoodle" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/noodle-package.jpg" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/noodle-package-1.jpg" },
+
+        { kind: "section-title", title: "Pinch" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/pinch-package.jpg" },
+
+        { kind: "section-title", title: "Thallo" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/thallo-package-cover.jpg" },
+        { kind: "image-contain", src: "images/design/package-design-collection/mockup/thallo-package.jpg" }
+      ]
     },
     {
       slug: "printing-production-collection",
