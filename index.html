@@ -1878,6 +1878,16 @@ body { background: #fff; }
     .detail-img-half { border-radius: 4px; overflow: hidden; }
     .detail-caption { font-size: 13px; color: var(--color-ink-muted-48); padding: 10px 0 0; font-style: italic; }
     .detail-section-heading { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted-48); padding: 40px 0 12px; }
+    /* Page transition color flash */
+    #page-flash {
+      position: fixed; inset: 0; z-index: 99998;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+    #page-flash.flash-in { opacity: 1; transition: opacity 120ms ease; }
+    #page-flash.flash-out { opacity: 0; transition: opacity 300ms ease; }
+
     .detail-section-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-ink-muted-48); padding: 60px 0 20px; border-top: 1px solid rgba(0,0,0,0.08); margin-top: 20px; }
     .detail-section-title.title-prominent { font-size: 11px; padding: 96px 0 4px; border-top: 1px solid rgba(0,0,0,0.2); color: var(--color-ink); letter-spacing: 0.18em; }
     .detail-section-title.title-prominent + .brand-gallery-section { border-top: none; padding-top: 24px; }
@@ -1985,6 +1995,7 @@ body { background: #fff; }
 </head>
 <body>
 
+<div id="page-flash" aria-hidden="true"></div>
 <div class="page" id="page_index" data-page="index.html">
 <main>
   <section class="home-hero">
@@ -4397,6 +4408,25 @@ function showPage(pageName, params, skipHistory, cleanPath) {
   if (overlay) { overlay.classList.remove('is-open'); }
   if (burger) { burger.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); burger.style.removeProperty('color'); }
   document.body.style.overflow = '';
+
+  // Color flash transition
+  (function() {
+    var colors = ['#e8e0f5', '#fef3c7', '#d1f5ea', '#dbeafe', '#fce7f3'];
+    var flash = document.getElementById('page-flash');
+    if (!flash) return;
+    // Pick a random color different from last used
+    var last = flash._lastColor;
+    var available = colors.filter(function(c) { return c !== last; });
+    var color = available[Math.floor(Math.random() * available.length)];
+    flash._lastColor = color;
+    flash.style.background = color;
+    flash.classList.remove('flash-out');
+    flash.classList.add('flash-in');
+    setTimeout(function() {
+      flash.classList.remove('flash-in');
+      flash.classList.add('flash-out');
+    }, 220);
+  })();
 
   // Hide all
   document.querySelectorAll('.page').forEach(function(p) {
