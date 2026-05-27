@@ -1981,10 +1981,24 @@ body { background: #fff; }
       text-transform: uppercase;
     }
 
+
+    /* ── Page transition ───────────────────────────────────────────────── */
+    #page-flash, #page-flash-white {
+      position: fixed; inset: 0; pointer-events: none;
+      clip-path: polygon(0 110%, 100% 110%, 100% 110%, 0 110%);
+    }
+    #page-flash       { z-index: 99998; }
+    #page-flash-white { z-index: 99997; background: #fff; }
+    #page-flash.wipe-in       { clip-path: polygon(0 -10%, 100% -10%, 100% 110%, 0 110%); transition: clip-path 900ms cubic-bezier(0.76,0,0.24,1); }
+    #page-flash-white.wipe-in { clip-path: polygon(0 -10%, 100% -10%, 100% 110%, 0 110%); transition: clip-path 900ms cubic-bezier(0.76,0,0.24,1); }
+    #page-flash.wipe-out       { clip-path: polygon(0 -110%, 100% -110%, 100% -10%, 0 -10%); transition: clip-path 700ms cubic-bezier(0.76,0,0.24,1); }
+    #page-flash-white.wipe-out { clip-path: polygon(0 -110%, 100% -110%, 100% -10%, 0 -10%); transition: clip-path 700ms cubic-bezier(0.76,0,0.24,1); }
 </style>
 </head>
 <body>
 
+<div id="page-flash" aria-hidden="true"></div>
+<div id="page-flash-white" aria-hidden="true"></div>
 <div class="page" id="page_index" data-page="index.html">
 <main>
   <section class="home-hero">
@@ -4398,79 +4412,154 @@ function showPage(pageName, params, skipHistory, cleanPath) {
   if (burger) { burger.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); burger.style.removeProperty('color'); }
   document.body.style.overflow = '';
 
-  // Hide all
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('is-active');
-  });
-  
-  // Remove old nav/footer/cursor/overlay injected by SHUANG
-  var oldOverlay = document.querySelector('.nav-overlay');
-  if (oldOverlay) oldOverlay.remove();
-  var oldNav = document.querySelector('header.nav');
-  if (oldNav) oldNav.remove();
-  var oldFooter = document.querySelector('footer.footer');
-  if (oldFooter) oldFooter.remove();
-  var oldBtt = document.querySelector('.back-to-top');
-  if (oldBtt) oldBtt.remove();
-  var oldVeil = document.querySelector('.page-veil');
-  if (oldVeil) oldVeil.remove();
-  var oldDot = document.querySelector('.cursor-dot');
-  if (oldDot) oldDot.remove();
-  var oldRing = document.querySelector('.cursor-ring');
-  if (oldRing) oldRing.remove();
-  document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
+  var _f  = document.getElementById('page-flash');
+  var _fw = document.getElementById('page-flash-white');
+  var _COLORS = ['#c4b5fd','#fde68a','#a5f3e8','#93c5fd','#ffb4a2'];
+  var _T = { colorIn: 900, offset: 200, colorOut: 700, whiteOut: 700 };
+  var _doAnim = _f && _fw && !_f._busy && !skipHistory;
 
-  // Show target
-  var pid = pageName.replace('.html','').replace(/-/g,'_');
-  var el = document.getElementById('page_' + pid);
-  if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
-  el.classList.add('is-active');
-  
-  _currentPage = pageName;
-  window.scrollTo(0,0);
+  if (_doAnim) {
+    _f._busy = true;
 
-  // Page-specific background colors
-  var bgMap = { 'contact.html': '#eae8e4' };
-  document.body.style.background = bgMap[pageName] || '';
+    // ── Pick color ──────────────────────────────────────────────────────
+    var _avail = _COLORS.filter(function(c){ return c !== _f._last; });
+    var _color = _avail[Math.floor(Math.random() * _avail.length)];
+    _f._last = _color;
 
-  // Store params for detail pages
-  window._routerParams = params;
+    // ── Reset both layers to off-screen bottom, no transition ───────────
+    _f.removeAttribute('class');
+    _fw.removeAttribute('class');
+    _f.style.cssText  = 'background:' + _color + ';clip-path:polygon(0 110%,100% 110%,100% 110%,0 110%)';
+    _fw.style.cssText = 'clip-path:polygon(0 110%,100% 110%,100% 110%,0 110%)';
 
-  // Push browser history â€” use clean path if provided, else hash fallback
-  if (!skipHistory) {
-    var pushPath;
-    if (cleanPath) {
-      pushPath = cleanPath;
-    } else if (pageName === 'index.html') {
-      pushPath = '/';
-    } else if (pageName === 'design.html') {
-      pushPath = '/design';
-    } else if (pageName === 'illustration.html') {
-      pushPath = '/illustration';
-    } else if (pageName === 'about.html') {
-      pushPath = '/about';
-    } else if (pageName === 'contact.html') {
-      pushPath = '/contact';
-    } else {
-      var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
-      pushPath = '/' + pageName + (qs ? '?' + qs : '');
+    // ── Force paint so reset registers before animation ─────────────────
+    requestAnimationFrame(function() { requestAnimationFrame(function() {
+
+      // ── Step 1: colour wipes in ────────────────────────────────────────
+      _f.style.cssText = 'background:' + _color;
+      _f.classList.add('wipe-in');
+
+      // ── Step 2: white follows 200ms later ─────────────────────────────
+      setTimeout(function() {
+        _fw.style.cssText = '';
+        _fw.classList.add('wipe-in');
+      }, _T.offset);
+
+      // ── Heavy JS at 300ms — colour covering, nothing visible ──────────
+      setTimeout(function() {
+        document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('is-active'); });
+        ['.nav-overlay','header.nav','footer.footer','.back-to-top','.page-veil','.cursor-dot','.cursor-ring'].forEach(function(s){
+          var e = document.querySelector(s); if (e) e.remove();
+        });
+        document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
+
+        var pid = pageName.replace('.html','').replace(/-/g,'_');
+        var el  = document.getElementById('page_' + pid);
+        if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
+        el.classList.add('is-active');
+        _currentPage = pageName;
+        window.scrollTo(0,0);
+        document.body.style.background = pageName === 'contact.html' ? '#eae8e4' : '';
+        window._routerParams = params;
+
+        if (!skipHistory) {
+          var pp;
+          if (cleanPath)                           pp = cleanPath;
+          else if (pageName==='index.html')        pp = '/';
+          else if (pageName==='design.html')       pp = '/design';
+          else if (pageName==='illustration.html') pp = '/illustration';
+          else if (pageName==='about.html')        pp = '/about';
+          else if (pageName==='contact.html')      pp = '/contact';
+          else {
+            var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(params[k]); }).join('&');
+            pp = '/'+pageName+(qs?'?'+qs:'');
+          }
+          history.pushState({page:pageName,params:params,cleanPath:pp},'',pp);
+        }
+
+        var theme = (pageName==='design-detail.html'||pageName==='index.html') ? 'light' : undefined;
+        SHUANG.init(theme ? {theme:theme} : {});
+        var fn2 = window['_init_'+pid]; if (fn2) fn2();
+        el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
+      }, 300);
+
+      // ── Exit sequence starts at cover time (900+200+900 = 2000ms) ─────
+      // This setTimeout is set from the same rAF base, completely independent
+      // of the JS work above — no blocking, no freeze
+      var coverTime = _T.colorIn + _T.offset + _T.colorIn; // 2000ms
+
+      setTimeout(function() {
+        // colour exits first
+        _f.removeAttribute('class');
+        void _f.offsetWidth;
+        _f.classList.add('wipe-out');
+
+        // white exits 200ms after colour
+        setTimeout(function() {
+          _fw.removeAttribute('class');
+          void _fw.offsetWidth;
+          _fw.classList.add('wipe-out');
+
+          // page fades in 300ms into white exit
+          setTimeout(function() {
+            var activeEl = document.querySelector('.page.is-active');
+            if (activeEl) {
+              activeEl.style.opacity = '0';
+              activeEl.style.transition = 'opacity 500ms ease';
+              requestAnimationFrame(function() { activeEl.style.opacity = '1'; });
+              setTimeout(function() {
+                activeEl.style.transition = '';
+                activeEl.style.opacity   = '';
+                activeEl.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
+                _f.removeAttribute('class');  _fw.removeAttribute('class');
+                _f.style.cssText = '';        _fw.style.cssText = '';
+                _f._busy = false;
+              }, 520);
+            }
+          }, 300);
+        }, _T.offset);
+      }, coverTime);
+
+    }); }); // end double rAF
+
+  } else {
+    // ── No transition: instant switch ─────────────────────────────────────
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('is-active'); });
+    ['.nav-overlay','header.nav','footer.footer','.back-to-top','.page-veil','.cursor-dot','.cursor-ring'].forEach(function(s){
+      var e = document.querySelector(s); if (e) e.remove();
+    });
+    document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
+
+    var pid = pageName.replace('.html','').replace(/-/g,'_');
+    var el  = document.getElementById('page_' + pid);
+    if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
+    el.classList.add('is-active');
+    _currentPage = pageName;
+    window.scrollTo(0,0);
+    document.body.style.background = pageName === 'contact.html' ? '#eae8e4' : '';
+    window._routerParams = params;
+
+    if (!skipHistory) {
+      var pp;
+      if (cleanPath)                           pp = cleanPath;
+      else if (pageName==='index.html')        pp = '/';
+      else if (pageName==='design.html')       pp = '/design';
+      else if (pageName==='illustration.html') pp = '/illustration';
+      else if (pageName==='about.html')        pp = '/about';
+      else if (pageName==='contact.html')      pp = '/contact';
+      else {
+        var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(params[k]); }).join('&');
+        pp = '/'+pageName+(qs?'?'+qs:'');
+      }
+      history.pushState({page:pageName,params:params,cleanPath:pp},'',pp);
     }
-    history.pushState({ page: pageName, params: params, cleanPath: pushPath }, '', pushPath);
+
+    var theme = (pageName==='design-detail.html'||pageName==='index.html') ? 'light' : undefined;
+    SHUANG.init(theme ? {theme:theme} : {});
+    var fn2 = window['_init_'+pid]; if (fn2) fn2();
+    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
+    setTimeout(function(){ el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); }); }, 80);
   }
-
-  // Re-init SHUANG
-  var theme = (pageName === 'design-detail.html' || pageName === 'index.html') ? 'light' : undefined;
-  SHUANG.init(theme ? {theme: theme} : {});
-
-  // Run page-specific init
-  var fn = window['_init_' + pid];
-  if (fn) fn();
-
-  // Re-init reveal for newly shown page
-  el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
-  setTimeout(function(){
-    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
-  }, 80);
 }
 
 // Intercept ALL link clicks â€” capture phase to beat any parent handlers
