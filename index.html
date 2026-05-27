@@ -1981,10 +1981,48 @@ body { background: #fff; }
       text-transform: uppercase;
     }
 
+
+    /* Two-layer page transition */
+    #page-flash, #page-flash-white {
+      position: fixed; inset: 0; pointer-events: none;
+      clip-path: polygon(0 110%, 100% 110%, 100% 110%, 0 110%);
+    }
+    #page-flash       { z-index: 99998; }
+    #page-flash-white { z-index: 99997; background: #fff; }
+
+    #page-flash.wipe-in {
+      clip-path: polygon(0 -10%, 100% -10%, 100% 110%, 0 110%);
+      transition: clip-path 700ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #page-flash.wipe-out {
+      clip-path: polygon(0 -110%, 100% -110%, 100% -10%, 0 -10%);
+      transition: clip-path 700ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #page-flash-white.wipe-in {
+      clip-path: polygon(0 -10%, 100% -10%, 100% 110%, 0 110%);
+      transition: clip-path 700ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #page-flash-white.wipe-out {
+      clip-path: polygon(0 -110%, 100% -110%, 100% -10%, 0 -10%);
+      transition: clip-path 700ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    /* Staged content entrance — bottom to top */
+    .reveal-stage {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+    .reveal-stage.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 </style>
 </head>
 <body>
 
+<div id="page-flash" aria-hidden="true"></div>
+<div id="page-flash-white" aria-hidden="true"></div>
 <div class="page" id="page_index" data-page="index.html">
 <main>
   <section class="home-hero">
@@ -4398,79 +4436,142 @@ function showPage(pageName, params, skipHistory, cleanPath) {
   if (burger) { burger.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); burger.style.removeProperty('color'); }
   document.body.style.overflow = '';
 
-  // Hide all
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('is-active');
-  });
-  
-  // Remove old nav/footer/cursor/overlay injected by SHUANG
-  var oldOverlay = document.querySelector('.nav-overlay');
-  if (oldOverlay) oldOverlay.remove();
-  var oldNav = document.querySelector('header.nav');
-  if (oldNav) oldNav.remove();
-  var oldFooter = document.querySelector('footer.footer');
-  if (oldFooter) oldFooter.remove();
-  var oldBtt = document.querySelector('.back-to-top');
-  if (oldBtt) oldBtt.remove();
-  var oldVeil = document.querySelector('.page-veil');
-  if (oldVeil) oldVeil.remove();
-  var oldDot = document.querySelector('.cursor-dot');
-  if (oldDot) oldDot.remove();
-  var oldRing = document.querySelector('.cursor-ring');
-  if (oldRing) oldRing.remove();
-  document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
+  // ── Two-layer wipe transition ────────────────────────────────────────────
+  var _f   = document.getElementById('page-flash');
+  var _fw  = document.getElementById('page-flash-white');
+  var _cols = ['#c4b5fd','#fde68a','#a5f3e8','#93c5fd','#ffb4a2'];
+  var _delay = 0;
 
-  // Show target
-  var pid = pageName.replace('.html','').replace(/-/g,'_');
-  var el = document.getElementById('page_' + pid);
-  if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
-  el.classList.add('is-active');
-  
-  _currentPage = pageName;
-  window.scrollTo(0,0);
+  if (_f && _fw && !_f._busy && !skipHistory) {
+    _f._busy = true;
 
-  // Page-specific background colors
-  var bgMap = { 'contact.html': '#eae8e4' };
-  document.body.style.background = bgMap[pageName] || '';
+    // Pick colour
+    var _av = _cols.filter(function(c){ return c !== _f._last; });
+    var _c  = _av[Math.floor(Math.random() * _av.length)];
+    _f._last = _c;
+    _f.style.background = _c;
 
-  // Store params for detail pages
-  window._routerParams = params;
+    // Reset both layers to bottom
+    _f.className  = '';
+    _fw.className = '';
+    _f.style.clipPath  = 'polygon(0 110%, 100% 110%, 100% 110%, 0 110%)';
+    _fw.style.clipPath = 'polygon(0 110%, 100% 110%, 100% 110%, 0 110%)';
+    void _f.offsetWidth;
 
-  // Push browser history â€” use clean path if provided, else hash fallback
-  if (!skipHistory) {
-    var pushPath;
-    if (cleanPath) {
-      pushPath = cleanPath;
-    } else if (pageName === 'index.html') {
-      pushPath = '/';
-    } else if (pageName === 'design.html') {
-      pushPath = '/design';
-    } else if (pageName === 'illustration.html') {
-      pushPath = '/illustration';
-    } else if (pageName === 'about.html') {
-      pushPath = '/about';
-    } else if (pageName === 'contact.html') {
-      pushPath = '/contact';
-    } else {
-      var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
-      pushPath = '/' + pageName + (qs ? '?' + qs : '');
-    }
-    history.pushState({ page: pageName, params: params, cleanPath: pushPath }, '', pushPath);
+    // Step 1: colour layer wipes up (700ms)
+    _f.style.clipPath = '';
+    _f.classList.add('wipe-in');
+
+    // Step 2: after colour fully covers + 500ms pause → white layer wipes up
+    // Total delay before page switch = 700ms (colour in) + 500ms (pause) + 700ms (white in) = 1900ms
+    setTimeout(function() {
+      _fw.style.clipPath = '';
+      void _fw.offsetWidth;
+      _fw.classList.add('wipe-in');
+    }, 1200); // 700ms colour + 500ms pause
+
+    _delay = 1950; // colour in + pause + white in
   }
 
-  // Re-init SHUANG
-  var theme = (pageName === 'design-detail.html' || pageName === 'index.html') ? 'light' : undefined;
-  SHUANG.init(theme ? {theme: theme} : {});
+  setTimeout(function() {
+    // ── Hide current page ──────────────────────────────────────────────────
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('is-active'); });
+    ['.nav-overlay','header.nav','footer.footer','.back-to-top',
+     '.page-veil','.cursor-dot','.cursor-ring'].forEach(function(s){
+      var e = document.querySelector(s); if (e) e.remove();
+    });
+    document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
 
-  // Run page-specific init
-  var fn = window['_init_' + pid];
-  if (fn) fn();
+    // ── Show new page (hidden under white layer) ───────────────────────────
+    var pid = pageName.replace('.html','').replace(/-/g,'_');
+    var el  = document.getElementById('page_' + pid);
+    if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
+    el.classList.add('is-active');
+    _currentPage = pageName;
+    window.scrollTo(0, 0);
+    document.body.style.background = pageName === 'contact.html' ? '#eae8e4' : '';
+    window._routerParams = params;
 
-  // Re-init reveal for newly shown page
-  el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
-  setTimeout(function(){
-    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
-  }, 80);
+    // ── History ────────────────────────────────────────────────────────────
+    if (!skipHistory) {
+      var pp;
+      if (cleanPath)                           { pp = cleanPath; }
+      else if (pageName==='index.html')        { pp = '/'; }
+      else if (pageName==='design.html')       { pp = '/design'; }
+      else if (pageName==='illustration.html') { pp = '/illustration'; }
+      else if (pageName==='about.html')        { pp = '/about'; }
+      else if (pageName==='contact.html')      { pp = '/contact'; }
+      else {
+        var qs = Object.keys(params).map(function(k){
+          return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);
+        }).join('&');
+        pp = '/'+pageName+(qs?'?'+qs:'');
+      }
+      history.pushState({page:pageName,params:params,cleanPath:pp},'',pp);
+    }
+
+    // ── Re-init page ───────────────────────────────────────────────────────
+    var theme = (pageName==='design-detail.html'||pageName==='index.html') ? 'light' : undefined;
+    SHUANG.init(theme ? {theme:theme} : {});
+    var fn = window['_init_' + pid]; if (fn) fn();
+
+    // Mark content sections for staged reveal
+    if (_delay) {
+      // Images first, then text blocks, nav appears normally
+      var images = el.querySelectorAll('img, video, .proj-thumb, .detail-hero, .hero-slide');
+      var texts  = el.querySelectorAll('h1, h2, h3, p, .proj-info, .summary-block, .detail-info');
+      images.forEach(function(e){ e.classList.add('reveal-stage'); });
+      texts.forEach(function(e){  e.classList.add('reveal-stage'); });
+    }
+
+    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
+
+    // ── Exit sequence ──────────────────────────────────────────────────────
+    if (_f && _fw && _delay) {
+      setTimeout(function() {
+        // Colour layer exits
+        _f.classList.remove('wipe-in');
+        _f.classList.add('wipe-out');
+
+        // White layer exits 200ms after colour
+        setTimeout(function() {
+          _fw.classList.remove('wipe-in');
+          _fw.classList.add('wipe-out');
+
+          // Staged content reveal as white layer clears
+          setTimeout(function() {
+            // Images appear first
+            el.querySelectorAll('img, video, .proj-thumb, .detail-hero, .hero-slide').forEach(function(e){
+              e.classList.add('is-visible');
+            });
+
+            // Text 200ms after images
+            setTimeout(function() {
+              el.querySelectorAll('h1, h2, h3, p, .proj-info, .summary-block, .detail-info').forEach(function(e){
+                e.classList.add('is-visible');
+              });
+
+              // Reveals + cleanup 300ms after text
+              setTimeout(function() {
+                el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
+                // Clean up stage classes
+                el.querySelectorAll('.reveal-stage').forEach(function(e){
+                  e.classList.remove('reveal-stage','is-visible');
+                  e.style.opacity = '';
+                  e.style.transform = '';
+                });
+                _f.className  = '';
+                _fw.className = '';
+                _f._busy = false;
+              }, 300);
+            }, 200);
+          }, 300);
+        }, 200);
+      }, 40);
+    } else {
+      el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
+    }
+  }, _delay);
 }
 
 // Intercept ALL link clicks â€” capture phase to beat any parent handlers
