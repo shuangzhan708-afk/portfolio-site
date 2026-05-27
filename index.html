@@ -1981,10 +1981,30 @@ body { background: #fff; }
       text-transform: uppercase;
     }
 
+
+    /* Page wipe transition */
+    #page-flash {
+      position: fixed; inset: 0; z-index: 99998; pointer-events: none;
+      clip-path: polygon(0 110%, 100% 110%, 100% 110%, 0 110%);
+    }
+    #page-flash.wipe-in {
+      clip-path: polygon(0 -10%, 100% -10%, 100% 110%, 0 110%);
+      transition: clip-path 780ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #page-flash.wipe-out {
+      clip-path: polygon(0 -10%, 100% -10%, 100% -10%, 0 -10%);
+      transition: clip-path 680ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page-entering { animation: pageEnter 400ms cubic-bezier(0.4,0,0.2,1) forwards; }
 </style>
 </head>
 <body>
 
+<div id="page-flash" aria-hidden="true"></div>
 <div class="page" id="page_index" data-page="index.html">
 <main>
   <section class="home-hero">
@@ -4398,80 +4418,81 @@ function showPage(pageName, params, skipHistory, cleanPath) {
   if (burger) { burger.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); burger.style.removeProperty('color'); }
   document.body.style.overflow = '';
 
-  // Hide all
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('is-active');
-  });
-  
-  // Remove old nav/footer/cursor/overlay injected by SHUANG
-  var oldOverlay = document.querySelector('.nav-overlay');
-  if (oldOverlay) oldOverlay.remove();
-  var oldNav = document.querySelector('header.nav');
-  if (oldNav) oldNav.remove();
-  var oldFooter = document.querySelector('footer.footer');
-  if (oldFooter) oldFooter.remove();
-  var oldBtt = document.querySelector('.back-to-top');
-  if (oldBtt) oldBtt.remove();
-  var oldVeil = document.querySelector('.page-veil');
-  if (oldVeil) oldVeil.remove();
-  var oldDot = document.querySelector('.cursor-dot');
-  if (oldDot) oldDot.remove();
-  var oldRing = document.querySelector('.cursor-ring');
-  if (oldRing) oldRing.remove();
-  document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
+  // ── Wipe transition ──────────────────────────────────────────────────────
+  var _f = document.getElementById('page-flash');
+  var _cols = ['#c4b5fd','#fde68a','#a5f3e8','#93c5fd','#ffb4a2'];
+  var _ms = 0;
 
-  // Show target
-  var pid = pageName.replace('.html','').replace(/-/g,'_');
-  var el = document.getElementById('page_' + pid);
-  if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
-  el.classList.add('is-active');
-  
-  _currentPage = pageName;
-  window.scrollTo(0,0);
-
-  // Page-specific background colors
-  var bgMap = { 'contact.html': '#eae8e4' };
-  document.body.style.background = bgMap[pageName] || '';
-
-  // Store params for detail pages
-  window._routerParams = params;
-
-  // Push browser history â€” use clean path if provided, else hash fallback
-  if (!skipHistory) {
-    var pushPath;
-    if (cleanPath) {
-      pushPath = cleanPath;
-    } else if (pageName === 'index.html') {
-      pushPath = '/';
-    } else if (pageName === 'design.html') {
-      pushPath = '/design';
-    } else if (pageName === 'illustration.html') {
-      pushPath = '/illustration';
-    } else if (pageName === 'about.html') {
-      pushPath = '/about';
-    } else if (pageName === 'contact.html') {
-      pushPath = '/contact';
-    } else {
-      var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
-      pushPath = '/' + pageName + (qs ? '?' + qs : '');
-    }
-    history.pushState({ page: pageName, params: params, cleanPath: pushPath }, '', pushPath);
+  if (_f && !_f._busy && !skipHistory) {
+    _f._busy = true;
+    var _av = _cols.filter(function(c){ return c !== _f._last; });
+    var _c  = _av[Math.floor(Math.random() * _av.length)];
+    _f._last = _c;
+    _f.style.background = _c;
+    _f.className = '';
+    void _f.offsetWidth;
+    _f.classList.add('wipe-in');
+    _ms = 780;
   }
 
-  // Re-init SHUANG
-  var theme = (pageName === 'design-detail.html' || pageName === 'index.html') ? 'light' : undefined;
-  SHUANG.init(theme ? {theme: theme} : {});
+  setTimeout(function() {
+    // ── Hide current page ──────────────────────────────────────────────────
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('is-active'); });
 
-  // Run page-specific init
-  var fn = window['_init_' + pid];
-  if (fn) fn();
+    // ── Remove injected UI ─────────────────────────────────────────────────
+    ['.nav-overlay','header.nav','footer.footer','.back-to-top',
+     '.page-veil','.cursor-dot','.cursor-ring'].forEach(function(s){
+      var e = document.querySelector(s); if (e) e.remove();
+    });
+    document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
 
-  // Re-init reveal for newly shown page
-  el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
-  setTimeout(function(){
-    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
-  }, 80);
+    // ── Show new page ──────────────────────────────────────────────────────
+    var pid = pageName.replace('.html','').replace(/-/g,'_');
+    var el  = document.getElementById('page_' + pid);
+    if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
+    el.classList.add('is-active');
+    _currentPage = pageName;
+    window.scrollTo(0, 0);
+
+    document.body.style.background = pageName === 'contact.html' ? '#eae8e4' : '';
+    window._routerParams = params;
+
+    // ── History ────────────────────────────────────────────────────────────
+    if (!skipHistory) {
+      var pp;
+      if (cleanPath)                      { pp = cleanPath; }
+      else if (pageName==='index.html')   { pp = '/'; }
+      else if (pageName==='design.html')  { pp = '/design'; }
+      else if (pageName==='illustration.html') { pp = '/illustration'; }
+      else if (pageName==='about.html')   { pp = '/about'; }
+      else if (pageName==='contact.html') { pp = '/contact'; }
+      else { var qs=Object.keys(params).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);}).join('&'); pp='/'+pageName+(qs?'?'+qs:''); }
+      history.pushState({page:pageName,params:params,cleanPath:pp},'',pp);
+    }
+
+    // ── Re-init ────────────────────────────────────────────────────────────
+    var theme = (pageName==='design-detail.html'||pageName==='index.html') ? 'light' : undefined;
+    SHUANG.init(theme ? {theme:theme} : {});
+    var fn = window['_init_' + pid]; if (fn) fn();
+    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
+    setTimeout(function(){ el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); }); }, 80);
+
+    // ── Wipe out + page entrance ───────────────────────────────────────────
+    if (_f && _ms) {
+      _f.classList.remove('wipe-in');
+      setTimeout(function() {
+        _f.classList.add('wipe-out');
+        el.classList.add('page-entering');
+        setTimeout(function() {
+          _f.className = '';
+          _f._busy = false;
+          el.classList.remove('page-entering');
+        }, 700);
+      }, 40);
+    }
+  }, _ms);
 }
+
 
 // Intercept ALL link clicks â€” capture phase to beat any parent handlers
 document.addEventListener('click', function(e) {
