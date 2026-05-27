@@ -1879,6 +1879,46 @@ body { background: #fff; }
     .detail-caption { font-size: 13px; color: var(--color-ink-muted-48); padding: 10px 0 0; font-style: italic; }
     .detail-section-heading { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted-48); padding: 40px 0 12px; }
     .detail-section-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-ink-muted-48); padding: 60px 0 20px; border-top: 1px solid rgba(0,0,0,0.08); margin-top: 20px; }
+    .detail-section-title.title-prominent { font-size: 11px; padding: 80px 0 8px; border-top: 2px solid var(--color-ink); color: var(--color-ink); letter-spacing: 0.18em; }
+    .detail-section-title.title-prominent + .brand-gallery-section { border-top: none; padding-top: 24px; }
+    /* Brand gallery section */
+    .brand-gallery-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin: 40px 0; padding-top: 48px; border-top: 1px solid rgba(0,0,0,0.08); }
+    .brand-gallery-reversed { direction: rtl; }
+    .brand-gallery-reversed > * { direction: ltr; }
+    .brand-gallery-imgblock { display: flex; flex-direction: column; gap: 8px; }
+    .brand-gallery-main { aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; cursor: pointer; position: relative; }
+    .brand-gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 400ms ease; }
+    .brand-gallery-main:hover img { transform: scale(1.03); }
+    .brand-gallery-zoom { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); color: #fff; font-size: 11px; padding: 5px 10px; border-radius: 4px; display: flex; align-items: center; gap: 5px; opacity: 0; transition: opacity 200ms; pointer-events: none; }
+    .brand-gallery-main:hover .brand-gallery-zoom { opacity: 1; }
+    .brand-gallery-thumbs { display: flex; gap: 6px; }
+    .brand-gallery-thumb { flex: 1; aspect-ratio: 4/3; overflow: hidden; border-radius: 5px; cursor: pointer; border: 2px solid transparent; transition: border-color 150ms; }
+    .brand-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .brand-gallery-thumb.active { border-color: var(--color-ink); }
+    .brand-gallery-text { padding: 8px 0; }
+    .brand-gallery-name { font-family: var(--font-display); font-size: clamp(20px, 2vw, 26px); font-weight: 600; letter-spacing: -0.02em; margin: 0 0 12px; }
+    .brand-gallery-desc { font-size: 14px; line-height: 1.7; color: var(--color-ink-muted-80); margin: 0 0 16px; }
+    .brand-gallery-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
+    .brand-gallery-tag { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(0,0,0,0.15); border-radius: 20px; color: var(--color-ink-muted-80); }
+    .brand-gallery-resp { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .brand-gallery-resp li { font-size: 13px; line-height: 1.6; color: var(--color-ink-muted-80); padding-left: 14px; position: relative; }
+    .brand-gallery-resp li::before { content: "—"; position: absolute; left: 0; color: var(--color-ink-muted-48); }
+    /* Lightbox */
+    #brand-lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; flex-direction: column; gap: 20px; cursor: default; }
+    #brand-lightbox * { cursor: default; }
+    #brand-lightbox button, .blb-close { cursor: pointer !important; }
+    #brand-lightbox.open { display: flex; }
+    .blb-img { max-width: 90vw; max-height: 78vh; object-fit: contain; border-radius: 6px; display: block; }
+    .blb-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; line-height: 1; }
+    .blb-nav { display: flex; align-items: center; gap: 16px; }
+    .blb-nav button { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 18px; transition: background 150ms; }
+    .blb-nav button:hover { background: rgba(255,255,255,0.3); }
+    #blb-counter { color: rgba(255,255,255,0.6); font-size: 13px; min-width: 40px; text-align: center; }
+    /* Mobile */
+    @media (max-width: 600px) {
+      .brand-gallery-section { grid-template-columns: 1fr !important; gap: 20px; direction: ltr !important; }
+      .brand-gallery-reversed { direction: ltr; }
+    }
     .detail-caption-right { font-size: 13px; color: var(--color-ink-muted-48); padding: 12px 0 0; font-style: italic; text-align: right; max-width: 480px; margin-left: auto; line-height: 1.6; }
     /* â”€â”€ Detail: Next project â”€â”€ */
     .detail-next { padding: 80px clamp(60px, 10vw, 180px) 0; max-width: var(--max); margin: 0 auto; }
@@ -2245,7 +2285,54 @@ window.PROJECTS = {
         { kind: "split-asymmetric", left: "images/design/kinton-ramen/brand/kinton-ramen-gif-01.gif", right: "images/design/kinton-ramen/photo/kinton-ramen-photo-03.jpg" },
         { kind: "split-asymmetric-rev", left: "images/design/kinton-ramen/banner/kinton-ramen-photo-02.png", right: "images/design/kinton-ramen/brand/kinton-ramen-gif-02.gif" },
         { kind: "image", src: "images/design/kinton-ramen/banner/kinton-ramen-mockup-05.webp" },
-        { kind: "image", src: "images/design/kinton-ramen/mockup/kinton-ramen-mockup-06.webp" }
+        { kind: "image", src: "images/design/kinton-ramen/mockup/kinton-ramen-mockup-06.webp" },
+        { kind: "section-title", title: "Additional Brand Work — Kinton Family Group", prominent: true },
+        { kind: "brand-gallery",
+          brand: "Neo Café",
+          desc: "Supported visual content and promotional materials for social media communication within an established café brand system.",
+          tags: ["Social Media Design", "Campaign Design", "Visual Content"],
+          responsibilities: [
+            "Framing the Campaign — Developed visual communication for ongoing promotional and seasonal campaigns within an established brand system.",
+            "Adapting the System — Worked within existing brand guidelines while adjusting layouts for different campaign needs.",
+            "Campaign Execution — Designed social media, poster, and digital promotional assets across multiple formats."
+          ],
+          images: [
+            "images/design/kinton-ramen/mockup/neo-mockup-01.png",
+            "images/design/kinton-ramen/mockup/neo-mockup-02.png",
+            "images/design/kinton-ramen/mockup/neo-mockup-03.png",
+            "images/design/kinton-ramen/mockup/neo-mockup-04.png"
+          ]
+        },
+        { kind: "brand-gallery",
+          brand: "Kinka Izakaya",
+          desc: "Contributed to campaign and promotional design across digital and print touchpoints within a Japanese dining brand.",
+          tags: ["Campaign Design", "Print Design", "Digital Promotion"],
+          responsibilities: [
+            "Adapting the System — Worked within existing brand guidelines while adjusting layouts for different campaign needs.",
+            "Campaign Execution — Designed social media, poster, and digital promotional assets across multiple formats.",
+            "Maintaining Consistency — Ensured visual alignment across fast-moving campaign materials."
+          ],
+          images: [
+            "images/design/kinton-ramen/mockup/izakaya-mockup-01.png",
+            "images/design/kinton-ramen/mockup/izakaya-mockup-02.png",
+            "images/design/kinton-ramen/mockup/izakaya-mockup-03.png"
+          ],
+          reversed: true
+        },
+        { kind: "brand-gallery",
+          brand: "Ja Bistro",
+          desc: "Provided light marketing and visual support for ongoing brand communication needs.",
+          tags: ["Marketing Design", "Visual Support", "Brand Communication"],
+          responsibilities: [
+            "Framing the Campaign — Developed visual communication for ongoing promotional needs within an established brand system.",
+            "Maintaining Consistency — Ensured visual alignment across fast-moving campaign materials."
+          ],
+          images: [
+            "images/design/kinton-ramen/mockup/jabistro-mockup-01.png",
+            "images/design/kinton-ramen/mockup/jabistro-mockup-02.png",
+            "images/design/kinton-ramen/mockup/jabistro-mockup-03.png"
+          ]
+        }
       ]
     },
     {
@@ -3398,6 +3485,47 @@ window._init_contact = function() {
 
 };
 
+// Brand gallery lightbox
+function openBrandLightbox(imgs, startIdx) {
+  var lb = document.getElementById("brand-lightbox");
+  if (!lb) {
+    lb = document.createElement("div");
+    lb.id = "brand-lightbox";
+    lb.innerHTML = '<button class="blb-close" id="blb-close">&#x2715;</button>' +
+      '<img class="blb-img" id="blb-img" src="" alt="">' +
+      '<div class="blb-nav">' +
+        '<button id="blb-prev">&#8592;</button>' +
+        '<span id="blb-counter"></span>' +
+        '<button id="blb-next">&#8594;</button>' +
+      '</div>';
+    document.body.appendChild(lb);
+    document.getElementById("blb-close").addEventListener("click", closeBrandLightbox);
+    lb.addEventListener("click", function(e) { if (e.target === lb) closeBrandLightbox(); });
+  }
+  var idx = [startIdx];
+  function update() {
+    document.getElementById("blb-img").src = imgs[idx[0]];
+    document.getElementById("blb-counter").textContent = (idx[0]+1) + " / " + imgs.length;
+  }
+  document.getElementById("blb-prev").onclick = function() { idx[0] = (idx[0]-1+imgs.length)%imgs.length; update(); };
+  document.getElementById("blb-next").onclick = function() { idx[0] = (idx[0]+1)%imgs.length; update(); };
+  lb._keyHandler = function(e) {
+    if (e.key==="Escape") closeBrandLightbox();
+    if (e.key==="ArrowLeft") { idx[0]=(idx[0]-1+imgs.length)%imgs.length; update(); }
+    if (e.key==="ArrowRight") { idx[0]=(idx[0]+1)%imgs.length; update(); }
+  };
+  document.addEventListener("keydown", lb._keyHandler);
+  update();
+  lb.classList.add("open");
+}
+function closeBrandLightbox() {
+  var lb = document.getElementById("brand-lightbox");
+  if (lb) {
+    lb.classList.remove("open");
+    if (lb._keyHandler) document.removeEventListener("keydown", lb._keyHandler);
+  }
+}
+
 window._init_design_detail = function() {
   if (window._carouselTimer) { clearInterval(window._carouselTimer); window._carouselTimer = null; }
   var params = window._routerParams || {};
@@ -3532,9 +3660,73 @@ window._init_design_detail = function() {
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
       sec.appendChild(w);
+    } else if (s.kind === "brand-gallery") {
+      // Brand gallery section with main image, thumbnails, lightbox
+      var wrap = document.createElement("div");
+      wrap.className = "brand-gallery-section";
+      if (s.reversed) wrap.classList.add("brand-gallery-reversed");
+
+      var imgBlock = document.createElement("div");
+      imgBlock.className = "brand-gallery-imgblock";
+
+      var mainImg = document.createElement("div");
+      mainImg.className = "brand-gallery-main";
+      var mainImgEl = document.createElement("img");
+      mainImgEl.src = s.images[0];
+      mainImgEl.alt = s.brand;
+      mainImgEl.loading = "lazy";
+      var zoomHint = document.createElement("div");
+      zoomHint.className = "brand-gallery-zoom";
+      zoomHint.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg> View';
+      mainImg.appendChild(mainImgEl);
+      mainImg.appendChild(zoomHint);
+
+      var thumbStrip = document.createElement("div");
+      thumbStrip.className = "brand-gallery-thumbs";
+
+      var imgs = s.images;
+      var currentIdx = [0];
+
+      // Open lightbox on main image click
+      mainImg.addEventListener("click", function() {
+        openBrandLightbox(imgs, currentIdx[0]);
+      });
+
+      imgs.forEach(function(src, i) {
+        var thumb = document.createElement("div");
+        thumb.className = "brand-gallery-thumb" + (i === 0 ? " active" : "");
+        var tImg = document.createElement("img");
+        tImg.src = src; tImg.loading = "lazy";
+        thumb.appendChild(tImg);
+        thumb.addEventListener("click", function() {
+          mainImgEl.src = src;
+          currentIdx[0] = i;
+          thumbStrip.querySelectorAll(".brand-gallery-thumb").forEach(function(t, j) {
+            t.classList.toggle("active", j === i);
+          });
+        });
+        thumbStrip.appendChild(thumb);
+      });
+
+      imgBlock.appendChild(mainImg);
+      imgBlock.appendChild(thumbStrip);
+
+      var textBlock = document.createElement("div");
+      textBlock.className = "brand-gallery-text";
+      var tagsHtml = s.tags ? s.tags.map(function(t){ return '<span class="brand-gallery-tag">' + t + '</span>'; }).join('') : '';
+      var responsibilitiesHtml = s.responsibilities ? '<ul class="brand-gallery-resp">' + s.responsibilities.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' : '';
+      textBlock.innerHTML = '<p class="brand-gallery-name">' + s.brand + '</p>' +
+        (tagsHtml ? '<div class="brand-gallery-tags">' + tagsHtml + '</div>' : '') +
+        '<p class="brand-gallery-desc">' + s.desc + '</p>' +
+        responsibilitiesHtml;
+
+      wrap.appendChild(imgBlock);
+      wrap.appendChild(textBlock);
+      sec.appendChild(wrap);
+      return;
     } else if (s.kind === "section-title") {
       var w = document.createElement("div");
-      w.className = "detail-section-title";
+      w.className = "detail-section-title" + (s.prominent ? " title-prominent" : "");
       w.textContent = s.title;
       sec.appendChild(w);
       return;
@@ -3937,9 +4129,73 @@ window._init_illustration_detail = function() {
       else { w.style.backgroundImage = "url('" + s.src + "')"; }
       if (s.caption) { var cap = document.createElement("div"); cap.className = "detail-caption"; cap.textContent = s.caption; w.appendChild(cap); }
       sec.appendChild(w);
+    } else if (s.kind === "brand-gallery") {
+      // Brand gallery section with main image, thumbnails, lightbox
+      var wrap = document.createElement("div");
+      wrap.className = "brand-gallery-section";
+      if (s.reversed) wrap.classList.add("brand-gallery-reversed");
+
+      var imgBlock = document.createElement("div");
+      imgBlock.className = "brand-gallery-imgblock";
+
+      var mainImg = document.createElement("div");
+      mainImg.className = "brand-gallery-main";
+      var mainImgEl = document.createElement("img");
+      mainImgEl.src = s.images[0];
+      mainImgEl.alt = s.brand;
+      mainImgEl.loading = "lazy";
+      var zoomHint = document.createElement("div");
+      zoomHint.className = "brand-gallery-zoom";
+      zoomHint.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg> View';
+      mainImg.appendChild(mainImgEl);
+      mainImg.appendChild(zoomHint);
+
+      var thumbStrip = document.createElement("div");
+      thumbStrip.className = "brand-gallery-thumbs";
+
+      var imgs = s.images;
+      var currentIdx = [0];
+
+      // Open lightbox on main image click
+      mainImg.addEventListener("click", function() {
+        openBrandLightbox(imgs, currentIdx[0]);
+      });
+
+      imgs.forEach(function(src, i) {
+        var thumb = document.createElement("div");
+        thumb.className = "brand-gallery-thumb" + (i === 0 ? " active" : "");
+        var tImg = document.createElement("img");
+        tImg.src = src; tImg.loading = "lazy";
+        thumb.appendChild(tImg);
+        thumb.addEventListener("click", function() {
+          mainImgEl.src = src;
+          currentIdx[0] = i;
+          thumbStrip.querySelectorAll(".brand-gallery-thumb").forEach(function(t, j) {
+            t.classList.toggle("active", j === i);
+          });
+        });
+        thumbStrip.appendChild(thumb);
+      });
+
+      imgBlock.appendChild(mainImg);
+      imgBlock.appendChild(thumbStrip);
+
+      var textBlock = document.createElement("div");
+      textBlock.className = "brand-gallery-text";
+      var tagsHtml = s.tags ? s.tags.map(function(t){ return '<span class="brand-gallery-tag">' + t + '</span>'; }).join('') : '';
+      var responsibilitiesHtml = s.responsibilities ? '<ul class="brand-gallery-resp">' + s.responsibilities.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' : '';
+      textBlock.innerHTML = '<p class="brand-gallery-name">' + s.brand + '</p>' +
+        (tagsHtml ? '<div class="brand-gallery-tags">' + tagsHtml + '</div>' : '') +
+        '<p class="brand-gallery-desc">' + s.desc + '</p>' +
+        responsibilitiesHtml;
+
+      wrap.appendChild(imgBlock);
+      wrap.appendChild(textBlock);
+      sec.appendChild(wrap);
+      return;
     } else if (s.kind === "section-title") {
       var w = document.createElement("div");
-      w.className = "detail-section-title";
+      w.className = "detail-section-title" + (s.prominent ? " title-prominent" : "");
       w.textContent = s.title;
       sec.appendChild(w);
       return;
