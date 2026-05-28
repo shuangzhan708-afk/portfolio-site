@@ -1981,10 +1981,41 @@ body { background: #fff; }
       text-transform: uppercase;
     }
 
+
+    /* ── Page Transition (state machine) ─────────────────────────────── */
+    #pt-overlay {
+      position: fixed; inset: 0; z-index: 99998;
+      pointer-events: all;
+      visibility: hidden;
+    }
+    #pt-overlay.is-active { visibility: visible; }
+
+    #pt-color, #pt-white {
+      position: absolute; inset: 0;
+      transform: translateY(100%);
+      will-change: transform;
+    }
+    #pt-white { background: #fff; z-index: 1; }
+    #pt-color { z-index: 2; }
+
+    #pt-color.wipe-in  { animation: ptWipeIn  850ms cubic-bezier(0.65,0,0.35,1) forwards; }
+    #pt-white.wipe-in  { animation: ptWipeIn  850ms cubic-bezier(0.65,0,0.35,1) forwards; }
+    #pt-color.wipe-out { animation: ptWipeOut 700ms cubic-bezier(0.65,0,0.35,1) forwards; }
+    #pt-white.wipe-out { animation: ptWipeOut 700ms cubic-bezier(0.65,0,0.35,1) forwards; }
+
+    @keyframes ptWipeIn  { from { transform: translateY(100%); } to { transform: translateY(0%);    } }
+    @keyframes ptWipeOut { from { transform: translateY(0%);   } to { transform: translateY(-100%); } }
+
+    /* Content reveal */
+    .pt-hidden { opacity: 0 !important; transform: translateY(20px) !important; transition: none !important; }
+    .pt-reveal  { animation: ptReveal 500ms cubic-bezier(0.4,0,0.2,1) forwards; }
+    .pt-reveal-late { animation: ptReveal 500ms cubic-bezier(0.4,0,0.2,1) 120ms forwards; }
+    @keyframes ptReveal { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 </style>
 </head>
 <body>
 
+<div id="pt-overlay" aria-hidden="true"><div id="pt-color"></div><div id="pt-white"></div></div>
 <div class="page" id="page_index" data-page="index.html">
 <main>
   <section class="home-hero">
@@ -4398,79 +4429,164 @@ function showPage(pageName, params, skipHistory, cleanPath) {
   if (burger) { burger.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); burger.style.removeProperty('color'); }
   document.body.style.overflow = '';
 
-  // Hide all
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('is-active');
-  });
-  
-  // Remove old nav/footer/cursor/overlay injected by SHUANG
-  var oldOverlay = document.querySelector('.nav-overlay');
-  if (oldOverlay) oldOverlay.remove();
-  var oldNav = document.querySelector('header.nav');
-  if (oldNav) oldNav.remove();
-  var oldFooter = document.querySelector('footer.footer');
-  if (oldFooter) oldFooter.remove();
-  var oldBtt = document.querySelector('.back-to-top');
-  if (oldBtt) oldBtt.remove();
-  var oldVeil = document.querySelector('.page-veil');
-  if (oldVeil) oldVeil.remove();
-  var oldDot = document.querySelector('.cursor-dot');
-  if (oldDot) oldDot.remove();
-  var oldRing = document.querySelector('.cursor-ring');
-  if (oldRing) oldRing.remove();
-  document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
+  // ── Page Transition State Machine ──────────────────────────────────────
+  var COLORS   = ['#c4b5fd','#fde68a','#a5f3e8','#93c5fd','#ffb4a2'];
+  var overlay  = document.getElementById('pt-overlay');
+  var colorEl  = document.getElementById('pt-color');
+  var whiteEl  = document.getElementById('pt-white');
 
-  // Show target
-  var pid = pageName.replace('.html','').replace(/-/g,'_');
-  var el = document.getElementById('page_' + pid);
-  if (!el) { el = document.getElementById('page_index'); pid = 'index'; pageName = 'index.html'; }
-  el.classList.add('is-active');
-  
-  _currentPage = pageName;
-  window.scrollTo(0,0);
+  // ── Build page switch payload (do heavy work NOW, before animation) ──────
+  // All DOM work happens here so it's ready before any layer moves
+  var _pid = pageName.replace('.html','').replace(/-/g,'_');
+  var _el  = document.getElementById('page_' + _pid);
+  if (!_el) { _el = document.getElementById('page_index'); _pid = 'index'; pageName = 'index.html'; }
 
-  // Page-specific background colors
-  var bgMap = { 'contact.html': '#eae8e4' };
-  document.body.style.background = bgMap[pageName] || '';
-
-  // Store params for detail pages
-  window._routerParams = params;
-
-  // Push browser history â€” use clean path if provided, else hash fallback
-  if (!skipHistory) {
-    var pushPath;
-    if (cleanPath) {
-      pushPath = cleanPath;
-    } else if (pageName === 'index.html') {
-      pushPath = '/';
-    } else if (pageName === 'design.html') {
-      pushPath = '/design';
-    } else if (pageName === 'illustration.html') {
-      pushPath = '/illustration';
-    } else if (pageName === 'about.html') {
-      pushPath = '/about';
-    } else if (pageName === 'contact.html') {
-      pushPath = '/contact';
-    } else {
-      var qs = Object.keys(params).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
-      pushPath = '/' + pageName + (qs ? '?' + qs : '');
-    }
-    history.pushState({ page: pageName, params: params, cleanPath: pushPath }, '', pushPath);
+  // History
+  var _pp;
+  if (cleanPath)                           _pp = cleanPath;
+  else if (pageName==='index.html')        _pp = '/';
+  else if (pageName==='design.html')       _pp = '/design';
+  else if (pageName==='illustration.html') _pp = '/illustration';
+  else if (pageName==='about.html')        _pp = '/about';
+  else if (pageName==='contact.html')      _pp = '/contact';
+  else {
+    var _qs = Object.keys(params).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(params[k]); }).join('&');
+    _pp = '/'+pageName+(_qs?'?'+_qs:'');
   }
 
-  // Re-init SHUANG
-  var theme = (pageName === 'design-detail.html' || pageName === 'index.html') ? 'light' : undefined;
-  SHUANG.init(theme ? {theme: theme} : {});
+  function _doSwitch() {
+    // Hide current page
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('is-active'); });
+    ['.nav-overlay','header.nav','footer.footer','.back-to-top',
+     '.page-veil','.cursor-dot','.cursor-ring'].forEach(function(s){
+      var e = document.querySelector(s); if (e) e.remove();
+    });
+    document.body.classList.remove('has-cursor','cursor-hover','cursor-view','is-entering');
 
-  // Run page-specific init
-  var fn = window['_init_' + pid];
-  if (fn) fn();
+    // Show new page — still hidden under white layer
+    _el.classList.add('is-active');
+    _currentPage = pageName;
+    window.scrollTo(0,0);
+    document.body.style.background = pageName==='contact.html' ? '#eae8e4' : '';
+    window._routerParams = params;
 
-  // Re-init reveal for newly shown page
-  el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
-  setTimeout(function(){
-    el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
-  }, 80);
+    if (!skipHistory) history.pushState({page:pageName,params:params,cleanPath:_pp},'',_pp);
+
+    var theme = (pageName==='design-detail.html'||pageName==='index.html') ? 'light' : undefined;
+    SHUANG.init(theme ? {theme:theme} : {});
+    var _fn = window['_init_'+_pid]; if (_fn) _fn();
+    _el.querySelectorAll('.reveal').forEach(function(e){ e.classList.remove('is-in'); });
+
+    // Hide all content — will reveal in stages after white exits
+    var imgs  = Array.prototype.slice.call(_el.querySelectorAll('img, video, .proj-thumb, .detail-hero, .hero-wrap'));
+    var texts = Array.prototype.slice.call(_el.querySelectorAll('h1,h2,h3,p,.proj-meta,.detail-meta,.proj-tags,.tag-pill,.btn'));
+    imgs.concat(texts).forEach(function(e){ e.classList.add('pt-hidden'); });
+
+    return { imgs: imgs, texts: texts };
+  }
+
+  function _reveal(els) {
+    var imgs  = els.imgs;
+    var texts = els.texts;
+
+    // Step 1: images appear first
+    imgs.forEach(function(e){
+      e.classList.remove('pt-hidden');
+      e.classList.add('pt-reveal');
+    });
+
+    // Step 2: text follows on first image animationend (or immediately if no images)
+    function revealText() {
+      texts.forEach(function(e){
+        e.classList.remove('pt-hidden');
+        e.classList.add('pt-reveal-late');
+      });
+      // Step 3: reveals + cleanup after text
+      setTimeout(function() {
+        _el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
+        document.querySelectorAll('.pt-reveal,.pt-reveal-late,.pt-hidden').forEach(function(e){
+          e.classList.remove('pt-reveal','pt-reveal-late','pt-hidden');
+        });
+      }, 700);
+    }
+
+    if (imgs.length > 0) {
+      imgs[0].addEventListener('animationend', revealText, {once: true});
+    } else {
+      revealText();
+    }
+  }
+
+  // ── Instant switch (back/forward/initial load) ───────────────────────────
+  if (skipHistory || !overlay) {
+    _doSwitch();
+    _el.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('is-in'); });
+    return;
+  }
+
+  // ── Animated transition ──────────────────────────────────────────────────
+  if (overlay._busy) return;
+  overlay._busy = true;
+  document.body.style.overflow = 'hidden';
+
+  // Pick colour
+  var _avail = COLORS.filter(function(c){ return c !== overlay._last; });
+  var _col   = _avail[Math.floor(Math.random() * _avail.length)];
+  overlay._last = _col;
+  colorEl.style.background = _col;
+
+  // Reset to bottom, no animation
+  colorEl.className = ''; whiteEl.className = '';
+  colorEl.style.transform = 'translateY(100%)';
+  whiteEl.style.transform = 'translateY(100%)';
+  overlay.classList.add('is-active');
+
+  // Force paint then start
+  requestAnimationFrame(function() { requestAnimationFrame(function() {
+
+    // Phase 1: colour wipes in
+    colorEl.style.transform = '';
+    colorEl.classList.add('wipe-in');
+
+    colorEl.addEventListener('animationend', function onColorIn() {
+      colorEl.removeEventListener('animationend', onColorIn);
+
+      // Colour fully covers screen — NOW safe to switch page
+      var els = _doSwitch();
+
+      // Colour exits, white enters simultaneously (slight overlap = smooth)
+      colorEl.classList.remove('wipe-in');
+      colorEl.classList.add('wipe-out');
+      whiteEl.style.transform = '';
+      whiteEl.classList.add('wipe-in');
+
+      whiteEl.addEventListener('animationend', function onWhiteIn() {
+        whiteEl.removeEventListener('animationend', onWhiteIn);
+
+        // White fully covers — content is ready behind it
+        // Start white exit + reveal content as it lifts
+        whiteEl.classList.remove('wipe-in');
+        whiteEl.classList.add('wipe-out');
+
+        // Reveal content as white lifts
+        requestAnimationFrame(function() {
+          _reveal(els);
+        });
+
+        // Cleanup after white fully exits
+        whiteEl.addEventListener('animationend', function onWhiteOut() {
+          whiteEl.removeEventListener('animationend', onWhiteOut);
+          overlay.classList.remove('is-active');
+          overlay._busy = false;
+          colorEl.className = ''; whiteEl.className = '';
+          colorEl.style.cssText = ''; whiteEl.style.cssText = '';
+          document.body.style.overflow = '';
+        }, {once: true});
+
+      }, {once: true});
+    }, {once: true});
+
+  }); }); // end double rAF
 }
 
 // Intercept ALL link clicks â€” capture phase to beat any parent handlers
